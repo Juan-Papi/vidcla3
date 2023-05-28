@@ -25,11 +25,12 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard');
+    })->middleware('can:Ver dashboard')->name('dashboard');
 });
 
 //Para los roles
 Route::resource('roles',RoleController::class)->names('admin.roles');
 
 //Para los usuarios
-Route::resource('users',UserController::class)->names('admin.users');
+//only en este caso solo creara las rutas index, edit, update
+Route::resource('users',UserController::class)->only(['index', 'edit', 'update'])->names('admin.users');

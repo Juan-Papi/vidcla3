@@ -302,7 +302,7 @@ return [
         ],
 
         // Sidebar items:
-       /* [
+        /* [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],*/
@@ -315,8 +315,9 @@ return [
             'text' => 'DASHBOARD',
             'route'  => 'dashboard',
             'icon' => 'fas fa-fw fa-tachometer-alt',
+            'can' => 'Ver dashboard',
         ],
-       /* [
+        /* [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',
@@ -329,12 +330,12 @@ return [
             'route'  => 'profile.show',
             'icon' => 'fas fa-fw fa-user',
         ],
-       /* [
+        /* [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
         ],*/
-        ['header' => 'labels'],
+        ['header' => 'ADMINISTRACION'],
         [
             'text'    => 'Administrar usuarios',
             'icon'    => 'fas fa-fw fa-users',
@@ -343,14 +344,16 @@ return [
                     'text' => 'Usuarios',
                     'route'  => 'admin.users.index',
                     'icon'    => 'fas fa-fw fa-user-friends',
-                    'active' => ['users*'],//extra para los botones sidevar relacionados
+                    'active' => ['users*'], //extra para los botones sidevar relacionados
+                    'can' => 'Listar usuarios',
                 ],
-               
+
                 [
                     'text' => 'Roles',
                     'icon'    => 'fas fa-fw fa-users-cog',
                     'route'  => 'admin.roles.index',
-                    'active' => ['roles*'],//extra para los botones sidevar relacionados
+                    'active' => ['roles*'], //extra para los botones sidevar relacionados
+                    'can' => 'Listar role',
                 ],
                 [
                     'text' => 'Personal',
@@ -360,6 +363,118 @@ return [
                     'text' => 'Bitacora',
                     'url'  => '#',
                 ],
+            ],
+        ],
+        [
+            'text'    => 'Administrar productos',
+            'icon'    => 'fas fa-fw fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Parabrisas',
+                    'route'  => 'admin.users.index',
+                    'icon'    => 'fas fa-fw fa-user-friends',
+                    'active' => ['users*'], //extra para los botones sidevar relacionados
+                ],
+                [
+                    'text' => 'Posicion',
+                    'route'  => 'admin.users.index',
+                    'icon'    => 'fas fa-fw fa-user-friends',
+                    'active' => ['users*'], //extra para los botones sidevar relacionados
+                ],
+
+                [
+                    'text' => 'Categorias',
+                    'icon'    => 'fas fa-fw fa-users-cog',
+                    'route'  => 'admin.roles.index',
+                    'active' => ['roles*'], //extra para los botones sidevar relacionados
+                ],
+                [
+                    'text' => 'Vehiculos',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Marcas',
+                    'url'  => '#',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Administrar ventas',
+            'icon'    => 'fas fa-fw fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Nota de venta',
+                    'route'  => 'admin.users.index',
+                    'icon'    => 'fas fa-fw fa-user-friends',
+                    'active' => ['users*'], //extra para los botones sidevar relacionados
+                ],
+
+                [
+                    'text' => 'Clientes',
+                    'icon'    => 'fas fa-fw fa-users-cog',
+                    'route'  => 'admin.roles.index',
+                    'active' => ['roles*'], //extra para los botones sidevar relacionados
+                ],
+                [
+                    'text' => 'Plan de pago',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Cuota',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Factura',
+                    'url'  => '#',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Administrar pedidos',
+            'icon'    => 'fas fa-fw fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Pedidos',
+                    'route'  => 'admin.users.index',
+                    'icon'    => 'fas fa-fw fa-user-friends',
+                    'active' => ['users*'], //extra para los botones sidevar relacionados
+                ],
+
+                [
+                    'text' => 'Estado del pedido',
+                    'icon'    => 'fas fa-fw fa-users-cog',
+                    'route'  => 'admin.roles.index',
+                    'active' => ['roles*'], //extra para los botones sidevar relacionados
+                ],
+               
+            ],
+        ],
+        [
+            'text'    => 'Administrar compras',
+            'icon'    => 'fas fa-fw fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Suministro',
+                    'route'  => 'admin.users.index',
+                    'icon'    => 'fas fa-fw fa-user-friends',
+                    'active' => ['users*'], //extra para los botones sidevar relacionados
+                ],
+
+                [
+                    'text' => 'Perdidas',
+                    'icon'    => 'fas fa-fw fa-users-cog',
+                    'route'  => 'admin.roles.index',
+                    'active' => ['roles*'], //extra para los botones sidevar relacionados
+                ],
+                [
+                    'text' => 'Almacen',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Proveedor',
+                    'url'  => '#',
+                ],
+               
             ],
         ],
 
@@ -401,7 +516,7 @@ return [
                 ],
             ],
         ],
-      /* ['header' => 'labels'],
+        /* ['header' => 'labels'],
         [
             'text'       => 'important',
             'icon_color' => 'red',
@@ -571,5 +686,5 @@ return [
     |
     */
 
-    'livewire' => true,//default false ->modificado a true
+    'livewire' => true, //default false ->modificado a true
 ];

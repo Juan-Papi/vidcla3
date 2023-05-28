@@ -13,11 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name'=>'Juan Pablo Rodriguez',
-            'email'=>'pablojuan123sc@gmail.com',
-            'password'=>bcrypt(12345678)
-        ]);
+        
         $usuarios = [
             //nro 1
             [
@@ -72,5 +68,11 @@ class UserSeeder extends Seeder
         foreach ($usuarios as $usuario) {
             User::create($usuario);
         }
+
+        User::create([
+            'name'=>'Juan Pablo Rodriguez',
+            'email'=>'pablojuan123sc@gmail.com',
+            'password'=>bcrypt(12345678)
+        ])->assignRole('admin');
     }
 }

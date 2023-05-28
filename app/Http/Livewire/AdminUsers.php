@@ -16,7 +16,11 @@ class AdminUsers extends Component
     public function render()
     {  
         $users = User::where('name', 'LIKE', '%' . $this->buscar . '%')
-        ->paginate(5);
+        ->orWhere('email', 'LIKE', '%' . $this->buscar . '%')
+        ->paginate(6);
         return view('livewire.admin-users', compact('users'));
+    }
+    public function limpiar_page(){
+        $this->resetPage();
     }
 }

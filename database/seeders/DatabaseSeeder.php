@@ -15,10 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(PermissionSeeder::class);
+        $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
-        Permission::create(['name' => 'Crear pedidos']);
-        Permission::create(['name' => 'Ver pedidos']);
-        Permission::create(['name' => 'Actualizar pedidos']);
-        Permission::create(['name' => 'Eliminar pedidos']);
+       
     }
 }
