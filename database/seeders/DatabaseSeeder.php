@@ -6,7 +6,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -14,16 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-        User::create([
-            'name'=>'Juan Pablo Rodriguez',
-            'email'=>'pablojuan123sc@gmail.com',
-            'password'=>bcrypt(12345678)
-        ]);
+        $this->call(UserSeeder::class);
+        Permission::create(['name' => 'Crear pedidos']);
+        Permission::create(['name' => 'Ver pedidos']);
+        Permission::create(['name' => 'Actualizar pedidos']);
+        Permission::create(['name' => 'Eliminar pedidos']);
     }
 }

@@ -341,7 +341,9 @@ return [
             'submenu' => [
                 [
                     'text' => 'Usuarios',
-                    'url'  => '#',
+                    'route'  => 'admin.users.index',
+                    'icon'    => 'fas fa-fw fa-user-friends',
+                    'active' => ['users*'],//extra para los botones sidevar relacionados
                 ],
                
                 [
@@ -569,5 +571,5 @@ return [
     |
     */
 
-    'livewire' => false,
+    'livewire' => true,//default false ->modificado a true
 ];
