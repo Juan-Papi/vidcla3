@@ -348,6 +348,7 @@ return [
                     'text' => 'Roles',
                     'icon'    => 'fas fa-fw fa-users-cog',
                     'route'  => 'admin.roles.index',
+                    'active' => ['roles*'],//extra para los botones sidevar relacionados
                 ],
                 [
                     'text' => 'Personal',

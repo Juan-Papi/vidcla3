@@ -3,11 +3,27 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1>Editar Rol</h1>
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+<div class="card">
+    <div class="card-body">
+        {{-- para editar abrimos el formulario con Form::model --}}
+
+        {{-- tomar en cuenta que la ruta update necesita que le pasemos un parametro --}}
+        {!! Form::model($role, ['route' => ['admin.roles.update', $role], 'method' => 'put']) !!}
+
+          {{-- directiva de blade -> include --}}
+          {{-- Para poner la ruta del form debe ser relativa(con referencia) 
+          a la vista views --}}
+           @include('roles.partials.form')
+
+        {!! Form::submit('Actualizar Rol', ['class' => 'btn btn-primary mt-2']) !!}
+
+        {!! Form::close() !!}
+    </div>
+</div>
 @stop
 
 @section('css')
