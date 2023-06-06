@@ -30,7 +30,7 @@
                                 </td>
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}
                                 <td width="10px">
-                                    <a class="btn btn-primary" href="{{ route('admin.users.edit', $user) }}">Editar</a>
+                                    <a class="btn btn-primary" href="{{ route('admin.users.edit', $user) }}">Editar/Ver</a>
                                 </td>
                             </tr>
                         @endforeach

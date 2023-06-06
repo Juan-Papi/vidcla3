@@ -3,11 +3,11 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Lista de clientes</h1>
+    <h1>Dashboard</h1>
 @stop
 
 @section('content')
-    @livewire('admin-users')
+    <p>Welcome to this beautiful admin panel.</p>
 @stop
 
 @section('css')

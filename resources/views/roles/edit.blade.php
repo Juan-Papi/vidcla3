@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Editar Rol</h1>
+    <h1>Editar ROL</h1>
 @stop
 
 @section('content')
@@ -19,7 +19,7 @@
           a la vista views --}}
            @include('roles.partials.form')
 
-        {!! Form::submit('Actualizar Rol', ['class' => 'btn btn-primary mt-2']) !!}
+        {!! Form::submit('Actualizar ROL', ['class' => 'btn btn-primary mt-2']) !!}
 
         {!! Form::close() !!}
     </div>

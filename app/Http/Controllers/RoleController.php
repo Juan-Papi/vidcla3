@@ -60,7 +60,7 @@ class RoleController extends Controller
         //Sabido lo anterior se deduce que es mejor usar sync
         $role->permissions()->sync($request->permissions);
 
-        return Redirect()->route('admin.roles.index')->with('info', 'El Rol se creo satisfactoriamente!');
+        return Redirect()->route('admin.roles.index')->with('info', 'El ROL se creo satisfactoriamente!');
     }
 
     /**
@@ -98,7 +98,7 @@ class RoleController extends Controller
         $role->name = $request->name;   
         $role->permissions()->sync($request->permissions);
         $role->save();
-        return redirect()->route('admin.roles.edit', $role);
+        return Redirect()->route('admin.roles.index')->with('info', 'Datos actualizados!');
     }
 
     /**

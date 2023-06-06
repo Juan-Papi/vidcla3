@@ -7,7 +7,16 @@
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+    @if (Auth::user()->roles->count() > 0)
+        <p>Roles asignados para {{Auth::user()->name}} :</p>
+        <ul>
+            @foreach (Auth::user()->roles as $role)
+                <li>{{ $role->name }}</li>
+            @endforeach
+        </ul>
+    @else
+        <p>No se han asignado roles al usuario.</p>
+    @endif
 @stop
 
 @section('css')
@@ -15,5 +24,7 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+        console.log('Hi!');
+    </script>
 @stop

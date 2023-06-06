@@ -18,7 +18,7 @@
     <div class="card">
 
         <div class="card-header">
-            <a href="{{ route('admin.roles.create') }}">Crear rol</a>
+            <a class="btn btn-secondary" href="{{ route('admin.roles.create') }}">CREAR ROL</a>
         </div>
 
 
