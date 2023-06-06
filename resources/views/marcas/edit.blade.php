@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Editar CATEGORIA</h1>
+    <h1>Editar MARCA</h1>
 @stop
 
 @section('content')
@@ -12,7 +12,7 @@
         {{-- para editar abrimos el formulario con Form::model --}}
 
         {{-- tomar en cuenta que la ruta update necesita que le pasemos un parametro --}}
-        {!! Form::model($categoria, ['route' => ['admin.categoria.update', $categoria], 'method' => 'put']) !!}
+        {!! Form::model($marca, ['route' => ['admin.marca.update', $marca], 'method' => 'put']) !!}
 
         <div class="form-group">
             {!! Form::label('name', 'Nombre: ') !!}
@@ -36,7 +36,7 @@
         </div>
 
 
-        {!! Form::submit('Actualizar CATEGORIA', ['class' => 'btn btn-primary mt-2']) !!}
+        {!! Form::submit('Actualizar MARCA', ['class' => 'btn btn-primary mt-2']) !!}
 
         {!! Form::close() !!}
     </div>

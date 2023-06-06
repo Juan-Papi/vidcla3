@@ -443,26 +443,26 @@ return [
         ],
      [
             'text'    => 'Administrar Inventario',
-            'icon'    => 'fas fa-fw fa-users',
+            'icon'    => 'fas fa-fw fa-warehouse',
             'submenu' => [
                 [
                     'text' => 'Parabrisa',
                     'route'  => 'admin.users.index',
-                    'icon'    => 'fas fa-fw fa-home',
+                    'icon'    => 'fas fa-fw fa-glass-whiskey',
                     'active' => ['users*'], //extra para los botones sidevar relacionados
                 ],
                 [
                     'text' => 'Categoria',
-                    'route'  => 'admin.users.index',
-                    'icon'    => 'fas fa-fw fa-list-alt',
-                    'active' => ['users*'], //extra para los botones sidevar relacionados
+                    'route'  => 'admin.categoria.index',
+                    'icon'    => 'fas fa-fw fa-box-open',
+                    'active' => ['categoria*'], //extra para los botones sidevar relacionados
                 ],
 
                 [
                     'text' => 'Marca',
                     'icon'    => 'fas fa-fw fa-list-alt',
-                    'route'  => 'admin.roles.index',
-                    'active' => ['roles*'], //extra para los botones sidevar relacionados
+                    'route'  => 'admin.marca.index',
+                    'active' => ['marca*'], //extra para los botones sidevar relacionados
                 ],
                 [
                     'text' => 'Vehiculo',
