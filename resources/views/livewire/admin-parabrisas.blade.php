@@ -20,8 +20,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Posicion</th>
+                            <th>ID</th>                       
                             {{-- en descripcion ira vehiculo con marca --}}
                             <th>Descripcion</th>
                             <th>Precio</th>
@@ -40,10 +39,7 @@
 
                                 <td>
                                     {{ $parabrisa->id }}
-                                </td>
-                                <td>
-                                    {{ $parabrisa->posicion->nombre }}
-                                </td>
+                                </td>                            
                                 <td>
                                     {{ $parabrisa->vehiculo->descripcion }} //
                                     Año: {{ $parabrisa->vehiculo->año}} //
@@ -69,9 +65,10 @@
                                     {{ $parabrisa->observacion }}
                                 </td>
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}
+                             
                                 <td width="10px">
                                     <a class="btn btn-primary"
-                                        href="{{ route('admin.parabrisa.edit', $parabrisa) }}">Editar/Ver</a>
+                                        href="{{ route('admin.parabrisa.edit', $parabrisa) }}">Editar</a>
                                 </td>
                                 <td width="10px">
                                     {{-- el form es necesario para cuando queremos eliminar por eso no pusimos la etiqueta <a href=""></a> --}}

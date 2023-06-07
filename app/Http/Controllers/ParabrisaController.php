@@ -91,14 +91,42 @@ class ParabrisaController extends Controller
      */
     public function update(Request $request, Parabrisa $parabrisa)
     {
-        //
+        // Validar los datos del formulario
+        $validatedData = $request->validate([
+            'precio' => 'required|numeric',
+            'abajo' => 'required|string',
+            'arriba' => 'required|string',
+            'costado' => 'required|string',
+            'medio' => 'required|string',
+            'observacion' => 'nullable|string',
+            'posicion_id' => 'required|exists:posicions,id',
+            'categoria_id' => 'required|exists:categorias,id',
+            'vehiculo_id' => 'required|exists:vehiculos,id',
+        ]);
+
+        $parabrisa->precio = $validatedData['precio'];
+        $parabrisa->abajo = $validatedData['abajo'];
+        $parabrisa->arriba = $validatedData['arriba'];
+        $parabrisa->costado = $validatedData['costado'];
+        $parabrisa->medio = $validatedData['medio'];
+        $parabrisa->observacion = $validatedData['observacion'];
+        $parabrisa->posicion_id = $validatedData['posicion_id'];
+        $parabrisa->categoria_id = $validatedData['categoria_id'];
+        $parabrisa->vehiculo_id = $validatedData['vehiculo_id'];
+
+        // Actualizando informacion
+        $parabrisa->save();
+
+        // Redireccionar a una página de éxito o mostrar un mensaje
+        return redirect()->route('admin.parabrisa.index')->with('info', 'Datos actualizados!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Parabrisa $parabrisa)
     {
-        //
+        $parabrisa->delete();
+        return redirect()->route('admin.parabrisa.index')->with('info', 'El PARABRISA se eliminó con éxito!');
     }
 }
