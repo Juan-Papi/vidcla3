@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PosicionController;
 use App\Http\Controllers\VehiculoController;
+use App\Http\Controllers\ParabrisaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,3 +79,12 @@ Route::get('vehiculo/{vehiculo}', [VehiculoController::class, 'show'])->name('ad
 Route::get('vehiculo/{vehiculo}/edit', [VehiculoController::class, 'edit'])->name('admin.vehiculo.edit');
 Route::put('vehiculo/{vehiculo}', [VehiculoController::class, 'update'])->name('admin.vehiculo.update');
 Route::delete('vehiculo/{vehiculo}', [VehiculoController::class, 'destroy'])->name('admin.vehiculo.destroy');
+//----------------------------------------------------------------------------------------------------------------
+//Para los PARABRISAS --------------------------------------------------------------------------------------------
+Route::get('parabrisa', [ParabrisaController::class, 'index'])->name('admin.parabrisa.index');
+Route::get('parabrisa/create', [ParabrisaController::class, 'create'])->name('admin.parabrisa.create');
+Route::post('parabrisa', [ParabrisaController::class, 'store'])->name('admin.parabrisa.store');
+Route::get('parabrisa/{parabrisa}', [ParabrisaController::class, 'show'])->name('admin.parabrisa.show');
+Route::get('parabrisa/{parabrisa}/edit', [ParabrisaController::class, 'edit'])->name('admin.parabrisa.edit');
+Route::put('parabrisa/{parabrisa}', [ParabrisaController::class, 'update'])->name('admin.parabrisa.update');
+Route::delete('parabrisa/{parabrisa}', [ParabrisaController::class, 'destroy'])->name('admin.parabrisa.destroy');

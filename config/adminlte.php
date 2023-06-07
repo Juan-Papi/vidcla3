@@ -447,9 +447,9 @@ return [
             'submenu' => [
                 [
                     'text' => 'Parabrisa',
-                    'route'  => 'admin.users.index',
+                    'route'  => 'admin.parabrisa.index',
                     'icon'    => 'fas fa-fw fa-glass-whiskey',
-                    'active' => ['users*'], //extra para los botones sidevar relacionados
+                    'active' => ['parabrisa*'], //extra para los botones sidevar relacionados
                 ],
                 [
                     'text' => 'Posicion',
