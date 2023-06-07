@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>CATEGORIAS</h1>
+    <h1>POSICIONES</h1>
 @stop
 
 @section('content')
@@ -18,7 +18,7 @@
 <div class="card">
 
 <div class="card-header">
-    <a class="btn btn-secondary" href="{{ route('admin.categoria.create') }}">CREAR CATEGORIA</a>
+    <a class="btn btn-secondary" href="{{ route('admin.posicion.create') }}">CREAR POSICION</a>
 </div>
 
 
@@ -34,16 +34,16 @@
 
         <tbody>
             {{-- Forelse te permite mostrar algo si la coleccion esta vacia --}}
-            @forelse ($categorias as $categoria)
+            @forelse ($posiciones as $posicion)
                 <tr>
-                    <td>{{ $categoria->id }}</td>
-                    <td>{{ $categoria->nombre }}</td>
+                    <td>{{ $posicion->id }}</td>
+                    <td>{{ $posicion->nombre }}</td>
                     <td width="10px">
-                        <a class="btn btn-secondary" href="{{ route('admin.categoria.edit', $categoria) }}">Editar</a>
+                        <a class="btn btn-secondary" href="{{ route('admin.posicion.edit', $posicion) }}">Editar</a>
                     </td>
                     <td width="10px">
                         {{-- el form es necesario para cuando queremos eliminar por eso no pusimos la etiqueta <a href=""></a> --}}
-                        <form action="{{ route('admin.categoria.destroy', $categoria)}}" method="POST">
+                        <form action="{{ route('admin.posicion.destroy', $posicion)}}" method="POST">
                             @method('delete')
                             @csrf
                             <button class="btn btn-danger" type="submit">Eliminar</button>
@@ -54,7 +54,7 @@
                 <tr>
                     {{-- colspan->espaciado de 4 columnas --}}
                     <td colspan="4">
-                        No hay ningunA CATEGORIA registrada
+                        No hay ninguna POSICION registrada
                     </td>
                 </tr>
             @endforelse

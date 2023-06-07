@@ -6,6 +6,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EstadoPedidoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\PosicionController;
+use App\Http\Controllers\VehiculoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,3 +62,19 @@ Route::get('marca/{marca}/edit', [MarcaController::class, 'edit'])->name('admin.
 Route::put('marca/{marca}', [MarcaController::class, 'update'])->name('admin.marca.update');
 Route::delete('marca/{marca}', [MarcaController::class, 'destroy'])->name('admin.marca.destroy');
 //-------------------------------------------------------------------------------------------------------------------
+//Para la POSICION --------------------------------------------------------------------------------------------------
+Route::get('posicion', [PosicionController::class, 'index'])->name('admin.posicion.index');
+Route::get('posicion/create', [PosicionController::class, 'create'])->name('admin.posicion.create');
+Route::post('posicion', [PosicionController::class, 'store'])->name('admin.posicion.store');
+Route::get('posicion/{posicion}', [PosicionController::class, 'show'])->name('admin.posicion.show');
+Route::get('posicion/{posicion}/edit', [PosicionController::class, 'edit'])->name('admin.posicion.edit');
+Route::put('posicion/{posicion}', [PosicionController::class, 'update'])->name('admin.posicion.update');
+Route::delete('posicion/{posicion}', [PosicionController::class, 'destroy'])->name('admin.posicion.destroy');
+//Para los VEHICULOS ---------------------------------------------------------------------------------------------
+Route::get('vehiculo', [VehiculoController::class, 'index'])->name('admin.vehiculo.index');
+Route::get('vehiculo/create', [VehiculoController::class, 'create'])->name('admin.vehiculo.create');
+Route::post('vehiculo', [VehiculoController::class, 'store'])->name('admin.vehiculo.store');
+Route::get('vehiculo/{vehiculo}', [VehiculoController::class, 'show'])->name('admin.vehiculo.show');
+Route::get('vehiculo/{vehiculo}/edit', [VehiculoController::class, 'edit'])->name('admin.vehiculo.edit');
+Route::put('vehiculo/{vehiculo}', [VehiculoController::class, 'update'])->name('admin.vehiculo.update');
+Route::delete('vehiculo/{vehiculo}', [VehiculoController::class, 'destroy'])->name('admin.vehiculo.destroy');

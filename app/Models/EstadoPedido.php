@@ -10,7 +10,5 @@ class EstadoPedido extends Model
     use HasFactory;
  
     //Asignacion masiva
-    protected $fillable = [
-        'nombre',
-    ];
+    protected $fillable = [ 'nombre',];
 }

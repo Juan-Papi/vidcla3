@@ -54,7 +54,7 @@
                 <tr>
                     {{-- colspan->espaciado de 4 columnas --}}
                     <td colspan="4">
-                        No hay ningun estado registrado
+                        No hay ninguna MARCA registrada
                     </td>
                 </tr>
             @endforelse

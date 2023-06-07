@@ -452,6 +452,12 @@ return [
                     'active' => ['users*'], //extra para los botones sidevar relacionados
                 ],
                 [
+                    'text' => 'Posicion',
+                    'route'  => 'admin.posicion.index',
+                    'icon'    => 'fas fa-fw fa-glass-whiskey',
+                    'active' => ['posicion*'], //extra para los botones sidevar relacionados
+                ],
+                [
                     'text' => 'Categoria',
                     'route'  => 'admin.categoria.index',
                     'icon'    => 'fas fa-fw fa-box-open',
@@ -467,8 +473,8 @@ return [
                 [
                     'text' => 'Vehiculo',
                     'icon'    => 'fas fa-fw fa-car',
-                    'route'  => 'admin.roles.index',
-                    'active' => ['roles*'], //extra para los botones sidevar relacionados
+                    'route'  => 'admin.vehiculo.index',
+                    'active' => ['vehiculo*'], //extra para los botones sidevar relacionados
                 ],
                
             ],
