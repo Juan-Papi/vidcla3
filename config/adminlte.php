@@ -365,7 +365,7 @@ return [
                 ],
             ],
         ],
-       /* [
+        /* [
             'text'    => 'Administrar productos',
             'icon'    => 'fas fa-fw fa-users',
             'submenu' => [
@@ -400,12 +400,12 @@ return [
         ],*/
         [
             'text'    => 'Administrar ventas',
-            'icon'    => 'fas fa-fw fa-shopping-cart',
+            'icon'    => 'fas fa-fw fa-chart-line',
             'submenu' => [
-               /* [
+                /* [
                     'text' => 'Nota de venta',
                     'route'  => 'admin.users.index',
-                    'icon'    => 'fas fa-fw fa-sticky-note',
+                    'icon'    => 'fas fa-fw fa-receipt',
                     'active' => ['users*'], //extra para los botones sidevar relacionados
                 ],*/
                 [
@@ -421,7 +421,7 @@ return [
                     'active' => ['estado-pedido*'], //extra para los botones sidevar relacionados
                 ],
 
-            /*    [
+                /*    [
                     'text' => 'Clientes',
                     'icon'    => 'fas fa-fw fa-users-cog',
                     'route'  => 'admin.roles.index',
@@ -441,7 +441,34 @@ return [
                 ],*/
             ],
         ],
-     [
+        [
+            'text'    => 'Administrar compras',
+            'icon'    => 'fas fa-fw fa-tags',
+            'submenu' => [
+                
+                [
+                    'text' => 'Nota de compra',
+                    'icon'    => 'fas fa-fw fa-file-invoice',
+                    'url'  => '#',
+                    'active' => ['roles*'], //extra para los botones sidevar relacionados
+                ],
+                [
+                    'text' => 'Almacen',
+                    'icon'    => 'fas fa-fw fa-cube',
+                    'route'  => 'admin.estado-pedido.index',
+                    'active' => ['estado-pedido*'], //extra para los botones sidevar relacionados
+                ],
+                [
+                    'text' => 'Proveedor',
+                    'icon'    => 'fas fa-fw fa-cogs',
+                    'route'  => 'admin.proveedor.index',
+                    'active' => ['proveedor*'], //extra para los botones sidevar relacionados
+                ],
+ 
+               
+            ],
+        ],
+        [
             'text'    => 'Administrar Inventario',
             'icon'    => 'fas fa-fw fa-warehouse',
             'submenu' => [
@@ -476,37 +503,9 @@ return [
                     'route'  => 'admin.vehiculo.index',
                     'active' => ['vehiculo*'], //extra para los botones sidevar relacionados
                 ],
-               
+
             ],
         ],
-      /*  [
-            'text'    => 'Administrar compras',
-            'icon'    => 'fas fa-fw fa-users',
-            'submenu' => [
-                [
-                    'text' => 'Suministro',
-                    'route'  => 'admin.users.index',
-                    'icon'    => 'fas fa-fw fa-user-friends',
-                    'active' => ['users*'], //extra para los botones sidevar relacionados
-                ],
-
-                [
-                    'text' => 'Perdidas',
-                    'icon'    => 'fas fa-fw fa-users-cog',
-                    'route'  => 'admin.roles.index',
-                    'active' => ['roles*'], //extra para los botones sidevar relacionados
-                ],
-                [
-                    'text' => 'Almacen',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'Proveedor',
-                    'url'  => '#',
-                ],
-               
-            ],
-        ],*/
 
         [
             'text'    => 'multilevel',

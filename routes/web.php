@@ -9,6 +9,7 @@ use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PosicionController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\ParabrisaController;
+use App\Http\Controllers\ProveedorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,3 +89,12 @@ Route::get('parabrisa/{parabrisa}', [ParabrisaController::class, 'show'])->name(
 Route::get('parabrisa/{parabrisa}/edit', [ParabrisaController::class, 'edit'])->name('admin.parabrisa.edit');
 Route::put('parabrisa/{parabrisa}', [ParabrisaController::class, 'update'])->name('admin.parabrisa.update');
 Route::delete('parabrisa/{parabrisa}', [ParabrisaController::class, 'destroy'])->name('admin.parabrisa.destroy');
+//----------------------------------------------------------------------------------------------------------------
+//Para los PROVEEDORES -------------------------------------------------------------------------------------------
+Route::get('proveedor', [ProveedorController::class, 'index'])->name('admin.proveedor.index');
+Route::get('proveedor/create', [ProveedorController::class, 'create'])->name('admin.proveedor.create');
+Route::post('proveedor', [ProveedorController::class, 'store'])->name('admin.proveedor.store');
+Route::get('proveedor/{proveedor}', [ProveedorController::class, 'show'])->name('admin.proveedor.show');
+Route::get('proveedor/{proveedor}/edit', [ProveedorController::class, 'edit'])->name('admin.proveedor.edit');
+Route::put('proveedor/{proveedor}', [ProveedorController::class, 'update'])->name('admin.proveedor.update');
+Route::delete('proveedor/{proveedor}', [ProveedorController::class, 'destroy'])->name('admin.proveedor.destroy');
