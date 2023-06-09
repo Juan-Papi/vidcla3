@@ -45,7 +45,6 @@ class EditPurchaseNoteForm extends Component
             }
         }
     }
-
     public function save()
     {
         $this->validate([
@@ -57,38 +56,51 @@ class EditPurchaseNoteForm extends Component
             'proveedor_id' => 'required|exists:proveedors,id',
         ]);
 
-        if ($this->notaCompraId) {
-            $notaCompra = NotaCompra::find($this->notaCompraId);
-            $oldCantidad = $notaCompra->cantidad; // Guardar la cantidad anterior para el cálculo del stock
-            $notaCompra->update([
-                'cantidad' => $this->cantidad,
-                'fecha' => $this->fecha,
-                'total' => $this->total,
-                'almacen_id' => $this->almacen_id,
-                'parabrisa_id' => $this->parabrisa_id,
-                'proveedor_id' => $this->proveedor_id,
-            ]);
+        // Buscar la NotaCompra existente y actualizarla
+        $notaCompra = NotaCompra::find($this->notaCompraId);
+        $oldCantidad = $notaCompra->cantidad; // Guardar la cantidad anterior para el cálculo del stock
+        $oldAlmacenId = $notaCompra->almacen_id; // Guardar el almacen_id anterior para ajustar el stock
+        $oldParabrisaId = $notaCompra->parabrisa_id; // Guardar el parabrisa_id anterior para ajustar el stock
 
-            $almacen = Almacen::find($this->almacen_id);
+        $notaCompra->update([
+            'cantidad' => $this->cantidad,
+            'fecha' => $this->fecha,
+            'total' => $this->total,
+            'almacen_id' => $this->almacen_id,
+            'parabrisa_id' => $this->parabrisa_id,
+            'proveedor_id' => $this->proveedor_id,
+        ]);
 
-            // Buscar el Parabrisa en la relación muchos a muchos
-            $parabrisa = $almacen->parabrisas()->where('parabrisas.id', $this->parabrisa_id)->first();
-
-            // Si el Parabrisa ya está asociado con el Almacén, actualiza el stock
-            if ($parabrisa) {
-                $stockActual = $parabrisa->pivot->stock;
-                $nuevoStock = $stockActual - $oldCantidad + $this->cantidad; // Ajustar el stock basado en la cantidad anterior
-                $almacen->parabrisas()->updateExistingPivot($parabrisa->id, ['stock' => $nuevoStock]);
-            } else {
-                // Si no, asocia el Parabrisa con el Almacén y establece el stock inicial
-                $almacen->parabrisas()->attach($this->parabrisa_id, ['stock' => $this->cantidad]);
+        if ($oldAlmacenId != $this->almacen_id || $oldParabrisaId != $this->parabrisa_id) {
+            // Si el almacen_id o parabrisa_id han cambiado, ajusta el stock del almacén y parabrisa anteriores
+            $oldAlmacen = Almacen::find($oldAlmacenId);
+            $oldParabrisa = $oldAlmacen->parabrisas()->where('parabrisas.id', $oldParabrisaId)->first();
+            if ($oldParabrisa) {
+                $oldStock = $oldParabrisa->pivot->stock;
+                $nuevoStock = $oldStock - $oldCantidad; // Resta la cantidad anterior del stock del almacén y parabrisa anteriores
+                $oldAlmacen->parabrisas()->updateExistingPivot($oldParabrisa->id, ['stock' => $nuevoStock]);
             }
-
-
-            /*$this->emit('alert', ['type' => 'success', 'message' => 'Nota de compra actualizada con éxito!']);*/
-            return redirect()->route('admin.nota_compra.index')->with('info', 'Nota de compra actualizada exitosamente');
         }
+
+        $almacen = Almacen::find($this->almacen_id);
+
+        // Buscar el Parabrisa en la relación muchos a muchos
+        $parabrisa = $almacen->parabrisas()->where('parabrisas.id', $this->parabrisa_id)->first();
+
+        // Si el Parabrisa ya está asociado con el Almacén, actualiza el stock
+        if ($parabrisa) {
+            $stockActual = $parabrisa->pivot->stock;
+            $nuevoStock = $stockActual + $this->cantidad; // Añade la nueva cantidad al stock del nuevo almacén y parabrisa
+            $almacen->parabrisas()->updateExistingPivot($parabrisa->id, ['stock' => $nuevoStock]);
+        } else {
+            // Si no, asocia el Parabrisa con el Almacén y establece el stock inicial
+            $almacen->parabrisas()->attach($this->parabrisa_id, ['stock' => $this->cantidad]);
+        }
+
+        return redirect()->route('admin.nota_compra.index')->with('info', 'Nota de compra actualizada exitosamente');
     }
+
+
 
     public function render()
     {
