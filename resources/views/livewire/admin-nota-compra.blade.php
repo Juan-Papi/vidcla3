@@ -21,6 +21,7 @@
                     <thead>
                         <tr>
                             <th>Fecha</th>
+                            <th>ID_P</th>
                             <th>Parabrisa</th>
                             <th>Cantidad</th>
                             <th>Total</th>                         
@@ -38,10 +39,13 @@
                                     {{ $nota_compra->fecha }}
                                 </td>
                                 <td>
-                                    Ab:{{ $nota_compra->parabrisa->abajo }} cm
-                                    Ar:{{ $nota_compra->parabrisa->arriba }} cm
-                                    Co:{{ $nota_compra->parabrisa->costado }} cm
-                                    Me:{{ $nota_compra->parabrisa->medio }} cm
+                                    {{ $nota_compra->parabrisa->id }}
+                                </td>
+                                <td>
+                                    Ab:{{ $nota_compra->parabrisa->abajo }}
+                                    Ar:{{ $nota_compra->parabrisa->arriba }}
+                                    Co:{{ $nota_compra->parabrisa->costado }}
+                                    Me:{{ $nota_compra->parabrisa->medio }}
                                     Pre: BS. {{ $nota_compra->parabrisa->precio }}
                                 </td>
                                 <td>

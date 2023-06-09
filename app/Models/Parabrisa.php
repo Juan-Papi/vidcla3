@@ -13,6 +13,7 @@ class Parabrisa extends Model
      /*cuando tiene muchos campos(atributos)
     los sgts no se asignan masivamente*/  
     protected $guarded =['id','created_at','updated_at'];
+    protected $table = 'parabrisas';//proviene de la rel muchos a muchos gpt-01
 
      //Relacion de uno a muchos inversa
      public function posicion(){
@@ -30,6 +31,13 @@ class Parabrisa extends Model
      public function notasCompra()
      {
          return $this->hasMany(NotaCompra::class);
+     }
+     
+    //Relacion muchos a muchos gpt-01
+     public function almacenes()
+     {
+         return $this->belongsToMany(Almacen::class, 'almacen_parabrisa')
+                     ->withPivot('stock');
      }
 
 }

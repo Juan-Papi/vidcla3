@@ -13,10 +13,19 @@ class Almacen extends Model
     los sgts no se asignan masivamente*/
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    protected $table = 'almacens';//proviene de la rel muchos a muchos gpt-01
 
     //Relacion de uno a muchos
     public function notasCompra()
     {
         return $this->hasMany(NotaCompra::class);
+    }
+
+    
+    //relacion muchos a muchos gpt-01
+    public function parabrisas()
+    {
+        return $this->belongsToMany(Parabrisa::class, 'almacen_parabrisa')
+                    ->withPivot('stock');
     }
 }
