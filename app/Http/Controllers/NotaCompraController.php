@@ -34,6 +34,7 @@ class NotaCompraController extends Controller
      */
     public function store(Request $request)
     {
+        //esto ya no esta en uso , se creo un componente de livewire para mayor dinamica y calculo del total
         $request->validate([
             'cantidad' => 'required|integer',
             'fecha' => 'required|date',

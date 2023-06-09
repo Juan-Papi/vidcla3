@@ -42,7 +42,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="total">Total: </label>
-                        <input type="number" class="form-control @error('total') is-invalid @enderror" placeholder="Escriba el total..." wire:model="total" readonly>
+                        <input type="number" class="form-control @error('total') is-invalid @enderror" placeholder="Total calculado..." wire:model="total" readonly>
                         @error('total')
                             <span class="invalid-feedback">
                                 <strong>{{ $message }}</strong>

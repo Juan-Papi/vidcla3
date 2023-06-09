@@ -55,10 +55,11 @@ class PurchaseNoteForm extends Component
         ]);
     
         // Restablecer las propiedades del formulario
-        $this->reset(['cantidad', 'fecha', 'total', 'almacen_id', 'parabrisa_id', 'proveedor_id']);
+        /*$this->reset(['cantidad', 'fecha', 'total', 'almacen_id', 'parabrisa_id', 'proveedor_id']);*/
     
         // Emitir un evento de browser para notificar al usuario
-        $this->emit('alert', ['type' => 'success', 'message' => 'Nota de compra creada con éxito!']);
+     /*   $this->emit('alert', ['type' => 'success', 'message' => 'Nota de compra creada con éxito!']);*/
+        return redirect()->route('admin.nota_compra.index')->with('info', 'Nota de compra creada exitosamente');
     }
 
     public function render()
