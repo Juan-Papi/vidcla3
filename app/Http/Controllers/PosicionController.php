@@ -30,9 +30,9 @@ class PosicionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required'
+            'nombre' => 'required|unique:posicions'
         ]);
-        
+    
         $posicion = new Posicion();
         $posicion->nombre = $request->nombre;
         $posicion->save();
@@ -61,10 +61,10 @@ class PosicionController extends Controller
     public function update(Request $request, Posicion $posicion)
     {
         $request->validate([
-            'nombre' => 'required',
+            'nombre' => 'required|unique:posicions,nombre,'.$posicion->id
         ]);
-       
-        $posicion->nombre = $request->nombre;    
+    
+        $posicion->nombre = $request->nombre;
         $posicion->save();
         return redirect()->route('admin.posicion.index')->with('info', 'Datos actualizados!');
     }

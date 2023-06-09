@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('arriba');
             $table->string('costado');
             $table->string('medio');
+            $table->string('descripcion');//actua como un nombre
             $table->string('observacion')->nullable();
 
             $table->unsignedBigInteger('posicion_id');

@@ -30,13 +30,14 @@ class MarcaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required'
+            'nombre' => 'required|unique:marcas'
         ]);
-        
+    
         $marca = new Marca();
         $marca->nombre = $request->nombre;
         $marca->save();
-        return Redirect()->route('admin.marca.index')->with('info', 'La MARCA se creo satisfactoriamente!');
+    
+        return redirect()->route('admin.marca.index')->with('info', '¡La MARCA se creó satisfactoriamente!');
     }
 
     /**
@@ -61,12 +62,13 @@ class MarcaController extends Controller
     public function update(Request $request, Marca $marca)
     {
         $request->validate([
-            'nombre' => 'required',
+            'nombre' => 'required|unique:marcas,nombre,'.$marca->id
         ]);
-       
-        $marca->nombre = $request->nombre;    
+    
+        $marca->nombre = $request->nombre;
         $marca->save();
-        return redirect()->route('admin.marca.index')->with('info', 'Datos actualizados!');
+    
+        return redirect()->route('admin.marca.index')->with('info', '¡La MARCA se actualizó satisfactoriamente!');
     }
 
     /**

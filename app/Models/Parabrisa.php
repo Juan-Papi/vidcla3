@@ -26,5 +26,10 @@ class Parabrisa extends Model
      public function categoria(){
         return $this->BelongsTo(Categoria::class);
     }
+     //Relacion de uno a muchos
+     public function notasCompra()
+     {
+         return $this->hasMany(NotaCompra::class);
+     }
 
 }

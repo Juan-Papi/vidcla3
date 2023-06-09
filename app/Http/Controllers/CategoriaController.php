@@ -30,12 +30,12 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required'
+            'nombre' => 'required|unique:categorias'
         ]);
-        
-        $estado = new Categoria();
-        $estado->nombre = $request->nombre;
-        $estado->save();
+    
+        $categoria = new Categoria();
+        $categoria->nombre = $request->nombre;
+        $categoria->save();
         return Redirect()->route('admin.categoria.index')->with('info', 'La CATEGORIA se creo satisfactoriamente!');
     }
 
@@ -61,10 +61,10 @@ class CategoriaController extends Controller
     public function update(Request $request, Categoria $categoria)
     {
         $request->validate([
-            'nombre' => 'required',
+            'nombre' => 'required|unique:categorias,nombre,'.$categoria->id
         ]);
-       
-        $categoria->nombre = $request->nombre;    
+    
+        $categoria->nombre = $request->nombre;
         $categoria->save();
         return redirect()->route('admin.categoria.index')->with('info', 'Datos actualizados!');
     }

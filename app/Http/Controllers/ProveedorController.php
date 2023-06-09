@@ -28,20 +28,20 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'nombre' => 'required|string',
-            'email' => 'required|email|unique:proveedors,email',
-            'telefono' => 'required|string',
-            'ciudad' => 'required|string',
-            'pais' => 'required|string',
+        $request->validate([
+            'nombre' => 'required|unique:proveedors',
+            'email' => 'required|email|unique:proveedors',
+            'telefono' => 'required',
+            'ciudad' => 'required',
+            'pais' => 'required'
         ]);
     
         $proveedor = new Proveedor();
-        $proveedor->nombre = $validatedData['nombre'];
-        $proveedor->email = $validatedData['email'];
-        $proveedor->telefono = $validatedData['telefono'];
-        $proveedor->ciudad = $validatedData['ciudad'];
-        $proveedor->pais = $validatedData['pais'];
+        $proveedor->nombre = $request->nombre;
+        $proveedor->email = $request->email;
+        $proveedor->telefono = $request->telefono;
+        $proveedor->ciudad = $request->ciudad;
+        $proveedor->pais = $request->pais;
         $proveedor->save();
         return redirect()->route('admin.proveedor.index')->with('info', 'El nuevo PROVEEDOR se creo satisfactoriamente!');
     }
@@ -67,19 +67,19 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, Proveedor $proveedor)
     {
-        $validatedData = $request->validate([
-            'nombre' => 'required|string',
-            'email' => 'required|email|unique:proveedors,email,' . $proveedor->id,
-            'telefono' => 'required|string',
-            'ciudad' => 'required|string',
-            'pais' => 'required|string',
+        $request->validate([
+            'nombre' => 'required|unique:proveedors,nombre,'.$proveedor->id,
+            'email' => 'required|email|unique:proveedors,email,'.$proveedor->id,
+            'telefono' => 'required',
+            'ciudad' => 'required',
+            'pais' => 'required'
         ]);
     
-        $proveedor->nombre = $validatedData['nombre'];
-        $proveedor->email = $validatedData['email'];
-        $proveedor->telefono = $validatedData['telefono'];
-        $proveedor->ciudad = $validatedData['ciudad'];
-        $proveedor->pais = $validatedData['pais'];
+        $proveedor->nombre = $request->nombre;
+        $proveedor->email = $request->email;
+        $proveedor->telefono = $request->telefono;
+        $proveedor->ciudad = $request->ciudad;
+        $proveedor->pais = $request->pais;
         $proveedor->save();
 
         return redirect()->route('admin.proveedor.index')->with('info', 'Proveedor actualizado exitosamente.');

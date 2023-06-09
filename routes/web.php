@@ -10,6 +10,8 @@ use App\Http\Controllers\PosicionController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\ParabrisaController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\AlmacenController;
+use App\Http\Controllers\NotaCompraController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,3 +100,21 @@ Route::get('proveedor/{proveedor}', [ProveedorController::class, 'show'])->name(
 Route::get('proveedor/{proveedor}/edit', [ProveedorController::class, 'edit'])->name('admin.proveedor.edit');
 Route::put('proveedor/{proveedor}', [ProveedorController::class, 'update'])->name('admin.proveedor.update');
 Route::delete('proveedor/{proveedor}', [ProveedorController::class, 'destroy'])->name('admin.proveedor.destroy');
+
+//Para los ALMACENES -------------------------------------------------------------------------------------------
+Route::get('almacen', [AlmacenController::class, 'index'])->name('admin.almacen.index');
+Route::get('almacen/create', [AlmacenController::class, 'create'])->name('admin.almacen.create');
+Route::post('almacen', [AlmacenController::class, 'store'])->name('admin.almacen.store');
+Route::get('almacen/{almacen}', [AlmacenController::class, 'show'])->name('admin.almacen.show');
+Route::get('almacen/{almacen}/edit', [AlmacenController::class, 'edit'])->name('admin.almacen.edit');
+Route::put('almacen/{almacen}', [AlmacenController::class, 'update'])->name('admin.almacen.update');
+Route::delete('almacen/{almacen}', [AlmacenController::class, 'destroy'])->name('admin.almacen.destroy');
+
+//Para NOTA COMPRA -------------------------------------------------------------------------------------------
+Route::get('nota_compra', [NotaCompraController::class, 'index'])->name('admin.nota_compra.index');
+Route::get('nota_compra/create', [NotaCompraController::class, 'create'])->name('admin.nota_compra.create');
+Route::post('nota_compra', [NotaCompraController::class, 'store'])->name('admin.nota_compra.store');
+Route::get('nota_compra/{nota_compra}', [NotaCompraController::class, 'show'])->name('admin.nota_compra.show');
+Route::get('nota_compra/{nota_compra}/edit', [NotaCompraController::class, 'edit'])->name('admin.nota_compra.edit');
+Route::put('nota_compra/{nota_compra}', [NotaCompraController::class, 'update'])->name('admin.nota_compra.update');
+Route::delete('nota-compra/{nota_compra}', [NotaCompraController::class, 'destroy'])->name('admin.nota_compra.destroy');

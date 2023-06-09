@@ -449,14 +449,14 @@ return [
                 [
                     'text' => 'Nota de compra',
                     'icon'    => 'fas fa-fw fa-file-invoice',
-                    'url'  => '#',
-                    'active' => ['roles*'], //extra para los botones sidevar relacionados
+                    'route'  => 'admin.nota_compra.index',
+                    'active' => ['nota_compra*'], //extra para los botones sidevar relacionados
                 ],
                 [
                     'text' => 'Almacen',
                     'icon'    => 'fas fa-fw fa-cube',
-                    'route'  => 'admin.estado-pedido.index',
-                    'active' => ['estado-pedido*'], //extra para los botones sidevar relacionados
+                    'route'  => 'admin.almacen.index',
+                    'active' => ['almacen*'], //extra para los botones sidevar relacionados
                 ],
                 [
                     'text' => 'Proveedor',

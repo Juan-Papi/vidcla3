@@ -29,16 +29,12 @@ class EstadoPedidoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required'
+            'nombre' => 'required|unique:estado_pedidos'
         ]);
-
-      /* $estado = EstadoPedido::create([
-            'nombre' => $request->nombre
-        ]);*/
-        
-        $estado = new EstadoPedido();
-        $estado->nombre = $request->nombre;
-        $estado->save();
+    
+        $estadoPedido = new EstadoPedido();
+        $estadoPedido->nombre = $request->nombre;
+        $estadoPedido->save();
         return Redirect()->route('admin.estado-pedido.index')->with('info', 'El ESTADO se creo satisfactoriamente!');
     }
 
@@ -64,13 +60,13 @@ class EstadoPedidoController extends Controller
     public function update(Request $request, EstadoPedido $estado_pedido)
     {
         $request->validate([
-            'nombre' => 'required',
+            'nombre' => 'required|unique:estado_pedidos,nombre,'.$estado_pedido->id
         ]);
-       
-       
-        $estado_pedido->nombre = $request->nombre;    
+    
+        $estado_pedido->nombre = $request->nombre;
         $estado_pedido->save();
-        return redirect()->route('admin.estado-pedido.index')->with('info', 'Datos actualizados!');
+    
+        return redirect()->route('admin.estado-pedido.index')->with('info', '¡El estado del pedido se actualizó satisfactoriamente!');
     }
 
     /**
