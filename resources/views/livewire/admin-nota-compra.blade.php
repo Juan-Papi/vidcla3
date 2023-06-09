@@ -67,8 +67,8 @@
                                     <a class="btn btn-primary"
                                         href="{{ route('admin.nota_compra.edit', $nota_compra) }}">Edit</a>
                                 </td>
-                                <td width="10px">                                  
-                                    <button class="btn btn-danger" type="submit" wire:click="deleteCompra({{ $nota_compra->id }})">Del</button>
+                                <td width="10px">
+                                    <button class="btn btn-danger" type="button" onclick="confirmDelete({{ $nota_compra->id }})">Del</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -86,4 +86,12 @@
         @endif
 
     </div>
+
+    <script>
+        function confirmDelete(nota_compra_id) {
+            if (confirm('¿Estás seguro/a?')) {
+                @this.call('deleteCompra', nota_compra_id);
+            }
+        }
+    </script>
 </div>
