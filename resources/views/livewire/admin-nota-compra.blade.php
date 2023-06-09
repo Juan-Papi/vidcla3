@@ -67,14 +67,8 @@
                                     <a class="btn btn-primary"
                                         href="{{ route('admin.nota_compra.edit', $nota_compra) }}">Edit</a>
                                 </td>
-                                <td width="10px">
-                                    {{-- el form es necesario para cuando queremos eliminar por eso no pusimos la etiqueta <a href=""></a> --}}
-                                    <form action="{{ route('admin.nota_compra.destroy', $nota_compra) }}"
-                                        method="POST">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-danger" type="submit">Del</button>
-                                    </form>
+                                <td width="10px">                                  
+                                    <button class="btn btn-danger" type="submit" wire:click="deleteCompra({{ $nota_compra->id }})">Del</button>
                                 </td>
                             </tr>
                         @endforeach
