@@ -23,10 +23,9 @@ class NotaCompraController extends Controller
      */
     public function create()
     {
-        $almacenes = Almacen::all();
-        $proveedores = Proveedor::all();
-        $parabrisas = Parabrisa::all();
-        return view('nota-compra.create', compact('almacenes', 'proveedores', 'parabrisas'));
+        //ya no se le  manda los demas atributos de prov,alma y parabri
+        //porque se trabaja desde el componente livewire
+        return view('nota-compra.create');
     }
 
     /**
@@ -43,7 +42,7 @@ class NotaCompraController extends Controller
             'parabrisa_id' => 'required|exists:parabrisas,id',
             'proveedor_id' => 'required|exists:proveedors,id',
         ]);
-    
+
         $notaCompra = new NotaCompra();
         $notaCompra->cantidad = $request->cantidad;
         $notaCompra->fecha = $request->fecha;
@@ -68,10 +67,9 @@ class NotaCompraController extends Controller
      */
     public function edit(NotaCompra $nota_compra)
     {
-        $almacenes = Almacen::all();
-        $proveedores = Proveedor::all();
-        $parabrisas = Parabrisa::all();
-        return view('nota-compra.edit', compact('almacenes', 'proveedores', 'parabrisas', 'nota_compra'));
+        //ya no se le  manda los demas atributos de prov,alma y parabri
+        //porque se trabaja desde el componente livewire
+        return view('nota-compra.edit', ['notaCompra' => $nota_compra]);
     }
 
     /**
@@ -79,6 +77,7 @@ class NotaCompraController extends Controller
      */
     public function update(Request $request, NotaCompra $nota_compra)
     {
+        //ya no usado porque esta con livewire
         $request->validate([
             'cantidad' => 'required|integer',
             'fecha' => 'required|date',
@@ -87,7 +86,7 @@ class NotaCompraController extends Controller
             'parabrisa_id' => 'required|exists:parabrisas,id',
             'proveedor_id' => 'required|exists:proveedors,id',
         ]);
-    
+
         $nota_compra->cantidad = $request->cantidad;
         $nota_compra->fecha = $request->fecha;
         $nota_compra->total = $request->total;
