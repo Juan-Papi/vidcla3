@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->integer('cantidad');
             $table->date('fecha');
-            $table->decimal('total', 8, 2);
+            $table->decimal('precio_unitario', 8, 2);
+            $table->decimal('importe_total', 8, 2);
 
             $table->unsignedBigInteger('almacen_id');
             $table->unsignedBigInteger('parabrisa_id');

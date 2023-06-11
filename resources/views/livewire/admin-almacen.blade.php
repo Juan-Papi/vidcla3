@@ -20,13 +20,13 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                                                 
+
                             {{-- en descripcion ira vehiculo con marca --}}
                             <th>Nombre</th>
                             <th>Ubicacion</th>
                             <th>Capacidad</th>
-                                      
-                            <th colspan="2"></th>
+
+                            <th colspan="3"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,17 +35,21 @@
 
                                 <td>
                                     {{ $almacen->nombre }}
-                                </td>                            
+                                </td>
                                 <td>
                                     {{ $almacen->ubicacion }}
                                 </td>
                                 <td>
                                     {{ $almacen->capacidad }}
                                 </td>
-                            
-                                                       
+
+
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}
-                             
+                                <td width="10px">
+                                    <a class="btn btn-outline-info"
+                                        href="{{ route('admin.almacen.show', $almacen) }}">Ver</a>
+                                </td>
+
                                 <td width="10px">
                                     <a class="btn btn-primary"
                                         href="{{ route('admin.almacen.edit', $almacen) }}">Editar</a>

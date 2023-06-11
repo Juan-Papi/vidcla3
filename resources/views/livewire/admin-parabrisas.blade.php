@@ -23,7 +23,7 @@
                             <th>ID</th>                       
                             {{-- en descripcion ira vehiculo con marca --}}
                             <th>Descripcion</th>
-                            <th>Precio</th>
+                     
                             <th>Abajo</th>
                             <th>Arriba</th>
                             <th>Costado</th>
@@ -43,12 +43,9 @@
                                 <td>
                                     {{ $parabrisa->vehiculo->descripcion }} //
                                     Año: {{ $parabrisa->vehiculo->año}} //
-                                    Placa: {{ $parabrisa->vehiculo->matricula}} //
                                     Marca: {{ $parabrisa->vehiculo->marca->nombre}}
                                 </td>
-                                <td>
-                                    {{ $parabrisa->precio }}
-                                </td>
+                              
                                 <td>
                                     {{ $parabrisa->abajo }}
                                 </td>

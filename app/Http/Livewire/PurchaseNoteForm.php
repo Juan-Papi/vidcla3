@@ -12,25 +12,23 @@ class PurchaseNoteForm extends Component
 {
     public $cantidad;
     public $fecha;
+    public $precio_unitario;
     public $proveedor_id;
-    public $total;
+    public $importe_total;
     public $almacen_id;
     public $parabrisa_id;
 
     public function updated($propertyName)
     {
-        if ($propertyName == 'cantidad' || $propertyName == 'parabrisa_id') {
+        if ($propertyName == 'cantidad' || $propertyName == 'precio_unitario') {
             $this->calculateTotal();
         }
     }
 
     public function calculateTotal()
     {
-        if (!empty($this->cantidad) && !empty($this->parabrisa_id)) {
-            $parabrisa = Parabrisa::find($this->parabrisa_id);
-            if ($parabrisa) {
-                $this->total = $this->cantidad * $parabrisa->precio;
-            }
+        if (!empty($this->cantidad) && !empty($this->precio_unitario)) {
+            $this->importe_total = $this->cantidad * $this->precio_unitario;
         }
     }
 
@@ -39,7 +37,8 @@ class PurchaseNoteForm extends Component
         $this->validate([
             'cantidad' => 'required|integer|min:1',
             'fecha' => 'required|date',
-            'total' => 'required|numeric|min:0',
+            'precio_unitario' => 'required|numeric|min:0',
+            'importe_total' => 'required|numeric|min:0',
             'almacen_id' => 'required|exists:almacens,id',
             'parabrisa_id' => 'required|exists:parabrisas,id',
             'proveedor_id' => 'required|exists:proveedors,id',
@@ -48,7 +47,8 @@ class PurchaseNoteForm extends Component
         NotaCompra::create([
             'cantidad' => $this->cantidad,
             'fecha' => $this->fecha,
-            'total' => $this->total,
+            'precio_unitario' => $this->precio_unitario,
+            'importe_total' => $this->importe_total,
             'almacen_id' => $this->almacen_id,
             'parabrisa_id' => $this->parabrisa_id,
             'proveedor_id' => $this->proveedor_id,
@@ -56,25 +56,16 @@ class PurchaseNoteForm extends Component
 
         $almacen = Almacen::find($this->almacen_id);
 
-        // Buscar el Parabrisa en la relación muchos a muchos
         $parabrisa = $almacen->parabrisas()->where('parabrisas.id', $this->parabrisa_id)->first();
 
-        // Si el Parabrisa ya está asociado con el Almacén, actualiza el stock
         if ($parabrisa) {
             $stockActual = $parabrisa->pivot->stock;
             $nuevoStock = $stockActual + $this->cantidad;
             $almacen->parabrisas()->updateExistingPivot($parabrisa->id, ['stock' => $nuevoStock]);
         } else {
-            // Si no, asocia el Parabrisa con el Almacén y establece el stock inicial
             $almacen->parabrisas()->attach($this->parabrisa_id, ['stock' => $this->cantidad]);
         }
-        
 
-        // Restablecer las propiedades del formulario
-        /*$this->reset(['cantidad', 'fecha', 'total', 'almacen_id', 'parabrisa_id', 'proveedor_id']);*/
-
-        // Emitir un evento de browser para notificar al usuario
-        /*   $this->emit('alert', ['type' => 'success', 'message' => 'Nota de compra creada con éxito!']);*/
         return redirect()->route('admin.nota_compra.index')->with('info', 'Nota de compra creada exitosamente');
     }
 

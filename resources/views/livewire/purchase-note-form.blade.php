@@ -14,6 +14,16 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="precio_unitario">Precio Unitario: </label>
+                        <input type="number" class="form-control @error('precio_unitario') is-invalid @enderror" placeholder="Escriba el precio unitario..." wire:model="precio_unitario">
+                        @error('precio_unitario')
+                            <span class="invalid-feedback">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label for="fecha">Fecha: </label>
                         <input type="date" class="form-control @error('fecha') is-invalid @enderror" placeholder="Seleccione la fecha..." wire:model="fecha">
                         @error('fecha')
@@ -41,9 +51,9 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="total">Total: </label>
-                        <input type="number" class="form-control @error('total') is-invalid @enderror" placeholder="Total calculado..." wire:model="total" readonly>
-                        @error('total')
+                        <label for="importe_total">Importe Total: </label>
+                        <input type="number" class="form-control @error('importe_total') is-invalid @enderror" placeholder="Total calculado..." wire:model="importe_total" readonly>
+                        @error('importe_total')
                             <span class="invalid-feedback">
                                 <strong>{{ $message }}</strong>
                             </span>

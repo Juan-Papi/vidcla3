@@ -24,6 +24,7 @@
                             <th>ID_P</th>
                             <th>Parabrisa</th>
                             <th>Cantidad</th>
+                            <th>Precio Unitario</th>
                             <th>Total</th>                         
                             <th>Almacen</th>
                             <th>Proveedor</th>
@@ -46,13 +47,16 @@
                                     Ar:{{ $nota_compra->parabrisa->arriba }}
                                     Co:{{ $nota_compra->parabrisa->costado }}
                                     Me:{{ $nota_compra->parabrisa->medio }}
-                                    Pre: BS. {{ $nota_compra->parabrisa->precio }}
+                                   
                                 </td>
                                 <td>
                                     {{ $nota_compra->cantidad }}
                                 </td>
                                 <td>
-                                    {{ $nota_compra->total}}
+                                   BS. {{ $nota_compra->precio_unitario }}
+                                </td>
+                                <td>
+                                   BS. {{ $nota_compra->importe_total }}
                                 </td>
                                 <td>
                                     {{ $nota_compra->almacen->nombre }}

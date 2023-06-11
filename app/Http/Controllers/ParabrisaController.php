@@ -36,7 +36,7 @@ class ParabrisaController extends Controller
     {
         // Validar los datos del formulario
         $validatedData = $request->validate([
-            'precio' => 'required|numeric',
+            
             'abajo' => 'required|string',
             'arriba' => 'required|string',
             'costado' => 'required|string',
@@ -49,7 +49,7 @@ class ParabrisaController extends Controller
 
         // Crear una nueva instancia de Parabrisa y asignar los valores
         $parabrisa = new Parabrisa();
-        $parabrisa->precio = $validatedData['precio'];
+        
         $parabrisa->abajo = $validatedData['abajo'];
         $parabrisa->arriba = $validatedData['arriba'];
         $parabrisa->costado = $validatedData['costado'];
@@ -59,7 +59,7 @@ class ParabrisaController extends Controller
         $parabrisa->categoria_id = $validatedData['categoria_id'];
         $parabrisa->vehiculo_id = $validatedData['vehiculo_id'];
 
-        $parabrisa->descripcion = "precio: Bs." . $validatedData['precio'] . ", abajo: " . $validatedData['abajo'] . ", arriba: " . $validatedData['arriba'] . ", costado: " . $validatedData['costado'] . ", medio: " . $validatedData['medio'];
+        $parabrisa->descripcion = "abajo: " . $validatedData['abajo'] . ", arriba: " . $validatedData['arriba'] . ", costado: " . $validatedData['costado'] . ", medio: " . $validatedData['medio'];
 
 
         // Guardar el nuevo parabrisa en la base de datos
@@ -96,7 +96,7 @@ class ParabrisaController extends Controller
     {
         // Validar los datos del formulario
         $validatedData = $request->validate([
-            'precio' => 'required|numeric',
+            
             'abajo' => 'required|string',
             'arriba' => 'required|string',
             'costado' => 'required|string',
@@ -107,7 +107,7 @@ class ParabrisaController extends Controller
             'vehiculo_id' => 'required|exists:vehiculos,id',
         ]);
 
-        $parabrisa->precio = $validatedData['precio'];
+        
         $parabrisa->abajo = $validatedData['abajo'];
         $parabrisa->arriba = $validatedData['arriba'];
         $parabrisa->costado = $validatedData['costado'];
@@ -117,7 +117,7 @@ class ParabrisaController extends Controller
         $parabrisa->categoria_id = $validatedData['categoria_id'];
         $parabrisa->vehiculo_id = $validatedData['vehiculo_id'];
 
-        $parabrisa->descripcion = "Precio: Bs." . $validatedData['precio'] . ", abajo: " . $validatedData['abajo'] . ", arriba: " . $validatedData['arriba'] . ", costado: " . $validatedData['costado'] . ", medio: " . $validatedData['medio'];
+        $parabrisa->descripcion = "abajo: " . $validatedData['abajo'] . ", arriba: " . $validatedData['arriba'] . ", costado: " . $validatedData['costado'] . ", medio: " . $validatedData['medio'];
 
         // Actualizando informacion
         $parabrisa->save();

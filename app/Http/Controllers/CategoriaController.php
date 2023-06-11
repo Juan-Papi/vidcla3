@@ -36,6 +36,8 @@ class CategoriaController extends Controller
         $categoria = new Categoria();
         $categoria->nombre = $request->nombre;
         $categoria->save();
+
+        
         return Redirect()->route('admin.categoria.index')->with('info', 'La CATEGORIA se creo satisfactoriamente!');
     }
 
@@ -66,6 +68,7 @@ class CategoriaController extends Controller
     
         $categoria->nombre = $request->nombre;
         $categoria->save();
+        
         return redirect()->route('admin.categoria.index')->with('info', 'Datos actualizados!');
     }
 

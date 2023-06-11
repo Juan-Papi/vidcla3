@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('parabrisas', function (Blueprint $table) {
             $table->id();
-            $table->decimal('precio', 8, 2);
+            
             $table->string('abajo');
             $table->string('arriba');
             $table->string('costado');

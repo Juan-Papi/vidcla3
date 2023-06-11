@@ -31,7 +31,7 @@ class VehiculoController extends Controller
     public function store(Request $request)
     {
         $messages = [
-            'matricula.required' => 'El campo Matrícula es obligatorio.',
+           
             'matricula.unique' => 'La matrícula ya está en uso.',
             'descripcion.required' => 'El campo Descripción es obligatorio.',
             'año.required' => 'El campo Año es obligatorio.',
@@ -39,7 +39,7 @@ class VehiculoController extends Controller
         ];
         
         $request->validate([
-            'matricula' => 'required|unique:vehiculos',
+            
             'descripcion' => 'required',
             'año' => 'required',
             'marca_id' => 'required',
@@ -47,7 +47,6 @@ class VehiculoController extends Controller
         
       
         $vehiculo = Vehiculo::create([
-            'matricula' => $request->matricula,
             'año' => $request->año,
             'descripcion' => $request->descripcion,
             'marca_id' => $request->marca_id,
@@ -79,7 +78,7 @@ class VehiculoController extends Controller
     public function update(Request $request, Vehiculo $vehiculo)
     {
         $messages = [
-            'matricula.required' => 'El campo Matrícula es obligatorio.',
+            
             'matricula.unique' => 'La matrícula ya está en uso.',
             'descripcion.required' => 'El campo Descripción es obligatorio.',
             'año.required' => 'El campo Año es obligatorio.',
@@ -87,13 +86,12 @@ class VehiculoController extends Controller
         ];
         
         $request->validate([
-            'matricula' => 'required|unique:vehiculos,matricula,'.$vehiculo->id,
             'descripcion' => 'required',
             'año' => 'required',
             'marca_id' => 'required',
         ], $messages);
 
-        $vehiculo->matricula = $request->matricula;   
+  
         $vehiculo->descripcion = $request->descripcion; 
         $vehiculo->año = $request->año;   
         $vehiculo->marca_id = $request->marca_id;      

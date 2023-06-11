@@ -12,9 +12,10 @@ class EditPurchaseNoteForm extends Component
 {
     public $notaCompraId;
     public $cantidad;
+    public $precio_unitario;
+    public $importe_total;
     public $fecha;
     public $proveedor_id;
-    public $total;
     public $almacen_id;
     public $parabrisa_id;
 
@@ -22,35 +23,40 @@ class EditPurchaseNoteForm extends Component
     {
         $this->notaCompraId = $notaCompra->id;
         $this->cantidad = $notaCompra->cantidad;
+        $this->precio_unitario = $notaCompra->precio_unitario;
+        $this->importe_total = $notaCompra->importe_total;
         $this->fecha = $notaCompra->fecha;
         $this->proveedor_id = $notaCompra->proveedor_id;
-        $this->total = $notaCompra->total;
         $this->almacen_id = $notaCompra->almacen_id;
         $this->parabrisa_id = $notaCompra->parabrisa_id;
     }
 
     public function updated($propertyName)
     {
-        if ($propertyName == 'cantidad' || $propertyName == 'parabrisa_id') {
+        $this->validateOnly($propertyName, [
+            'cantidad' => 'required|integer|min:1',
+            'precio_unitario' => 'required|numeric|min:0',
+        ]);
+
+        if ($propertyName == 'cantidad' || $propertyName == 'precio_unitario') {
             $this->calculateTotal();
         }
     }
 
     public function calculateTotal()
     {
-        if (!empty($this->cantidad) && !empty($this->parabrisa_id)) {
-            $parabrisa = Parabrisa::find($this->parabrisa_id);
-            if ($parabrisa) {
-                $this->total = $this->cantidad * $parabrisa->precio;
-            }
+        if (!empty($this->cantidad) && !empty($this->precio_unitario)) {
+            $this->importe_total = $this->cantidad * $this->precio_unitario;
         }
     }
+
     public function save()
     {
         $this->validate([
             'cantidad' => 'required|integer|min:1',
+            'precio_unitario' => 'required|numeric|min:0',
+            'importe_total' => 'required|numeric|min:0',
             'fecha' => 'required|date',
-            'total' => 'required|numeric|min:0',
             'almacen_id' => 'required|exists:almacens,id',
             'parabrisa_id' => 'required|exists:parabrisas,id',
             'proveedor_id' => 'required|exists:proveedors,id',
@@ -64,8 +70,9 @@ class EditPurchaseNoteForm extends Component
 
         $notaCompra->update([
             'cantidad' => $this->cantidad,
+            'precio_unitario' => $this->precio_unitario,
+            'importe_total' => $this->importe_total,
             'fecha' => $this->fecha,
-            'total' => $this->total,
             'almacen_id' => $this->almacen_id,
             'parabrisa_id' => $this->parabrisa_id,
             'proveedor_id' => $this->proveedor_id,
@@ -89,8 +96,15 @@ class EditPurchaseNoteForm extends Component
 
         // Si el Parabrisa ya está asociado con el Almacén, actualiza el stock
         if ($parabrisa) {
+            $diferenciaCantidad = $this->cantidad - $oldCantidad;
             $stockActual = $parabrisa->pivot->stock;
-            $nuevoStock = $stockActual + $this->cantidad; // Añade la nueva cantidad al stock del nuevo almacén y parabrisa
+    
+            // Aquí calculamos el nuevo stock basándonos en la diferencia
+            $nuevoStock = $stockActual + $diferenciaCantidad;
+            if ($nuevoStock < 0) {
+                $nuevoStock = 0;  // El stock no puede ser negativo
+            }
+    
             $almacen->parabrisas()->updateExistingPivot($parabrisa->id, ['stock' => $nuevoStock]);
         } else {
             // Si no, asocia el Parabrisa con el Almacén y establece el stock inicial
@@ -99,8 +113,6 @@ class EditPurchaseNoteForm extends Component
 
         return redirect()->route('admin.nota_compra.index')->with('info', 'Nota de compra actualizada exitosamente');
     }
-
-
 
     public function render()
     {

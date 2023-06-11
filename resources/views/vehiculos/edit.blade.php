@@ -11,19 +11,7 @@
         <div class="card-body">
             {!! Form::model($vehiculo, ['route' => ['admin.vehiculo.update', $vehiculo], 'method' => 'put']) !!}
 
-            <div class="form-group">
-                {!! Form::label('matricula', 'Matrícula: ') !!}
-                {!! Form::text('matricula', null, [
-                    'class' => 'form-control' . ($errors->has('matricula') ? ' is-invalid' : ''),
-                    'placeholder' => 'Escriba la matrícula...',
-                ]) !!}
-
-                @error('matricula')
-                    <span class="invalid-feedback">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
+            
 
             <div class="form-group">
                 {!! Form::label('año', 'Año: ') !!}

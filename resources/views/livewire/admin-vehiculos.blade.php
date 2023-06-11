@@ -20,7 +20,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Placa</th>
+                            
                             <th>Descripcion</th>
                             <th>Año</th>
                             <th>Marca</th>
@@ -31,9 +31,7 @@
                         @foreach ($vehiculos as $vehiculo)
                             <tr>
 
-                                <td>
-                                    {{ $vehiculo->matricula }}
-                                </td>
+                               
                                 <td>
                                     {{ $vehiculo->descripcion }}
                                 </td>

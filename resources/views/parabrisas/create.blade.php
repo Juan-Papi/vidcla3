@@ -14,12 +14,12 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    {!! Form::label('precio', 'Precio: ') !!}
-                    {!! Form::number('precio', null, [
-                        'class' => 'form-control' . ($errors->has('precio') ? ' is-invalid' : ''),
-                        'placeholder' => 'Escriba el precio...',
+                    {!! Form::label('abajo', 'Abajo: ') !!}
+                    {!! Form::text('abajo', null, [
+                        'class' => 'form-control' . ($errors->has('abajo') ? ' is-invalid' : ''),
+                        'placeholder' => 'Escriba la medida de abajo...',
                     ]) !!}
-                    @error('precio')
+                    @error('abajo')
                         <span class="invalid-feedback">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -27,12 +27,12 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('abajo', 'Abajo: ') !!}
-                    {!! Form::text('abajo', null, [
-                        'class' => 'form-control' . ($errors->has('abajo') ? ' is-invalid' : ''),
-                        'placeholder' => 'Escriba la medida de abajo...',
+                    {!! Form::label('medio', 'Medio: ') !!}
+                    {!! Form::text('medio', null, [
+                        'class' => 'form-control' . ($errors->has('medio') ? ' is-invalid' : ''),
+                        'placeholder' => 'Escriba la medida del medio...',
                     ]) !!}
-                    @error('abajo')
+                    @error('medio')
                         <span class="invalid-feedback">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -72,19 +72,6 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    {!! Form::label('medio', 'Medio: ') !!}
-                    {!! Form::text('medio', null, [
-                        'class' => 'form-control' . ($errors->has('medio') ? ' is-invalid' : ''),
-                        'placeholder' => 'Escriba la medida del medio...',
-                    ]) !!}
-                    @error('medio')
-                        <span class="invalid-feedback">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
                     {!! Form::label('posicion_id', 'Posición: ') !!}
                     {!! Form::select('posicion_id', $posiciones->pluck('nombre', 'id'), null, [
                         'class' => 'form-control' . ($errors->has('posicion_id') ? ' is-invalid' : ''),
@@ -96,9 +83,7 @@
                         </span>
                     @enderror
                 </div>
-            </div>
 
-            <div class="col-md-6">
                 <div class="form-group">
                     {!! Form::label('categoria_id', 'Categoría: ') !!}
                     {!! Form::select('categoria_id', $categorias->pluck('nombre', 'id'), null, [
@@ -111,10 +96,12 @@
                         </span>
                     @enderror
                 </div>
+            </div>
 
+            <div class="col-md-6">
                 <div class="form-group">
                     {!! Form::label('vehiculo_id', 'Vehículo: ') !!}
-                    {!! Form::select('vehiculo_id', $vehiculos->pluck('matricula', 'id'), null, [
+                    {!! Form::select('vehiculo_id', $vehiculos->pluck('descripcion', 'id'), null, [
                         'class' => 'form-control' . ($errors->has('vehiculo_id') ? ' is-invalid' : ''),
                         'placeholder' => 'Seleccione un vehículo...',
                     ]) !!}
@@ -150,6 +137,7 @@
         {!! Form::close() !!}
     </div>
 </div>
+
 @stop
 
 @section('css')
