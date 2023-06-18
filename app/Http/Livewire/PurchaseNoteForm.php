@@ -57,7 +57,7 @@ class PurchaseNoteForm extends Component
         $almacen = Almacen::find($this->almacen_id);
 
         $parabrisa = $almacen->parabrisas()->where('parabrisas.id', $this->parabrisa_id)->first();
-
+         //el parabrisa con el almacen esta relacionado
         if ($parabrisa) {
             $stockActual = $parabrisa->pivot->stock;
             $nuevoStock = $stockActual + $this->cantidad;

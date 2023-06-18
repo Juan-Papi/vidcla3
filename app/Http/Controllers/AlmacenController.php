@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Almacen;
 use Illuminate\Http\Request;
+use PDF;
 
 class AlmacenController extends Controller
 {
@@ -14,6 +15,24 @@ class AlmacenController extends Controller
     {
         return view('almacen.index');
     }
+    public function generarPDF($id)
+    {
+        $almacen = Almacen::find($id);
+        $parabrisas = $almacen->parabrisas;
+
+        $totalOcupado = 0;
+        foreach ($parabrisas as $parabrisa) {
+            $totalOcupado += $parabrisa->pivot->stock;
+        }
+        //interpretacion del loadview
+        /*Con referencia a view, la vista pdf que esta dentro de la carpeta almacen*/
+        $pdf = PDF::loadView('almacen.pdf', compact('almacen', 'parabrisas', 'totalOcupado'));
+
+      /*  $filename = 'almacen_' . $almacen->nombre . '_' . $almacen->id . '.pdf';*/
+        $filename = 'almacen_' . $almacen->id . '.pdf';
+        return $pdf->download($filename);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -33,7 +52,7 @@ class AlmacenController extends Controller
             'ubicacion' => 'required',
             'capacidad' => 'required|integer',
         ]);
-    
+
         // Crear el almacén
         $almacen = new Almacen;
         $almacen->nombre = $request->nombre;
@@ -41,7 +60,6 @@ class AlmacenController extends Controller
         $almacen->capacidad = $request->capacidad;
         $almacen->save();
         return Redirect()->route('admin.almacen.index')->with('info', 'El ALMACEN se creo satisfactoriamente!');
-    
     }
 
     /**
@@ -70,7 +88,7 @@ class AlmacenController extends Controller
             'ubicacion' => 'required',
             'capacidad' => 'required|integer',
         ]);
-    
+
         // Actualizar el almacén
         $almacen->nombre = $request->input('nombre');
         $almacen->ubicacion = $request->input('ubicacion');

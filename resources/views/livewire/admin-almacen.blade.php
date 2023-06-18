@@ -47,7 +47,7 @@
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}
                                 <td width="10px">
                                     <a class="btn btn-outline-info"
-                                        href="{{ route('admin.almacen.show', $almacen) }}">Ver</a>
+                                        href="{{ route('almacen.pdf', $almacen->id) }}">PDF</a>
                                 </td>
 
                                 <td width="10px">

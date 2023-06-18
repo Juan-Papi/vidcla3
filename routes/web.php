@@ -109,6 +109,7 @@ Route::get('almacen/{almacen}', [AlmacenController::class, 'show'])->name('admin
 Route::get('almacen/{almacen}/edit', [AlmacenController::class, 'edit'])->name('admin.almacen.edit');
 Route::put('almacen/{almacen}', [AlmacenController::class, 'update'])->name('admin.almacen.update');
 Route::delete('almacen/{almacen}', [AlmacenController::class, 'destroy'])->name('admin.almacen.destroy');
+Route::get('almacen/{id}/pdf',  [AlmacenController::class, 'generarPDF'])->name('almacen.pdf');
 
 //Para NOTA COMPRA -------------------------------------------------------------------------------------------
 Route::get('nota_compra', [NotaCompraController::class, 'index'])->name('admin.nota_compra.index');
