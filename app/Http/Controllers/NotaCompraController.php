@@ -7,6 +7,7 @@ use App\Models\NotaCompra;
 use App\Models\Parabrisa;
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
+use PDF;
 
 class NotaCompraController extends Controller
 {
@@ -17,7 +18,7 @@ class NotaCompraController extends Controller
     {
         return view('nota-compra.index');
     }
-
+   
     /**
      * Show the form for creating a new resource.
      */

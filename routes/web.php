@@ -119,3 +119,5 @@ Route::get('nota_compra/{nota_compra}', [NotaCompraController::class, 'show'])->
 Route::get('nota_compra/{nota_compra}/edit', [NotaCompraController::class, 'edit'])->name('admin.nota_compra.edit');
 Route::put('nota_compra/{nota_compra}', [NotaCompraController::class, 'update'])->name('admin.nota_compra.update');
 Route::delete('nota-compra/{nota_compra}', [NotaCompraController::class, 'destroy'])->name('admin.nota_compra.destroy');
+//Route::get('nota_compra/{nota_compras}/pdf', [NotaCompraController::class, 'generarPDF'])->name('admin.nota_compra.pdf');
+//Route::get('nota_compra/pdf', [NotaCompraController::class, 'generarPDF'])->name('admin.nota_compra.pdf');

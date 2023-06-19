@@ -5,6 +5,70 @@
             {{ session('info') }}
         </div>
     @endif
+
+{{-- Filtros --}}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Filtros</h3>
+    </div>
+
+    <div class="card-body">
+        <form wire:submit.prevent="aplicarFiltros">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Proveedor</label>
+                        <select wire:model="filtroProveedor" class="form-control">
+                            <option value="">Todos</option>
+                            @foreach ($proveedores as $proveedor)
+                                <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Almacén</label>
+                        <select wire:model="filtroAlmacen" class="form-control">
+                            <option value="">Todos</option>
+                            @foreach ($almacenes as $almacen)
+                                <option value="{{ $almacen->id }}">{{ $almacen->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Desde fecha</label>
+                        <input wire:model="filtroDesdeFecha" type="date" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Hasta fecha</label>
+                        <input wire:model="filtroHastaFecha" type="date" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{-- <button type="submit" class="btn btn-primary">Aplicar filtros</button> --}}
+                    <button type="button" wire:click="resetFiltros" class="btn btn-secondary">Reiniciar filtros</button>
+                    <button type="button" wire:click="descargarPDF" class="btn btn-danger">Generar reporte</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- Aquí va el código restante para la tabla de compras --}} 
+
+
+    {{-- Tablas --}}
     <div class="card">
 
         {{-- <div class="card-header">

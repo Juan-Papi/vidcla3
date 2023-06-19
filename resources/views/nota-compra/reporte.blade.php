@@ -1,4 +1,37 @@
-<div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reporte de Compras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
     <h2>Reporte de Compras</h2>
     <table>
         <thead>
@@ -33,4 +66,5 @@
             @endforeach
         </tbody>
     </table>
-</div>
+</body>
+</html>
