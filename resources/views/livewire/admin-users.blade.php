@@ -2,9 +2,19 @@
     <div class="card">
 
         <div class="card-header">
-            <input wire:keydown="limpiar_page" wire:model="buscar" class="form-control w-100" placeholder="Escriba un nombre ..." type="text">
+            <input wire:keydown="limpiar_page" wire:model="buscar" class="form-control w-100"
+                placeholder="Escriba un nombre ..." type="text">
         </div>
-        @if ($users->count())   
+        @if (session('info'))
+            <div class="alert alert-primary" role="alert">
+                <strong>¡Éxito!</strong>
+                {{ session('info') }}
+            </div>
+        @endif
+        <div class="card-header">
+            <a class="btn btn-secondary" href="{{ route('admin.users.create') }}">NUEVO USUARIO</a>
+        </div>
+        @if ($users->count())
             <div class="card-body">
                 <table class="table table-striped">
                     <thead>
@@ -13,6 +23,8 @@
                             <th>Nombre</th>
                             <th>Email</th>
                             <th></th>
+                            {{-- para el editar y eliminar --}}
+                            <th colspan="2"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,7 +42,19 @@
                                 </td>
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}
                                 <td width="10px">
-                                    <a class="btn btn-primary" href="{{ route('admin.users.edit', $user) }}">Editar/Ver</a>
+                                    <a class="btn btn-success" href="{{ route('admin.users.rol', $user) }}"><i class="fas fa-user-tag"></i></a>
+                                </td>
+                                <td width="10px">
+                                    <a class="btn btn-primary" href="{{ route('admin.users.edit', $user) }}"><i
+                                            class="fas fa-user-edit"></i></a>
+                                </td>
+                                <td width="10px">
+                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-danger" type="submit"><i
+                                                class="fas fa-user-minus"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -42,9 +66,9 @@
                 {{ $users->links() }}
             </div>
         @else
-          <div class="card-body">
-             <strong>No hay registros ...</strong>
-          </div>
+            <div class="card-body">
+                <strong>No hay registros ...</strong>
+            </div>
         @endif
 
     </div>

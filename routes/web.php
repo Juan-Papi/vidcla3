@@ -43,7 +43,16 @@ Route::resource('roles',RoleController::class)->names('admin.roles');
 
 //Para los usuarios
 //only en este caso solo creara las rutas index, edit, update
-Route::resource('users',UserController::class)->only(['index', 'edit', 'update'])->names('admin.users');
+//Route::resource('users',UserController::class)->only(['index', 'edit', 'update'])->names('admin.users');
+Route::get('users', [UserController::class, 'index'])->name('admin.users.index');
+Route::get('users/create', [UserController::class, 'create'])->name('admin.users.create');
+Route::post('users', [UserController::class, 'store'])->name('admin.users.store');
+Route::get('users/{user}', [UserController::class, 'show'])->name('admin.users.show');
+Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+Route::get('users/{user}/rol', [UserController::class, 'rol'])->name('admin.users.rol');
+Route::put('rol/{user}', [UserController::class, 'updateRol'])->name('admin.users.updateRol');
+Route::put('users/{user}', [UserController::class, 'update'])->name('admin.users.update');
+Route::delete('users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 
 //Para los estados del pedido
 Route::resource('estado-pedido',EstadoPedidoController::class)->names('admin.estado-pedido');

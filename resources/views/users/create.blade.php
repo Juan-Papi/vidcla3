@@ -3,13 +3,13 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Actualizar informacion</h1>
+    <h1>Nuevo USUARIO</h1>
 @stop
 
 @section('content')
     <div class="card">
         <div class="card-body">
-            {!! Form::model($user, ['route' => ['admin.users.update', $user], 'method' => 'put']) !!}
+            {!! Form::open(['route' => 'admin.users.store']) !!}
 
             <div class="form-group">
                 {!! Form::label('name', 'Nombre: ') !!}
@@ -43,7 +43,7 @@
                 {!! Form::label('password', 'Contraseña: ') !!}
                 {!! Form::password('password', [
                     'class' => 'form-control' . ($errors->has('password') ? ' is-invalid' : ''),
-                    'placeholder' => 'Escriba una nueva contraseña si desea cambiarla',
+                    'placeholder' => 'Escriba una contraseña segura',
                 ]) !!}
 
                 @error('password')
@@ -53,7 +53,7 @@
                 @enderror
             </div>
 
-            {!! Form::submit('Actualizar USUARIO', ['class' => 'btn btn-primary mt-2']) !!}
+            {!! Form::submit('Crear USUARIO', ['class' => 'btn btn-primary mt-2']) !!}
 
             {!! Form::close() !!}
         </div>
