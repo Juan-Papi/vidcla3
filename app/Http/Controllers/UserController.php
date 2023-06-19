@@ -52,7 +52,8 @@ class UserController extends Controller
     public function updateRol(Request $request, User $user)
     {
         $user->roles()->sync($request->roles);
-        return redirect()->route('admin.users.rol', $user);
+        //return redirect()->route('admin.users.rol', $user);
+        return redirect()->route('admin.users.index', $user)->with('info', 'ASIGNACION DE ROLES.');;
     }
     public function update(Request $request, User $user)
     {

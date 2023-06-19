@@ -22,6 +22,7 @@
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Email</th>
+                            <th>Roles</th>
                             <th></th>
                             {{-- para el editar y eliminar --}}
                             <th colspan="2"></th>
@@ -40,9 +41,21 @@
                                 <td>
                                     {{ $user->email }}
                                 </td>
+                                <td>
+                                    {{-- aqui va los roles que tiene cada usuario considerando que estamos trabajando con laravel permissions y en caso de que no tenga rol debe decir ninguno --}}
+                                    @if ($user->roles()->count() > 0)
+                                        @foreach ($user->roles as $role)
+                                            <span class="badge badge-primary">{{ $role->name }}</span>
+                                        @endforeach
+                                    @else
+                                        Ninguno
+                                    @endif
+                                </td>
+
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}
                                 <td width="10px">
-                                    <a class="btn btn-success" href="{{ route('admin.users.rol', $user) }}"><i class="fas fa-user-tag"></i></a>
+                                    <a class="btn btn-success" href="{{ route('admin.users.rol', $user) }}"><i
+                                            class="fas fa-user-tag"></i></a>
                                 </td>
                                 <td width="10px">
                                     <a class="btn btn-primary" href="{{ route('admin.users.edit', $user) }}"><i
