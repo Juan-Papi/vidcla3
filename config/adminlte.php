@@ -409,13 +409,13 @@ return [
                     'active' => ['users*'], //extra para los botones sidevar relacionados
                 ],*/
                 [
-                    'text' => 'Pedidos',
+                    'text' => 'Nota de venta',
                     'icon'    => 'fas fa-fw fa-shipping-fast',
                     'url'  => '#',
                     'active' => ['roles*'], //extra para los botones sidevar relacionados
                 ],
                 [
-                    'text' => 'Estado del pedido',
+                    'text' => 'Plan de pago',
                     'icon'    => 'fas fa-fw fa-clock',
                     'route'  => 'admin.estado-pedido.index',
                     'active' => ['estado-pedido*'], //extra para los botones sidevar relacionados

@@ -78,7 +78,8 @@ class AdminNotaCompra extends Component
         $nota_compras = $nota_compras->get();
 
 
-        $pdf = PDF::loadView('nota-compra.reporte',  compact('nota_compras'));
+        $pdf = PDF::loadView('nota-compra.pdf',  compact('nota_compras'));
+       
         //dd($nota_compras);
         return $pdf->download('reporte.pdf');
         // return redirect()->route('admin.nota_compra.pdf', ['nota_compras' => $nota_compras]);
