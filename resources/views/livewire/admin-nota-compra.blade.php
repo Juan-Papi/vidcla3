@@ -58,7 +58,7 @@
                 <div class="col-md-12">
                     {{-- <button type="submit" class="btn btn-primary">Aplicar filtros</button> --}}
                     <button type="button" wire:click="resetFiltros" class="btn btn-secondary">Reiniciar filtros</button>
-                    <button type="button" wire:click="descargarPDF" class="btn btn-danger">Generar reporte</button>
+                    {{-- <button type="button" wire:click="descargarPDF" class="btn btn-danger">Generar reporte</button> --}}
                 </div>
             </div>
         </form>
