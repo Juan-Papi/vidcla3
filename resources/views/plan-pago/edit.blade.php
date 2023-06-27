@@ -3,27 +3,13 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Nueva CUOTA</h1>
+    <h1>Editar plan de pago</h1>
 @stop
 
 @section('content')
     <div class="card">
         <div class="card-body">
-            {!! Form::open(['route' => 'cuota.store']) !!}
-
-            <div class="form-group">
-                {!! Form::label('descripcion', 'Descripción: ') !!}
-                {!! Form::textarea('descripcion', null, [
-                    'class' => 'form-control' . ($errors->has('descripcion') ? ' is-invalid' : ''),
-                    'placeholder' => 'Escriba la descripción...',
-                ]) !!}
-
-                @error('descripcion')
-                    <span class="invalid-feedback">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
+            {!! Form::model($pago, ['route' => ['plan-pago.update', $pago], 'method' => 'put']) !!}
 
             <div class="form-group">
                 {!! Form::label('fecha', 'Fecha: ') !!}
@@ -40,13 +26,13 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('monto', 'Monto: ') !!}
-                {!! Form::number('monto', null, [
-                    'class' => 'form-control' . ($errors->has('monto') ? ' is-invalid' : ''),
-                    'placeholder' => 'Ingrese el monto...',
+                {!! Form::label('plazo', 'Plazo: ') !!}
+                {!! Form::text('plazo', null, [
+                    'class' => 'form-control' . ($errors->has('plazo') ? ' is-invalid' : ''),
+                    'placeholder' => 'Ingrese el plazo...',
                 ]) !!}
 
-                @error('monto')
+                @error('plazo')
                     <span class="invalid-feedback">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -54,25 +40,24 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('pago_id', 'Plan de Pago: ') !!}
-                {!! Form::select('pago_id', $pagos->pluck('id', 'id'), null, [
-                    'class' => 'form-control' . ($errors->has('pago_id') ? ' is-invalid' : ''),
-                    'placeholder' => 'Seleccione un plan de pago...',
+                {!! Form::label('monto_total', 'Monto Total: ') !!}
+                {!! Form::number('monto_total', null, [
+                    'class' => 'form-control' . ($errors->has('monto_total') ? ' is-invalid' : ''),
+                    'placeholder' => 'Ingrese el monto total...',
                 ]) !!}
 
-                @error('pago_id')
+                @error('monto_total')
                     <span class="invalid-feedback">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
             </div>
 
-            {!! Form::submit('Crear Cuota', ['class' => 'btn btn-primary mt-2']) !!}
+            {!! Form::submit('Actualizar Plan de Pago', ['class' => 'btn btn-primary mt-2']) !!}
 
             {!! Form::close() !!}
         </div>
     </div>
-
 @stop
 
 @section('css')

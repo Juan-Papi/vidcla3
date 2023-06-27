@@ -8,42 +8,43 @@
     <div class="card">
 
         <div class="card-header">
-            <a class="btn btn-secondary" href="{{ route('cuota.create') }}">NUEVA CUOTA</a>
+            <a class="btn btn-secondary" href="{{ route('plan-pago.create') }}">NUEVO PLAN DE PAGO</a>
         </div>
 
-        @if ($cuotas->count())
+        @if ($pagos->count())
             <div class="card-body">
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            
-                            <th>Descripcion</th>
+                            <th>ID</th>
                             <th>Fecha</th>
-                            <th>Monto</th>
+                            <th>Total</th>
+                            <th>Plazo</th>
                             <th colspan="2"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($cuotas as $cuota)
+                        @foreach ($pagos as $pago)
                             <tr>
-
                                 <td>
-                                    {{ $cuota->descripcion }}
+                                    {{ $pago->id }}
                                 </td>
                                 <td>
-                                    {{ $cuota->fecha }}
+                                    {{ $pago->fecha }}
                                 </td>
                                 <td>
-                                   BS. {{ $cuota->monto }}
+                                    BS. {{ $pago->monto_total }}
+                                </td>
+                                <td>
+                                    {{ $pago->plazo }}
                                 </td>
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}
                                 <td width="10px">
-                                    <a class="btn btn-primary"
-                                        href="{{ route('cuota.edit', $cuota) }}">Editar/Ver</a>
+                                    <a class="btn btn-primary" href="{{ route('plan-pago.edit', $pago) }}">Editar/Ver</a>
                                 </td>
                                 <td width="10px">
                                     {{-- el form es necesario para cuando queremos eliminar por eso no pusimos la etiqueta <a href=""></a> --}}
-                                    <form action="{{ route('cuota.destroy', $cuota) }}" method="POST">
+                                    <form action="{{ route('plan-pago.destroy', $pago) }}" method="POST">
                                         @method('delete')
                                         @csrf
                                         <button class="btn btn-danger" type="submit">Eliminar</button>
@@ -56,7 +57,7 @@
             </div>
 
             <div class="card-footer">
-                {{ $cuotas->links() }}
+                {{ $pagos->links() }}
             </div>
         @else
             <div class="card-body">

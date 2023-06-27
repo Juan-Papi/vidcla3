@@ -19,10 +19,13 @@ return new class extends Migration
             $table->unsignedBigInteger('pago_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('factura_id')->nullable();
+            $table->unsignedBigInteger('cliente_id');
 
             $table->foreign('pago_id')->references('id')->on('plan_pagos')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('factura_id')->references('id')->on('facturas')->onDelete('cascade');
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

@@ -384,8 +384,14 @@ return [
                 [
                     'text' => 'Plan de pago',
                     'icon'    => 'fas fa-fw fa-coins',
-                    'route'  => 'admin.estado-pedido.index',
-                    'active' => ['estado-pedido*'], //extra para los botones sidevar relacionados
+                    'route'  => 'plan-pago.index',
+                    'active' => ['pago*'], //extra para los botones sidevar relacionados
+                ],
+                [
+                    'text' => 'Cuota',
+                    'icon'    => 'fas fa-fw fa-coins',
+                    'route'  => 'cuota.index',
+                    'active' => ['cuota*'], //extra para los botones sidevar relacionados
                 ],
 
                 /*    [
@@ -395,10 +401,7 @@ return [
                     'active' => ['roles*'], //extra para los botones sidevar relacionados
                 ],
              
-                [
-                    'text' => 'Cuota',
-                    'url'  => '#',
-                ],
+             
                 [
                     'text' => 'Factura',
                     'url'  => '#',

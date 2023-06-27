@@ -12,6 +12,8 @@ use App\Http\Controllers\ParabrisaController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\NotaCompraController;
+use App\Http\Controllers\CuotaController;
+use App\Http\Controllers\PlanPagoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,3 +132,21 @@ Route::put('nota_compra/{nota_compra}', [NotaCompraController::class, 'update'])
 Route::delete('nota-compra/{nota_compra}', [NotaCompraController::class, 'destroy'])->name('admin.nota_compra.destroy');
 //Route::get('nota_compra/{nota_compras}/pdf', [NotaCompraController::class, 'generarPDF'])->name('admin.nota_compra.pdf');
 //Route::get('nota_compra/pdf', [NotaCompraController::class, 'generarPDF'])->name('admin.nota_compra.pdf');
+
+//PARA LAS CUOTAS
+Route::get('cuota', [CuotaController::class, 'index'])->name('cuota.index');
+Route::get('cuota/create', [CuotaController::class, 'create'])->name('cuota.create');
+Route::post('cuota', [CuotaController::class, 'store'])->name('cuota.store');
+Route::get('cuota/{cuota}', [CuotaController::class, 'show'])->name('cuota.show');
+Route::get('cuota/{cuota}/edit', [CuotaController::class, 'edit'])->name('cuota.edit');
+Route::put('cuota/{cuota}', [CuotaController::class, 'update'])->name('cuota.update');
+Route::delete('cuota/{cuota}', [CuotaController::class, 'destroy'])->name('cuota.destroy');
+
+//PARA LOS PLANES DE PAGO
+Route::get('pago', [PlanPagoController::class, 'index'])->name('plan-pago.index');
+Route::get('pago/create', [PlanPagoController::class, 'create'])->name('plan-pago.create');
+Route::post('pago', [PlanPagoController::class, 'store'])->name('plan-pago.store');
+Route::get('pago/{pago}', [PlanPagoController::class, 'show'])->name('plan-pago.show');
+Route::get('pago/{pago}/edit', [PlanPagoController::class, 'edit'])->name('plan-pago.edit');
+Route::put('pago/{pago}', [PlanPagoController::class, 'update'])->name('plan-pago.update');
+Route::delete('pago/{pago}', [PlanPagoController::class, 'destroy'])->name('plan-pago.destroy');
