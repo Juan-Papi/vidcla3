@@ -14,6 +14,8 @@ use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\NotaCompraController;
 use App\Http\Controllers\CuotaController;
 use App\Http\Controllers\PlanPagoController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\TelefonoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -150,3 +152,21 @@ Route::get('pago/{pago}', [PlanPagoController::class, 'show'])->name('plan-pago.
 Route::get('pago/{pago}/edit', [PlanPagoController::class, 'edit'])->name('plan-pago.edit');
 Route::put('pago/{pago}', [PlanPagoController::class, 'update'])->name('plan-pago.update');
 Route::delete('pago/{pago}', [PlanPagoController::class, 'destroy'])->name('plan-pago.destroy');
+
+//PARA LOS CLIENTES
+Route::get('cliente', [ClienteController::class, 'index'])->name('cliente.index');
+Route::get('cliente/create', [ClienteController::class, 'create'])->name('cliente.create');
+Route::post('cliente', [ClienteController::class, 'store'])->name('cliente.store');
+Route::get('cliente/{cliente}', [ClienteController::class, 'show'])->name('cliente.show');
+Route::get('cliente/{cliente}/edit', [ClienteController::class, 'edit'])->name('cliente.edit');
+Route::put('cliente/{cliente}', [ClienteController::class, 'update'])->name('cliente.update');
+Route::delete('cliente/{cliente}', [ClienteController::class, 'destroy'])->name('cliente.destroy');
+
+//PARA LOS TELEFONOS
+Route::get('telefono', [TelefonoController::class, 'index'])->name('telefono.index');
+Route::get('telefono/create', [TelefonoController::class, 'create'])->name('telefono.create');
+Route::post('telefono', [TelefonoController::class, 'store'])->name('telefono.store');
+Route::get('telefono/{telefono}', [TelefonoController::class, 'show'])->name('telefono.show');
+Route::get('telefono/{telefono}/edit', [TelefonoController::class, 'edit'])->name('telefono.edit');
+Route::put('telefono/{telefono}', [TelefonoController::class, 'update'])->name('telefono.update');
+Route::delete('telefono/{telefono}', [TelefonoController::class, 'destroy'])->name('telefono.destroy');

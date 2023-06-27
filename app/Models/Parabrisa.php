@@ -39,5 +39,10 @@ class Parabrisa extends Model
          return $this->belongsToMany(Almacen::class, 'almacen_parabrisa')
                      ->withPivot('stock');
      }
-
+     public function notasVenta()
+    {
+        return $this->belongsToMany(NotaVenta::class, 'nota_venta_parabrisa')
+                    ->withPivot('cantidad', 'precio_venta', 'importe')
+                    ->withTimestamps();
+    }
 }

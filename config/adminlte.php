@@ -394,18 +394,19 @@ return [
                     'active' => ['cuota*'], //extra para los botones sidevar relacionados
                 ],
 
-                /*    [
-                    'text' => 'Clientes',
-                    'icon'    => 'fas fa-fw fa-users-cog',
-                    'route'  => 'admin.roles.index',
-                    'active' => ['roles*'], //extra para los botones sidevar relacionados
-                ],
-             
-             
                 [
-                    'text' => 'Factura',
-                    'url'  => '#',
-                ],*/
+                    'text' => 'Clientes',
+                    'icon'    => 'fas fa-fw fa-users',
+                    'route'  => 'cliente.index',
+                    'active' => ['cliente*'], //extra para los botones sidevar relacionados
+                ],
+                [
+                    'text' => 'Telefonos',
+                    'icon'    => 'fas fa-fw fa-phone',
+                    'route'  => 'telefono.index',
+                    'active' => ['telefono*'], //extra para los botones sidevar relacionados
+                ],
+
             ],
         ],
         [
