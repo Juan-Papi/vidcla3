@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Almacen;
+use App\Models\Cliente;
 use App\Models\NotaVenta;
 use App\Models\Parabrisa;
 use Carbon\Carbon;
@@ -17,12 +18,25 @@ class CreateNotaVentaComponent extends Component
     public $almacen_id;
     public $lineasVenta = [];
     public $total = 0;
+    public $cliente_id;//trabajo junto con el buscador cliente
+    public $cliente_nombre = null; // Nombre del cliente seleccionado
+
+    //listener para el evento cliente seleccionado que se emitirá desde el componente buscador de clientes
+    protected $listeners = ['clienteSeleccionado' => 'seleccionarCliente'];
+
 
     public function mount()
     {
         $this->almacenes = Almacen::all();
         $this->parabrisas = Parabrisa::all();
         $this->addLineaVenta();
+    }
+    //trabaja de la mano del componente buscador de clientes
+    public function seleccionarCliente($clienteId)
+    {
+        $this->cliente_id = $clienteId;
+        $cliente = Cliente::findOrFail($clienteId);
+        $this->cliente_nombre = $cliente->nombre . ' ' . $cliente->paterno . ' ' . $cliente->materno;
     }
 
     public function updated($field)
@@ -55,12 +69,20 @@ class CreateNotaVentaComponent extends Component
 
     public function createNotaVenta()
     {
-        $this->validate([
+        $rules = [
             'almacen_id' => 'required',
             'lineasVenta.*.parabrisa_id' => 'required',
             'lineasVenta.*.cantidad' => 'required|integer',
             'lineasVenta.*.precio_venta' => 'required|numeric',
-        ]);
+            'cliente_id' => 'required',  // Valida que se haya seleccionado un cliente
+        ];
+    
+        $messages = [
+            'cliente_id.required' => 'Por favor, selecciona un cliente antes de crear una nota de venta.',
+            // Puedes añadir más mensajes personalizados para otras reglas aquí
+        ];
+    
+        $this->validate($rules, $messages);
 
         // Inicia una transacción de base de datos
         DB::beginTransaction();
@@ -70,7 +92,7 @@ class CreateNotaVentaComponent extends Component
             $notaVenta = NotaVenta::create([
                 'user_id' => auth()->id(), // Usuario que realiza la venta
                 'fecha' => Carbon::now(),
-                'cliente_id' => 1, //para prueba
+                'cliente_id' => $this->cliente_id, // Utiliza el cliente_id seleccionado
                 'monto_total' => $this->total,
             ]);
 

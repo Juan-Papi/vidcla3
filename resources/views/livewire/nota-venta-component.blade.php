@@ -25,7 +25,7 @@
                             <th>Factura</th>
                             {{-- El monto total es la suma de todos los importes o subtotales --}}
                             <th>Monto Total</th>
-
+                            <th>CI Cliente</th>
 
                             <th colspan="2"></th>
                         </tr>
@@ -58,7 +58,9 @@
                                 <td>
                                     BS. {{ $nota_venta->monto_total }}
                                 </td>
-
+                                <td>
+                                    CI. {{ $nota_venta->cliente->carnet }}
+                                </td>
 
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}
 

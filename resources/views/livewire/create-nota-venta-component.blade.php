@@ -3,14 +3,16 @@
         <div class="card-body">
             <form wire:submit.prevent="createNotaVenta">
                 <div class="row">
-                    <div class="col-md-6">
+
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="almacen_id">Almacén: </label>
                             <select class="form-control @error('almacen_id') is-invalid @enderror"
                                 wire:model="almacen_id">
                                 <option value="">Seleccione un almacén...</option>
                                 @foreach ($almacenes as $almacen)
-                                    <option value="{{ $almacen->id }}">ID: {{ $almacen->id }}, {{ $almacen->nombre }}</option>
+                                    <option value="{{ $almacen->id }}">ID: {{ $almacen->id }}, {{ $almacen->nombre }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('almacen_id')
@@ -18,6 +20,21 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="cliente_id">Cliente: </label>
+                            @livewire('buscador-cliente')
+                            <!-- Mostrando el cliente seleccionado -->
+                            @if ($cliente_nombre)
+                                <div class="alert alert-success mt-2">
+                                    Cliente seleccionado: {{ $cliente_nombre }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -31,7 +48,7 @@
                                 wire:model="lineasVenta.{{ $index }}.parabrisa_id">
                                 <option value="">Seleccione un parabrisa...</option>
                                 @foreach ($parabrisas as $parabrisa)
-                                    <option value="{{ $parabrisa->id }}">ID: {{ $parabrisa->id }}</option>
+                                    <option value="{{ $parabrisa->id }}">ID -> {{ $parabrisa->id }}</option>
                                 @endforeach
                             </select>
                             @error('lineasVenta.' . $index . '.parabrisa_id')
@@ -74,8 +91,8 @@
 
                 <div class="mt-3">
                     <button class="btn btn-info" type="button" wire:click="addLineaVenta"> <span class="icono-add">
-                        <i class="fas fa-plus"></i>
-                      </span>Add</button>
+                            <i class="fas fa-plus"></i>
+                        </span>Add</button>
                 </div>
 
                 <div class="row mt-3">
@@ -91,6 +108,16 @@
                         {{ session('error') }}
                     </div>
                 @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <button type="submit" class="btn btn-primary mt-2">Crear Nota de Venta</button>
             </form>
         </div>

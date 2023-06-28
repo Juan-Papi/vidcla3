@@ -19,7 +19,7 @@ class NotaVentaComponent extends Component
     }
     public function render()
     {  
-        $nota_ventas = NotaVenta::paginate(6);
+        $nota_ventas = NotaVenta::orderBy('id', 'DESC')->paginate(6);
         return view('livewire.nota-venta-component', compact('nota_ventas'));
     }
 }
