@@ -48,9 +48,9 @@ class PlanPagoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PlanPago $pago)
+    public function show(PlanPago $plan_pago)
     {
-        //
+        return view('plan-pago.show', compact('plan_pago'));
     }
 
     /**

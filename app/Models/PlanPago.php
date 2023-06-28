@@ -11,4 +11,13 @@ class PlanPago extends Model
       /*cuando tiene muchos campos(atributos)
     los sgts no se asignan masivamente*/  
     protected $guarded =['id','created_at','updated_at'];
+
+     //relacion uno a uno
+     public function nota_venta()
+     {
+         return $this->hasOne(NotaVenta::class);
+     }
+     public function cuotas(){
+       return $this->hasMany(Cuota::class);
+     }
 }

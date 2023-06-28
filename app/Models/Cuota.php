@@ -11,4 +11,9 @@ class Cuota extends Model
       /*cuando tiene muchos campos(atributos)
     los sgts no se asignan masivamente*/  
     protected $guarded =['id','created_at','updated_at'];
+
+    //relacion de uno a muchos inversa
+    public function plan_pago(){
+       return $this->belongsTo(PlanPago::class);
+    }
 }

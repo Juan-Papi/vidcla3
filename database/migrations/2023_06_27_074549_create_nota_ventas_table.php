@@ -16,9 +16,9 @@ return new class extends Migration
             $table->date('fecha');
             $table->decimal('monto_total', 8, 2);
 
-            $table->unsignedBigInteger('pago_id')->nullable();
+            $table->unsignedBigInteger('pago_id')->nullable()->unique();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('factura_id')->nullable();
+            $table->unsignedBigInteger('factura_id')->nullable()->unique();
             $table->unsignedBigInteger('cliente_id');
 
             $table->foreign('pago_id')->references('id')->on('plan_pagos')->onDelete('cascade');

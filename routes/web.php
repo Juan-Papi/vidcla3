@@ -16,6 +16,7 @@ use App\Http\Controllers\CuotaController;
 use App\Http\Controllers\PlanPagoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TelefonoController;
+use App\Http\Controllers\NotaVentaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -170,3 +171,12 @@ Route::get('telefono/{telefono}', [TelefonoController::class, 'show'])->name('te
 Route::get('telefono/{telefono}/edit', [TelefonoController::class, 'edit'])->name('telefono.edit');
 Route::put('telefono/{telefono}', [TelefonoController::class, 'update'])->name('telefono.update');
 Route::delete('telefono/{telefono}', [TelefonoController::class, 'destroy'])->name('telefono.destroy');
+
+//PARA LAS NOTA VENTA
+Route::get('nota_venta', [NotaVentaController::class, 'index'])->name('nota_venta.index');
+Route::get('nota_venta/create', [NotaVentaController::class, 'create'])->name('nota_venta.create');
+Route::post('nota_venta', [NotaVentaController::class, 'store'])->name('nota_venta.store');
+Route::get('nota_venta/{nota_venta}', [NotaVentaController::class, 'show'])->name('nota_venta.show');
+Route::get('nota_venta/{nota_venta}/edit', [NotaVentaController::class, 'edit'])->name('nota_venta.edit');
+Route::put('nota_venta/{nota_venta}', [NotaVentaController::class, 'update'])->name('nota_venta.update');
+Route::delete('nota_venta/{nota_venta}', [NotaVentaController::class, 'destroy'])->name('nota_venta.destroy');

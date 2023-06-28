@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Factura extends Model
 {
     use HasFactory;
+     /*cuando tiene muchos campos(atributos)
+    los sgts no se asignan masivamente*/
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
+    //relacion uno a uno
+    public function nota_venta()
+    {
+        return $this->hasOne(NotaVenta::class);
+    }
 }

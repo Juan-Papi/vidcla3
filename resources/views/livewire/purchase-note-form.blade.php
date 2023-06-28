@@ -80,7 +80,7 @@
                         <select class="form-control @error('parabrisa_id') is-invalid @enderror" wire:model="parabrisa_id" wire:change="calculateTotal">
                             <option value="">Seleccione un parabrisa...</option>
                             @foreach($parabrisas as $parabrisa)
-                                <option value="{{ $parabrisa->id }}">{{ $parabrisa->descripcion }}</option>
+                                <option value="{{ $parabrisa->id }}">{{ $parabrisa->id }}</option>
                             @endforeach
                         </select>
                         @error('parabrisa_id')

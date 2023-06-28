@@ -378,8 +378,8 @@ return [
                 [
                     'text' => 'Nota de venta',
                     'icon'    => 'fas fa-fw fa-receipt',
-                    'url'  => '#',
-                    'active' => ['roles*'], //extra para los botones sidevar relacionados
+                    'route'  => 'nota_venta.index',
+                    'active' => ['nota_venta*'], //extra para los botones sidevar relacionados
                 ],
                 [
                     'text' => 'Plan de pago',

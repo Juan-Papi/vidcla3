@@ -59,4 +59,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+     //relacion de uno a muchos
+     public function notasVenta(){
+        return $this->hasMany(NotaVenta::class);
+    }
 }

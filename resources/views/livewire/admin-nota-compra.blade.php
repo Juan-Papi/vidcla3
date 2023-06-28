@@ -107,6 +107,7 @@
                                     {{ $nota_compra->parabrisa->id }}
                                 </td>
                                 <td>
+                                    ID:{{ $nota_compra->parabrisa->id }}
                                     Ab:{{ $nota_compra->parabrisa->abajo }}
                                     Ar:{{ $nota_compra->parabrisa->arriba }}
                                     Co:{{ $nota_compra->parabrisa->costado }}
