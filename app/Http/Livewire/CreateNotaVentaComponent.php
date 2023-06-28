@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Almacen;
 use App\Models\Cliente;
+use App\Models\Factura;
 use App\Models\NotaVenta;
 use App\Models\Parabrisa;
 use Carbon\Carbon;
@@ -18,8 +19,12 @@ class CreateNotaVentaComponent extends Component
     public $almacen_id;
     public $lineasVenta = [];
     public $total = 0;
-    public $cliente_id;//trabajo junto con el buscador cliente
+    public $cliente_id; //trabajo junto con el buscador cliente
     public $cliente_nombre = null; // Nombre del cliente seleccionado
+
+    //PARA LA FACTURA
+    public $factura = false;
+    public $nit = '';
 
     //listener para el evento cliente seleccionado que se emitirá desde el componente buscador de clientes
     protected $listeners = ['clienteSeleccionado' => 'seleccionarCliente'];
@@ -27,6 +32,9 @@ class CreateNotaVentaComponent extends Component
 
     public function mount()
     {
+        $this->factura = false;
+        $this->nit = '';
+
         $this->almacenes = Almacen::all();
         $this->parabrisas = Parabrisa::all();
         $this->addLineaVenta();
@@ -75,25 +83,37 @@ class CreateNotaVentaComponent extends Component
             'lineasVenta.*.cantidad' => 'required|integer',
             'lineasVenta.*.precio_venta' => 'required|numeric',
             'cliente_id' => 'required',  // Valida que se haya seleccionado un cliente
+            'nit' => $this->factura ? 'required' : '',  // Valida el NIT si se ha seleccionado factura
         ];
-    
+
         $messages = [
             'cliente_id.required' => 'Por favor, selecciona un cliente antes de crear una nota de venta.',
-            // Puedes añadir más mensajes personalizados para otras reglas aquí
+            'nit.required' => 'Por favor, ingresa el NIT para la factura.',
         ];
-    
+
         $this->validate($rules, $messages);
 
         // Inicia una transacción de base de datos
         DB::beginTransaction();
 
         try {
+            // Crear la factura si se seleccionó
+            $factura_id = null;
+            if ($this->factura) {
+                $factura = Factura::create([
+                    'fecha' => now(),
+                    'nit' => $this->nit,
+                    'monto' => $this->total,
+                ]);
+                $factura_id = $factura->id;
+            }
             // Crea la NotaVenta
             $notaVenta = NotaVenta::create([
                 'user_id' => auth()->id(), // Usuario que realiza la venta
                 'fecha' => Carbon::now(),
                 'cliente_id' => $this->cliente_id, // Utiliza el cliente_id seleccionado
                 'monto_total' => $this->total,
+                'factura_id' => $factura_id,  // Usar el ID de la factura, si se creó
             ]);
 
             // Recorre cada linea de venta

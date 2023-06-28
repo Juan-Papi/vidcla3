@@ -94,6 +94,22 @@
                             <i class="fas fa-plus"></i>
                         </span>Add</button>
                 </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label for="factura">Factura? </label>
+                        <select class="form-control" wire:model="factura">
+                            <option value="0">No</option>
+                            <option value="1">Sí</option>
+                        </select>
+                    </div>
+
+                    @if ($factura)
+                        <div class="col-md-6">
+                            <label for="nit">NIT: </label>
+                            <input type="text" class="form-control" placeholder="Ingrese el NIT..." wire:model="nit">
+                        </div>
+                    @endif
+                </div>
 
                 <div class="row mt-3">
                     <div class="col-md-6">
