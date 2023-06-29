@@ -5,6 +5,11 @@
             {{ session('info') }}
         </div>
     @endif
+    @if (session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
 
     {{-- Tablas --}}
     <div class="card">
@@ -26,7 +31,7 @@
                             {{-- El monto total es la suma de todos los importes o subtotales --}}
                             <th>Monto Total</th>
                             <th>CI Cliente</th>
-
+                            <th>Almacen</th>
                             <th colspan="2"></th>
                         </tr>
                     </thead>
@@ -60,6 +65,9 @@
                                 </td>
                                 <td>
                                     CI. {{ $nota_venta->cliente->carnet }}
+                                </td>
+                                <td>
+                                    ID: {{ $nota_venta->almacen->id }}, {{ $nota_venta->almacen->nombre }}
                                 </td>
 
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}

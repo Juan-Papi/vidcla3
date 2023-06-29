@@ -25,6 +25,11 @@ class EditNotaVentaComponent extends Component
     public $nit = '';
     public $notaVenta;
     public $notaVenta_id;
+
+
+    public $lineasVentaOriginales = [];
+    public $almacenOriginal_id;
+
     protected $listeners = ['clienteSeleccionado' => 'seleccionarCliente'];
 
     public function mount($id)
@@ -45,6 +50,23 @@ class EditNotaVentaComponent extends Component
         $this->factura = $this->notaVenta->factura ? "1" : "0";
         // Se asigna el NIT si la nota de venta tiene factura, y se deja vacío si no la tiene.
         $this->nit = $this->notaVenta->factura ? $this->notaVenta->factura->nit : '';
+
+        $this->lineasVentaOriginales = [];
+        $this->almacenOriginal_id = $this->notaVenta->almacen->id;
+
+        foreach ($this->notaVenta->parabrisas as $parabrisa) {
+            $almacenParabrisa = $parabrisa->almacenes()->where('almacen_id', $this->almacenOriginal_id)->first();
+            $stockOriginal = $almacenParabrisa ? $almacenParabrisa->pivot->stock : 0;
+
+            $this->lineasVentaOriginales[] = [
+                'parabrisa_id' => $parabrisa->id,
+                'cantidad' => $parabrisa->pivot->cantidad,
+                'precio_venta' => $parabrisa->pivot->precio_venta,
+                'importe' => $parabrisa->pivot->importe,
+                'stock_original' => $stockOriginal
+            ];
+        }
+
 
         foreach ($this->notaVenta->parabrisas as $parabrisa) {
             $this->lineasVenta[] = [
@@ -80,12 +102,21 @@ class EditNotaVentaComponent extends Component
         $this->lineasVenta[] = ['parabrisa_id' => '', 'cantidad' => '', 'precio_venta' => '', 'importe' => 0];
     }
 
+    public function removeLineaVenta($index)
+    {
+        unset($this->lineasVenta[$index]);
+        $this->lineasVenta = array_values($this->lineasVenta);  // Reindexa el array
+        $this->calculateTotal();
+    }
+
     public function calculateTotal()
     {
         $this->total = 0;
         foreach ($this->lineasVenta as $index => $lineaVenta) {
-            if ($lineaVenta['cantidad'] && $lineaVenta['precio_venta']) {
-                $this->lineasVenta[$index]['importe'] = $lineaVenta['cantidad'] * $lineaVenta['precio_venta'];
+            if (isset($lineaVenta['cantidad'], $lineaVenta['precio_venta'])) { //cond. para que reconozca al 0(el valor)
+                $cantidad = floatval($lineaVenta['cantidad']); //convertido a float para evitar error string*string
+                $precioVenta = floatval($lineaVenta['precio_venta']);
+                $this->lineasVenta[$index]['importe'] = $cantidad * $precioVenta;
                 $this->total += $this->lineasVenta[$index]['importe'];
             }
         }
@@ -114,6 +145,29 @@ class EditNotaVentaComponent extends Component
                 'monto_total' => $this->total,
                 'almacen_id' => $this->almacen_id,
             ]);
+            // Recorre cada línea de venta original y restablece el stock
+            foreach ($this->lineasVentaOriginales as $lineaVentaOriginal) {
+                $parabrisaOriginal = Parabrisa::findOrFail($lineaVentaOriginal['parabrisa_id']);
+                $relacionParabrisaAlmacenOriginal = $parabrisaOriginal->almacenes()->where('almacen_id', $this->almacenOriginal_id)->first();
+
+                if ($relacionParabrisaAlmacenOriginal) {
+                    $stockOriginal = $lineaVentaOriginal['stock_original'];
+                    $stockDespuesVenta = $stockOriginal + $lineaVentaOriginal['cantidad'];
+
+                    // Restablece el stock al valor después de la venta original
+                    $parabrisaOriginal->almacenes()->updateExistingPivot($this->almacenOriginal_id, [
+                        'stock' => $stockDespuesVenta,
+                    ]);
+                }
+            }
+            $nuevosParabrisasIds = collect($this->lineasVenta)->pluck('parabrisa_id')->toArray();
+
+            $lineasVentaParaEliminar = $this->notaVenta->parabrisas()
+                ->whereNotIn('parabrisas.id', $nuevosParabrisasIds)
+                ->get();
+            foreach ($lineasVentaParaEliminar as $lineaVentaParaEliminar) {
+                $this->notaVenta->parabrisas()->detach($lineaVentaParaEliminar->id);
+            }
 
             // Recorre cada linea de venta y la actualiza
             foreach ($this->lineasVenta as $lineaVenta) {

@@ -41,7 +41,7 @@
 
                 @foreach ($lineasVenta as $index => $lineaVenta)
                     <div class="row mt-3">
-                        <div class="col-md-3">
+                        <div class="col-md-2 col-sm-6">
                             <label for="parabrisa_id">Parabrisa: </label>
                             <select
                                 class="form-control @error('lineasVenta.' . $index . '.parabrisa_id') is-invalid @enderror"
@@ -57,7 +57,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2 col-sm-6">
                             <label for="cantidad">Cantidad: </label>
                             <input type="number"
                                 class="form-control @error('lineasVenta.' . $index . '.cantidad') is-invalid @enderror"
@@ -69,7 +69,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2 col-sm-6">
                             <label for="precio_venta">Precio Venta: </label>
                             <input type="number"
                                 class="form-control @error('lineasVenta.' . $index . '.precio_venta') is-invalid @enderror"
@@ -81,10 +81,19 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2 col-sm-6">
                             <label for="importe">Importe: </label>
                             <input type="number" class="form-control" placeholder="Importe calculado..."
                                 wire:model="lineasVenta.{{ $index }}.importe" readonly>
+                        </div>
+                        <div class="col-md-2 col-sm-6 mt-4">
+                            <button class="btn btn-danger" type="button"
+                                wire:click="removeLineaVenta({{ $index }})">
+                                <span class="icono-remove">
+                                    <i class="fas fa-minus"></i>
+                                </span>
+                                Quitar
+                            </button>
                         </div>
                     </div>
                 @endforeach
@@ -134,7 +143,7 @@
                     </div>
                 @endif
 
-                <button type="submit" class="btn btn-primary mt-2">Crear Nota de Venta</button>
+                <button type="submit" class="btn btn-primary mt-2">Actualizar venta</button>
             </form>
         </div>
     </div>

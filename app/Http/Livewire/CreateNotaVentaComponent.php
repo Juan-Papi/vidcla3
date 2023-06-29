@@ -68,8 +68,10 @@ class CreateNotaVentaComponent extends Component
     {
         $this->total = 0;
         foreach ($this->lineasVenta as $index => $lineaVenta) {
-            if ($lineaVenta['cantidad'] && $lineaVenta['precio_venta']) {
-                $this->lineasVenta[$index]['importe'] = $lineaVenta['cantidad'] * $lineaVenta['precio_venta'];
+            if (isset($lineaVenta['cantidad'], $lineaVenta['precio_venta'])) {//cond. para que reconozca al 0(el valor)
+                $cantidad = floatval($lineaVenta['cantidad']);//convertido a float para evitar error string*string
+                $precioVenta = floatval($lineaVenta['precio_venta']);
+                $this->lineasVenta[$index]['importe'] = $cantidad * $precioVenta;
                 $this->total += $this->lineasVenta[$index]['importe'];
             }
         }
