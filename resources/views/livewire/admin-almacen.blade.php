@@ -25,6 +25,7 @@
                             <th>Nombre</th>
                             <th>Ubicacion</th>
                             <th>Capacidad</th>
+                            <th>Ocupado</th>
 
                             <th colspan="3"></th>
                         </tr>
@@ -42,6 +43,11 @@
                                 <td>
                                     {{ $almacen->capacidad }}
                                 </td>
+
+                                <td>
+                                    {{ $this->getTotalOcupado($almacen) }}
+                                </td>
+
 
 
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}
