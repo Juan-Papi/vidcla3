@@ -20,11 +20,13 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('factura_id')->nullable()->unique();
             $table->unsignedBigInteger('cliente_id');
+            $table->unsignedBigInteger('almacen_id');
 
             $table->foreign('pago_id')->references('id')->on('plan_pagos')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('factura_id')->references('id')->on('facturas')->onDelete('cascade');
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+            $table->foreign('almacen_id')->references('id')->on('almacens')->onDelete('cascade');
 
             $table->timestamps();
         });

@@ -39,5 +39,9 @@ class NotaVenta extends Model
     public function plan_pago(){
         return $this->belongsTo(PlanPago::class);
     }
+     //relacion de uno a muchos inversa with Almacen
+     public function almacen(){
+        return $this->belongsTo(Almacen::class);
+    }
 
 }

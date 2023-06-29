@@ -66,7 +66,7 @@
 
                                 <td width="10px">
                                     <a class="btn btn-primary"
-                                        href="{{ route('nota_venta.edit', $nota_venta) }}">Edit</a>
+                                        href="{{ route('nota_venta.edit', $nota_venta->id) }}">Edit</a>
                                 </td>
                                 <td width="10px">
                                     <button class="btn btn-danger" type="button"

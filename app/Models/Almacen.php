@@ -28,4 +28,8 @@ class Almacen extends Model
         return $this->belongsToMany(Parabrisa::class, 'almacen_parabrisa')
                     ->withPivot('stock');
     }
+    //relacion de uno a muchos con NotaVenta
+    public function notasVenta(){
+        return $this->hasMany(NotaVenta::class);
+    }
 }

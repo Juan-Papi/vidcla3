@@ -41,9 +41,9 @@ class NotaVentaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($nota_venta_id)
     {
-        //
+        return view('nota-venta.edit', compact('nota_venta_id'));
     }
 
     /**

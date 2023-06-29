@@ -12,34 +12,50 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class CreateNotaVentaComponent extends Component
+class EditNotaVentaComponent extends Component
 {
     public $almacenes;
     public $parabrisas;
     public $almacen_id;
     public $lineasVenta = [];
     public $total = 0;
-    public $cliente_id; //trabajo junto con el buscador cliente
-    public $cliente_nombre = null; // Nombre del cliente seleccionado
-
-    //PARA LA FACTURA
-    public $factura = false;
+    public $cliente_id;
+    public $cliente_nombre = null;
+    public $factura = "0";
     public $nit = '';
-
-    //listener para el evento cliente seleccionado que se emitirá desde el componente buscador de clientes
+    public $notaVenta;
+    public $notaVenta_id;
     protected $listeners = ['clienteSeleccionado' => 'seleccionarCliente'];
 
-
-    public function mount()
+    public function mount($id)
     {
-        $this->factura = false;
-        $this->nit = '';
-
         $this->almacenes = Almacen::all();
         $this->parabrisas = Parabrisa::all();
-        $this->addLineaVenta();
+
+        $this->notaVenta = NotaVenta::findOrFail($id);
+        $this->cliente_id = $this->notaVenta->cliente_id;
+        $this->notaVenta_id = $this->notaVenta->id;
+        $this->almacen_id = $this->notaVenta->almacen_id;
+        $this->total = $this->notaVenta->monto_total;
+
+        $cliente = Cliente::findOrFail($this->cliente_id);
+        $this->cliente_nombre = $cliente->nombre . ' ' . $cliente->paterno . ' ' . $cliente->materno;
+
+        // Se asigna el valor de factura como "1" si la nota de venta tiene factura, y "0" si no la tiene.
+        $this->factura = $this->notaVenta->factura ? "1" : "0";
+        // Se asigna el NIT si la nota de venta tiene factura, y se deja vacío si no la tiene.
+        $this->nit = $this->notaVenta->factura ? $this->notaVenta->factura->nit : '';
+
+        foreach ($this->notaVenta->parabrisas as $parabrisa) {
+            $this->lineasVenta[] = [
+                'parabrisa_id' => $parabrisa->id,
+                'cantidad' => $parabrisa->pivot->cantidad,
+                'precio_venta' => $parabrisa->pivot->precio_venta,
+                'importe' => $parabrisa->pivot->importe
+            ];
+        }
     }
-    //trabaja de la mano del componente buscador de clientes
+
     public function seleccionarCliente($clienteId)
     {
         $this->cliente_id = $clienteId;
@@ -75,71 +91,48 @@ class CreateNotaVentaComponent extends Component
         }
     }
 
-    public function createNotaVenta()
+    public function updateNotaVenta()
     {
-        $rules = [
-            'almacen_id' => 'required',
-            'lineasVenta.*.parabrisa_id' => 'required',
-            'lineasVenta.*.cantidad' => 'required|integer',
-            'lineasVenta.*.precio_venta' => 'required|numeric',
-            'cliente_id' => 'required',  // Valida que se haya seleccionado un cliente
-            'nit' => $this->factura ? 'required' : '',  // Valida el NIT si se ha seleccionado factura
-        ];
-
-        $messages = [
-            'cliente_id.required' => 'Por favor, selecciona un cliente antes de crear una nota de venta.',
-            'nit.required' => 'Por favor, ingresa el NIT para la factura.',
-        ];
-
-        $this->validate($rules, $messages);
-
         // Inicia una transacción de base de datos
         DB::beginTransaction();
 
         try {
-            // Crear la factura si se seleccionó
-            $factura_id = null;
-            if ($this->factura) {
-                $factura = Factura::create([
+            // Actualiza la Factura si se seleccionó
+            if ($this->factura === "1" && $this->notaVenta->factura_id) {
+                Factura::where('id', $this->notaVenta->factura_id)->update([
                     'fecha' => now(),
                     'nit' => $this->nit,
                     'monto' => $this->total,
                 ]);
-                $factura_id = $factura->id;
             }
-            // Crea la NotaVenta
-            $notaVenta = NotaVenta::create([
-                'user_id' => auth()->id(), // Usuario que realiza la venta
+
+            // Actualiza la NotaVenta
+            $this->notaVenta->update([
+                'user_id' => auth()->id(),
                 'fecha' => Carbon::now(),
-                'cliente_id' => $this->cliente_id, // Utiliza el cliente_id seleccionado
+                'cliente_id' => $this->cliente_id,
                 'monto_total' => $this->total,
                 'almacen_id' => $this->almacen_id,
-                'factura_id' => $factura_id,  // Usar el ID de la factura, si se creó
             ]);
 
-            // Recorre cada linea de venta
+            // Recorre cada linea de venta y la actualiza
             foreach ($this->lineasVenta as $lineaVenta) {
-                // Obtiene el Parabrisa
                 $parabrisa = Parabrisa::findOrFail($lineaVenta['parabrisa_id']);
 
-                // Recupera la relación entre el Parabrisa y el Almacén
                 $relacionParabrisaAlmacen = $parabrisa->almacenes()->where('almacen_id', $this->almacen_id)->first();
 
-                // Si no se encuentra la relación, lanza una excepción
                 if ($relacionParabrisaAlmacen === null) {
                     throw new Exception('El parabrisa con ID: ' . $parabrisa->id . ' con descripcion:' . $parabrisa->descripcion . ' no está asociado al almacén seleccionado.');
                 }
 
-                // Obtiene el stock de la relación
                 $stock = $relacionParabrisaAlmacen->pivot->stock;
 
-                // Comprueba que el stock sea suficiente
                 if ($stock < $lineaVenta['cantidad']) {
                     throw new Exception('Stock insuficiente para el parabrisa con ID: ' . $parabrisa->id . ' con descripcion:' . $parabrisa->descripcion . '. ID almacen asociado: ' . $this->almacen_id . ', pruebe a seleccionar otro almacen o suministrar mas parabrisas a los almacenes. STOCK DISPONIBLE : ' . $stock);
                 }
 
-                // Crea la relación en la tabla intermedia entre NotaVenta y Parabrisa
-                $notaVenta->parabrisas()->attach($parabrisa->id, [
+                // Actualiza la relación en la tabla intermedia entre NotaVenta y Parabrisa
+                $this->notaVenta->parabrisas()->updateExistingPivot($parabrisa->id, [
                     'cantidad' => $lineaVenta['cantidad'],
                     'precio_venta' => $lineaVenta['precio_venta'],
                     'importe' => $lineaVenta['importe'],
@@ -153,18 +146,18 @@ class CreateNotaVentaComponent extends Component
 
             // Si todo va bien, se confirma la transacción
             DB::commit();
-            return redirect()->route('nota_venta.index')->with('info', 'Nueva venta registrada!!');
+            return redirect()->route('nota_venta.index')->with('info', 'Venta actualizada!!');
         } catch (\Exception $e) {
             // En caso de error, se revierte la transacción
             DB::rollback();
 
             // Agrega aquí el manejo de errores, por ejemplo:
-            session()->flash('error', 'Ha ocurrido un error al crear la nota de venta: ' . $e->getMessage());
+            session()->flash('error', 'Ha ocurrido un error al actualizar la nota de venta: ' . $e->getMessage());
         }
     }
 
     public function render()
     {
-        return view('livewire.create-nota-venta-component');
+        return view('livewire.edit-nota-venta-component');
     }
 }
