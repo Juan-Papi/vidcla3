@@ -1,5 +1,6 @@
 <div>
     @if (session('info'))
+        ||
         <div class="alert alert-primary" role="alert">
             <strong>¡Éxito!</strong>
             {{ session('info') }}
@@ -10,6 +11,76 @@
             {{ session('error') }}
         </div>
     @endif
+    {{-- Filtros --}}
+    <div class="card my-4">
+        <h5 class="card-header">Filtros de búsqueda</h5>
+        <div class="card-body">
+
+            <div class="form-row">
+                <!-- Usuario -->
+                <div class="col-md-3">
+                    <label for="usuario">Usuario</label>
+                    <select wire:model="usuario" id="usuario" class="form-control">
+                        <option value="">Todos</option>
+                        @foreach ($usuarios as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <!-- Cliente -->
+                <div class="col-md-3">
+                    <label for="cliente">Cliente</label>
+                    <select wire:model="cliente" id="cliente" class="form-control">
+                        <option value="">Todos</option>
+                        @foreach ($clientes as $client)
+                            <option value="{{ $client->id }}">{{ $client->nombre }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <!-- Almacén -->
+                <div class="col-md-3">
+                    <label for="almacen">Almacén</label>
+                    <select wire:model="almacen" id="almacen" class="form-control">
+                        <option value="">Todos</option>
+                        @foreach ($almacenes as $alma)
+                            <option value="{{ $alma->id }}">{{ $alma->nombre }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <!-- Desde -->
+                <div class="col-md-3">
+                    <label for="desde">Desde</label>
+                    <input wire:model="desde" type="date" class="form-control" id="desde">
+                </div>
+                <!-- Hasta -->
+                <div class="col-md-3">
+                    <label for="hasta">Hasta</label>
+                    <input wire:model="hasta" type="date" class="form-control" id="hasta">
+                </div>
+            </div>
+            <!-- Botones -->
+
+            <button type="button" wire:click="resetFilters" class="btn btn-secondary mt-3">Reiniciar
+                filtros</button>
+            {{-- FORMA 1 no funciona por alguna extraña razon--}}
+            {{-- <a href="{{ route('nota_venta.reporte', ['desde' => $desde, 'hasta' => $hasta, 'cliente' => $cliente, 'usuario' => $usuario, 'almacen' => $almacen]) }}"
+                target="_blank" class="btn btn-success mt-3">Generar Reporte</a> --}}
+             
+             
+               {{-- FORMA 2 con POST funciona--}}
+                <form action="{{ route('nota_venta.reporte') }}" method="post" target="_blank">
+                    @csrf
+                    <input type="hidden" name="desde" value="{{ $desde }}">
+                    <input type="hidden" name="hasta" value="{{ $hasta }}">
+                    <input type="hidden" name="cliente" value="{{ $cliente }}">
+                    <input type="hidden" name="usuario" value="{{ $usuario }}">
+                    <input type="hidden" name="almacen" value="{{ $almacen }}">
+                    <button type="submit" class="btn btn-success mt-3">Generar Reporte</button>
+                </form>
+                
+
+        </div>
+    </div>
 
     {{-- Tablas --}}
     <div class="card">
@@ -25,7 +96,6 @@
                     <thead>
                         <tr>
                             <th>Usuario</th>
-                            <th>Plan de pago</th>
                             <th>Fecha</th>
                             <th>Factura</th>
                             {{-- El monto total es la suma de todos los importes o subtotales --}}
@@ -40,15 +110,6 @@
                             <tr>
                                 <td>
                                     {{ $nota_venta->user->name }}
-                                </td>
-                                <td>
-                                    @isset($nota_venta->plan_pago)
-                                        <a href="{{ route('plan-pago.show', ['pago' => $nota_venta->plan_pago]) }}">
-                                            {{ $nota_venta->plan_pago->id }}
-                                        </a>
-                                    @else
-                                        N/A
-                                    @endisset
                                 </td>
                                 <td>
                                     {{ $nota_venta->fecha }}

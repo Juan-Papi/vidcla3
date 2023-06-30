@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Almacen;
+use App\Models\Cliente;
 use App\Models\Factura;
 use App\Models\NotaVenta;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -13,6 +16,32 @@ class NotaVentaComponent extends Component
 {
     use WithPagination;
     protected $paginationTheme = "bootstrap";
+
+    public $desde;
+    public $hasta;
+    public $usuario;
+    public $cliente;
+    public $almacen;
+    public $usuarios;
+    public $clientes;
+    public $almacenes;
+
+    public function mount()
+    {
+        $this->usuarios = User::all();
+        $this->clientes = Cliente::all();
+        $this->almacenes = Almacen::all();
+    }
+
+    public function updating($name, $value)
+    {
+        $this->resetPage();
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['desde', 'hasta', 'usuario', 'cliente', 'almacen']);
+    }
 
     public function deleteVenta($nota_venta_id)
     {
@@ -73,7 +102,26 @@ class NotaVentaComponent extends Component
     }
     public function render()
     {
-        $nota_ventas = NotaVenta::orderBy('id', 'DESC')->paginate(6);
+        $query = NotaVenta::query();
+
+        if (!empty($this->usuario)) {
+            $query = $query->where('user_id', $this->usuario);
+        }
+        if (!empty($this->cliente)) {
+            $query = $query->where('cliente_id', $this->cliente);
+        }
+        if (!empty($this->almacen)) {
+            $query = $query->where('almacen_id', $this->almacen);
+        }
+        if (!empty($this->desde)) {
+            $query = $query->whereDate('fecha', '>=', $this->desde);
+        }
+        if (!empty($this->hasta)) {
+            $query = $query->whereDate('fecha', '<=', $this->hasta);
+        }
+
+        $nota_ventas = $query->orderBy('id', 'DESC')->paginate(6);
+
         return view('livewire.nota-venta-component', compact('nota_ventas'));
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\NotaVenta;
 use Illuminate\Http\Request;
+use PDF;
 
 class NotaVentaController extends Controller
 {
@@ -60,5 +62,40 @@ class NotaVentaController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function generarReporte(Request $request)
+    {
+        $desde = $request->desde;
+        $hasta = $request->hasta;
+        $usuario = $request->usuario;
+        $cliente = $request->cliente;
+        $almacen = $request->almacen;
+
+        $query = NotaVenta::query();
+
+        if (!empty($usuario)) {
+            $query = $query->where('user_id', $usuario);
+        }
+        if (!empty($cliente)) {
+            $query = $query->where('cliente_id', $cliente);
+        }
+        if (!empty($almacen)) {
+            $query = $query->where('almacen_id', $almacen);
+        }
+        if (!empty($desde)) {
+            $query = $query->whereDate('fecha', '>=', $desde);
+        }
+        if (!empty($hasta)) {
+            $query = $query->whereDate('fecha', '<=', $hasta);
+        }
+
+        $nota_ventas = $query->orderBy('id', 'DESC')->get();
+
+        // Crear la vista del informe y convertirla a PDF
+        $pdf = PDF::loadView('nota-venta.pdf', ['nota_ventas' => $nota_ventas]);
+        // return view('nota-venta.pdf', ['nota_ventas' => $nota_ventas]);// para probar que la vista este funcionando!!
+
+        // Retornar el PDF como una descarga
+        return $pdf->download('nota_venta_reporte.pdf');
     }
 }

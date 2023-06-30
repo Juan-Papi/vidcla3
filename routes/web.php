@@ -180,3 +180,5 @@ Route::get('nota_venta/{nota_venta}', [NotaVentaController::class, 'show'])->nam
 Route::get('nota_venta/{nota_venta}/edit', [NotaVentaController::class, 'edit'])->name('nota_venta.edit');
 Route::put('nota_venta/{nota_venta}', [NotaVentaController::class, 'update'])->name('nota_venta.update');
 Route::delete('nota_venta/{nota_venta}', [NotaVentaController::class, 'destroy'])->name('nota_venta.destroy');
+//Route::get('nota_venta/reporte', [NotaVentaController::class, 'generarReporte'])->name('nota_venta.reporte');//Forma1 no funciona por alguna razon,mirar notaCompraComponent de software sport center para ver como se hizo get correctamente
+Route::post('nota_venta/reporte', [NotaVentaController::class, 'generarReporte'])->name('nota_venta.reporte');//para la forma 2 con POST (si funciona comprobado!!)
