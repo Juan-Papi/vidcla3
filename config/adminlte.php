@@ -357,7 +357,10 @@ return [
                 ],
                 [
                     'text' => 'Personal',
-                    'url'  => '#',
+                    'route'  => 'personal.index',
+                    'icon'    => 'fas fa-fw fa-briefcase',
+                    'active' => ['personal*'], //extra para los botones sidevar relacionados
+                    //'can' => 'Listar usuarios',
                 ],
                 [
                     'text' => 'Bitacora',

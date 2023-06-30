@@ -14,20 +14,6 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    {!! Form::label('carnet', 'Carnet: ') !!}
-                    {!! Form::number('carnet', null, [
-                        'class' => 'form-control' . ($errors->has('carnet') ? ' is-invalid' : ''),
-                        'placeholder' => 'Ingrese el número de carnet...',
-                    ]) !!}
-
-                    @error('carnet')
-                        <span class="invalid-feedback">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
                     {!! Form::label('nombre', 'Nombre: ') !!}
                     {!! Form::text('nombre', null, [
                         'class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''),
@@ -40,7 +26,19 @@
                         </span>
                     @enderror
                 </div>
+                <div class="form-group">
+                    {!! Form::label('paterno', 'Apellido Paterno: ') !!}
+                    {!! Form::text('paterno', null, [
+                        'class' => 'form-control' . ($errors->has('paterno') ? ' is-invalid' : ''),
+                        'placeholder' => 'Ingrese el apellido paterno...',
+                    ]) !!}
 
+                    @error('paterno')
+                        <span class="invalid-feedback">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
                 <div class="form-group">
                     {!! Form::label('materno', 'Apellido Materno: ') !!}
                     {!! Form::text('materno', null, [
@@ -55,16 +53,15 @@
                     @enderror
                 </div>
             </div>
-            
             <div class="col-md-6">
                 <div class="form-group">
-                    {!! Form::label('paterno', 'Apellido Paterno: ') !!}
-                    {!! Form::text('paterno', null, [
-                        'class' => 'form-control' . ($errors->has('paterno') ? ' is-invalid' : ''),
-                        'placeholder' => 'Ingrese el apellido paterno...',
+                    {!! Form::label('carnet', 'Carnet: ') !!}
+                    {!! Form::number('carnet', null, [
+                        'class' => 'form-control' . ($errors->has('carnet') ? ' is-invalid' : ''),
+                        'placeholder' => 'Ingrese el número de carnet...',
                     ]) !!}
 
-                    @error('paterno')
+                    @error('carnet')
                         <span class="invalid-feedback">
                             <strong>{{ $message }}</strong>
                         </span>

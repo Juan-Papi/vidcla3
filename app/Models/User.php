@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;//extra
+use Spatie\Permission\Traits\HasRoles; //extra
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -17,7 +17,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
-    use HasRoles;//extra
+    use HasRoles; //extra
 
     /**
      * The attributes that are mass assignable.
@@ -60,8 +60,14 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-     //relacion de uno a muchos
-     public function notasVenta(){
+    //relacion de uno a muchos
+    public function notasVenta()
+    {
         return $this->hasMany(NotaVenta::class);
+    }
+    //relacion uno a uno
+    public function Personal()
+    {
+        return $this->hasOne(Personal::class);
     }
 }

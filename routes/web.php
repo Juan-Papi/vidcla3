@@ -17,6 +17,7 @@ use App\Http\Controllers\PlanPagoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TelefonoController;
 use App\Http\Controllers\NotaVentaController;
+use App\Http\Controllers\PersonalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -182,3 +183,12 @@ Route::put('nota_venta/{nota_venta}', [NotaVentaController::class, 'update'])->n
 Route::delete('nota_venta/{nota_venta}', [NotaVentaController::class, 'destroy'])->name('nota_venta.destroy');
 //Route::get('nota_venta/reporte', [NotaVentaController::class, 'generarReporte'])->name('nota_venta.reporte');//Forma1 no funciona por alguna razon,mirar notaCompraComponent de software sport center para ver como se hizo get correctamente
 Route::post('nota_venta/reporte', [NotaVentaController::class, 'generarReporte'])->name('nota_venta.reporte');//para la forma 2 con POST (si funciona comprobado!!)
+
+//PARA LOS EMPLEADOS
+Route::get('personal', [PersonalController::class, 'index'])->name('personal.index');
+Route::get('personal/create', [PersonalController::class, 'create'])->name('personal.create');
+Route::post('personal', [PersonalController::class, 'store'])->name('personal.store');
+Route::get('personal/{personal}', [PersonalController::class, 'show'])->name('personal.show');
+Route::get('personal/{personal}/edit', [PersonalController::class, 'edit'])->name('personal.edit');
+Route::put('personal/{personal}', [PersonalController::class, 'update'])->name('personal.update');
+Route::delete('personal/{personal}', [PersonalController::class, 'destroy'])->name('personal.destroy');

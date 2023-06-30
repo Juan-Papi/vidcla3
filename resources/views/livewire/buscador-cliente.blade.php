@@ -13,6 +13,7 @@
                     <div class="col-2 text-right">
                         <button wire:click="$emit('clienteSeleccionado', {{ $cliente->id }})" class="btn btn-sm btn-primary">Seleccionar</button>
                     </div>
+                    
                 </div>
             </li>
         @endforeach
