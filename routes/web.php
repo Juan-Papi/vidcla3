@@ -18,6 +18,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TelefonoController;
 use App\Http\Controllers\NotaVentaController;
 use App\Http\Controllers\PersonalController;
+use App\Http\Controllers\BitacoraController;
 
 /*
 |--------------------------------------------------------------------------
@@ -192,3 +193,6 @@ Route::get('personal/{personal}', [PersonalController::class, 'show'])->name('pe
 Route::get('personal/{personal}/edit', [PersonalController::class, 'edit'])->name('personal.edit');
 Route::put('personal/{personal}', [PersonalController::class, 'update'])->name('personal.update');
 Route::delete('personal/{personal}', [PersonalController::class, 'destroy'])->name('personal.destroy');
+
+//PARA LA BITACORA 
+Route::get('bitacora', [BitacoraController::class, 'index'])->name('bitacora.index');

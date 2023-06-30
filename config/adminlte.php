@@ -364,7 +364,10 @@ return [
                 ],
                 [
                     'text' => 'Bitacora',
-                    'url'  => '#',
+                    'route'  => 'bitacora.index',
+                    'icon'    => 'fas fa-fw fa-book',
+                    'active' => ['bitacora*'], //extra para los botones sidevar relacionados
+                    //'can' => 'Listar usuarios',
                 ],
             ],
         ],

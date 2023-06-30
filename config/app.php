@@ -171,6 +171,7 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
     ])->toArray(),
 
     /*
