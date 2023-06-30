@@ -73,6 +73,6 @@ class UserSeeder extends Seeder
             'name'=>'Juan Pablo Rodriguez',
             'email'=>'pablojuan123sc@gmail.com',
             'password'=>bcrypt(12345678)
-        ])->assignRole('admin');
+        ])->assignRole('Administrador');
     }
 }
