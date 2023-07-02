@@ -18,8 +18,8 @@
 
             <div class="form-row">
                 <!-- Usuario -->
-                <div class="col-md-3">
-                    <label for="usuario">Usuario</label>
+                <div class="col-md-2">
+                    <label for="usuario">Usuario vendedor</label>
                     <select wire:model="usuario" id="usuario" class="form-control">
                         <option value="">Todos</option>
                         @foreach ($usuarios as $user)
@@ -28,7 +28,7 @@
                     </select>
                 </div>
                 <!-- Cliente -->
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="cliente">Cliente</label>
                     <select wire:model="cliente" id="cliente" class="form-control">
                         <option value="">Todos</option>
@@ -38,7 +38,7 @@
                     </select>
                 </div>
                 <!-- Almacén -->
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="almacen">Almacén</label>
                     <select wire:model="almacen" id="almacen" class="form-control">
                         <option value="">Todos</option>
@@ -58,26 +58,30 @@
                     <input wire:model="hasta" type="date" class="form-control" id="hasta">
                 </div>
             </div>
-            <!-- Botones -->
+            
 
-            <button type="button" wire:click="resetFilters" class="btn btn-secondary mt-3">Reiniciar
-                filtros</button>
-            {{-- FORMA 1 no funciona por alguna extraña razon--}}
-            {{-- <a href="{{ route('nota_venta.reporte', ['desde' => $desde, 'hasta' => $hasta, 'cliente' => $cliente, 'usuario' => $usuario, 'almacen' => $almacen]) }}"
+            <!-- Botones -->
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <button type="button" wire:click="resetFilters" class="btn btn-secondary">Reiniciar
+                        filtros</button>
+                    {{-- FORMA 1 no funciona por alguna extraña razon --}}
+                    {{-- <a href="{{ route('nota_venta.reporte', ['desde' => $desde, 'hasta' => $hasta, 'cliente' => $cliente, 'usuario' => $usuario, 'almacen' => $almacen]) }}"
                 target="_blank" class="btn btn-success mt-3">Generar Reporte</a> --}}
-             
-             
-               {{-- FORMA 2 con POST funciona--}}
-                <form action="{{ route('nota_venta.reporte') }}" method="post" target="_blank">
-                    @csrf
-                    <input type="hidden" name="desde" value="{{ $desde }}">
-                    <input type="hidden" name="hasta" value="{{ $hasta }}">
-                    <input type="hidden" name="cliente" value="{{ $cliente }}">
-                    <input type="hidden" name="usuario" value="{{ $usuario }}">
-                    <input type="hidden" name="almacen" value="{{ $almacen }}">
-                    <button type="submit" class="btn btn-success mt-3">Generar Reporte</button>
-                </form>
-                
+                </div>
+                <div class="col-md-2">
+                    <!-- FORMA 2 con POST funciona-->
+                    <form action="{{ route('nota_venta.reporte') }}" method="post" target="_blank">
+                        @csrf
+                        <input type="hidden" name="desde" value="{{ $desde }}">
+                        <input type="hidden" name="hasta" value="{{ $hasta }}">
+                        <input type="hidden" name="cliente" value="{{ $cliente }}">
+                        <input type="hidden" name="usuario" value="{{ $usuario }}">
+                        <input type="hidden" name="almacen" value="{{ $almacen }}">
+                        <button type="submit" class="btn btn-success">Generar Reporte</button>
+                    </form>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -87,7 +91,7 @@
 
 
         <div class="card-header">
-            <a class="btn btn-secondary" href="{{ route('nota_venta.create') }}">NUEVA VENTA</a>
+            <a class="btn btn-info" href="{{ route('nota_venta.create') }}">NUEVA VENTA</a>
         </div>
 
         @if ($nota_ventas->count())
