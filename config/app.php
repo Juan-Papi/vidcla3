@@ -70,7 +70,8 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    //'timezone' => 'UTC',//por defecto
+    'timezone' => 'America/La_Paz',
 
     /*
     |--------------------------------------------------------------------------

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Almacen;
+use App\Models\Bitacora;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -59,6 +60,13 @@ class AlmacenController extends Controller
         $almacen->ubicacion = $request->ubicacion;
         $almacen->capacidad = $request->capacidad;
         $almacen->save();
+        
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR ALMACEN';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
         return Redirect()->route('admin.almacen.index')->with('info', 'El ALMACEN se creo satisfactoriamente!');
     }
 
@@ -94,6 +102,14 @@ class AlmacenController extends Controller
         $almacen->ubicacion = $request->input('ubicacion');
         $almacen->capacidad = $request->input('capacidad');
         $almacen->save();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR ALMACEN';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return Redirect()->route('admin.almacen.index')->with('info', 'Datos actualizados!');
     }
 
@@ -103,6 +119,14 @@ class AlmacenController extends Controller
     public function destroy(Almacen $almacen)
     {
         $almacen->delete();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR ALMACEN';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return Redirect()->route('admin.almacen.index')->with('info', 'Almacen eliminado!');
     }
 }
