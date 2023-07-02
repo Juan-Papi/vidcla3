@@ -15,8 +15,13 @@ class AdminUsers extends Component
 
     public function render()
     {  
+        /*$users = User::where('name', 'LIKE', '%' . $this->buscar . '%')
+        ->orWhere('email', 'LIKE', '%' . $this->buscar . '%')
+        ->paginate(6);*/
+        
         $users = User::where('name', 'LIKE', '%' . $this->buscar . '%')
         ->orWhere('email', 'LIKE', '%' . $this->buscar . '%')
+        ->orderBy('id', 'DESC')  // Add this line
         ->paginate(6);
         return view('livewire.admin-users', compact('users'));
     }
