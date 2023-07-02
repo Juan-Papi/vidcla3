@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
 
@@ -43,6 +44,14 @@ class ProveedorController extends Controller
         $proveedor->ciudad = $request->ciudad;
         $proveedor->pais = $request->pais;
         $proveedor->save();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR PROVEEDOR';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+        
         return redirect()->route('admin.proveedor.index')->with('info', 'El nuevo PROVEEDOR se creo satisfactoriamente!');
     }
 
@@ -82,6 +91,13 @@ class ProveedorController extends Controller
         $proveedor->pais = $request->pais;
         $proveedor->save();
 
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR PROVEEDOR';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('admin.proveedor.index')->with('info', 'Proveedor actualizado exitosamente.');
     }
 
@@ -91,6 +107,14 @@ class ProveedorController extends Controller
     public function destroy(Proveedor $proveedor)
     {
         $proveedor->delete();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR PROVEEDOR';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+        
         return redirect()->route('admin.proveedor.index')->with('info', 'El PROVEEDOR se eliminó con éxito!');
 
     }

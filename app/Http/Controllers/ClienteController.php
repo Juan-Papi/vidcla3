@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 
@@ -46,6 +47,12 @@ class ClienteController extends Controller
             'sexo' => $request->sexo,
         ]);
 
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR CLIENTE';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
         // Código adicional o redireccionamiento después de guardar el cliente
 
         return redirect()->route('cliente.index')->with('info', 'Cliente creado exitosamente.');
@@ -89,6 +96,13 @@ class ClienteController extends Controller
             'ciudad' => $request->ciudad,
             'sexo' => $request->sexo,
         ]);
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR CLIENTE';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
     
         // Código adicional o redireccionamiento después de actualizar el cliente
     
@@ -101,6 +115,14 @@ class ClienteController extends Controller
     public function destroy(Cliente $cliente)
     {
         $cliente->delete();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR CLIENTE';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('cliente.index')->with('info', 'El CLIENTE se eliminó con éxito!');
     }
 }

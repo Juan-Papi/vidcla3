@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use App\Models\Posicion;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,16 @@ class PosicionController extends Controller
         $posicion = new Posicion();
         $posicion->nombre = $request->nombre;
         $posicion->save();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR POSICION';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+        
         return Redirect()->route('admin.posicion.index')->with('info', 'La POSICION se creo satisfactoriamente!');
+
     }
 
     /**
@@ -66,6 +76,14 @@ class PosicionController extends Controller
     
         $posicion->nombre = $request->nombre;
         $posicion->save();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR POSICION';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('admin.posicion.index')->with('info', 'Datos actualizados!');
     }
 
@@ -75,6 +93,14 @@ class PosicionController extends Controller
     public function destroy(Posicion $posicion)
     {
         $posicion->delete();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR POSICION';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('admin.posicion.index')->with('info', 'La POSICION se eliminó con éxito!');
     }
 }

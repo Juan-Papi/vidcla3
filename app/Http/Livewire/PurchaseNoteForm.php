@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Almacen;
+use App\Models\Bitacora;
 use App\Models\NotaCompra;
 use App\Models\Parabrisa;
 use App\Models\Proveedor;
@@ -65,6 +66,13 @@ class PurchaseNoteForm extends Component
         } else {
             $almacen->parabrisas()->attach($this->parabrisa_id, ['stock' => $this->cantidad]);
         }
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR COMPRA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
 
         return redirect()->route('admin.nota_compra.index')->with('info', 'Nota de compra creada exitosamente');
     }

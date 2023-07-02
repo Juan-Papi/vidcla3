@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use App\Models\Cliente;
 use App\Models\Telefono;
 use Illuminate\Http\Request;
@@ -40,7 +41,12 @@ class TelefonoController extends Controller
             'telefono' => $request->telefono,
         ]);
     
-        // Resto de la lógica de almacenamiento
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR TELEFONO';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
     
         return redirect()->route('telefono.index')->with('info', 'Teléfono creado exitosamente');
     }
@@ -77,7 +83,12 @@ class TelefonoController extends Controller
             'telefono' => $request->telefono,
         ]);
     
-        // Resto de la lógica de actualización
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR TELEFONO';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
     
         return redirect()->route('telefono.index')->with('info', 'Teléfono actualizado exitosamente');
     }
@@ -88,6 +99,14 @@ class TelefonoController extends Controller
     public function destroy(Telefono $telefono)
     {
         $telefono->delete();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR TELEFONO';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('telefono.index')->with('info', 'TELEFONO eliminado exitosamente!!');
     }
 }

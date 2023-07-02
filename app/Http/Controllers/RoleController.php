@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\Permission\Models\Role;
@@ -60,6 +61,13 @@ class RoleController extends Controller
         //Sabido lo anterior se deduce que es mejor usar sync
         $role->permissions()->sync($request->permissions);
 
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR ROL';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+        
         return Redirect()->route('admin.roles.index')->with('info', 'El ROL se creo satisfactoriamente!');
     }
 
@@ -98,6 +106,14 @@ class RoleController extends Controller
         $role->name = $request->name;   
         $role->permissions()->sync($request->permissions);
         $role->save();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR ROL';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return Redirect()->route('admin.roles.index')->with('info', 'Datos actualizados!');
     }
 
@@ -107,6 +123,13 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
+        
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR ROL';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
 
         return redirect()->route('admin.roles.index')->with('info', 'El Rol se elimino con éxito');
     }

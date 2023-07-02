@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Almacen;
+use App\Models\Bitacora;
 use App\Models\Cliente;
 use App\Models\Factura;
 use App\Models\NotaVenta;
@@ -200,7 +201,7 @@ class EditNotaVentaComponent extends Component
 
             // Si todo va bien, se confirma la transacción
             DB::commit();
-            return redirect()->route('nota_venta.index')->with('info', 'Venta actualizada!!');
+           /* return redirect()->route('nota_venta.index')->with('info', 'Venta actualizada!!');*/
         } catch (\Exception $e) {
             // En caso de error, se revierte la transacción
             DB::rollback();
@@ -208,6 +209,15 @@ class EditNotaVentaComponent extends Component
             // Agrega aquí el manejo de errores, por ejemplo:
             session()->flash('error', 'Ha ocurrido un error al actualizar la nota de venta: ' . $e->getMessage());
         }
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR NOTA DE VENTA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
+        return redirect()->route('nota_venta.index')->with('info', 'Venta actualizada!!');
     }
 
     public function render()

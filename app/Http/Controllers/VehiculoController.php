@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use App\Models\Marca;
 use App\Models\Vehiculo;
 use Illuminate\Http\Request;
@@ -52,6 +53,13 @@ class VehiculoController extends Controller
             'marca_id' => $request->marca_id,
         ]);
         
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR VEHICULO';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+        
         return Redirect()->route('admin.vehiculo.index')->with('info', 'El nuevo VEHICULO se creo satisfactoriamente!');
     }
 
@@ -96,6 +104,14 @@ class VehiculoController extends Controller
         $vehiculo->año = $request->año;   
         $vehiculo->marca_id = $request->marca_id;      
         $vehiculo->save();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR VEHICULO';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('admin.vehiculo.index')->with('info', 'Datos actualizados!');
 
     }
@@ -106,6 +122,14 @@ class VehiculoController extends Controller
     public function destroy(Vehiculo $vehiculo)
     {
         $vehiculo->delete();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR VEHICULO';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+        
         return redirect()->route('admin.vehiculo.index')->with('info', 'El VEHICULO se eliminó con éxito!');
     }
 }

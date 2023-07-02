@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use App\Models\Personal;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -48,6 +49,13 @@ class PersonalController extends Controller
     
         $personal = new Personal($validatedData);
         $personal->save();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR PERSONAL';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
     
         return redirect()->route('personal.index')
             ->with('info', 'Personal creado exitosamente.');
@@ -109,7 +117,14 @@ class PersonalController extends Controller
     
         // Actualizar el Personal con los datos del request
         $personal->update($request->except('user_id'));
-    
+        
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR PERSONAL';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('personal.index')->with('info', 'Personal actualizado exitosamente');
     }
 
@@ -119,6 +134,14 @@ class PersonalController extends Controller
     public function destroy(Personal $personal)
     {
         $personal->delete();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR PERSONAL';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+        
         return redirect()->route('personal.index')
             ->with('info', 'Personal eliminado exitosamente.');
     }

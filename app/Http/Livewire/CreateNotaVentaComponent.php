@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Almacen;
+use App\Models\Bitacora;
 use App\Models\Cliente;
 use App\Models\Factura;
 use App\Models\NotaVenta;
@@ -68,8 +69,8 @@ class CreateNotaVentaComponent extends Component
     {
         $this->total = 0;
         foreach ($this->lineasVenta as $index => $lineaVenta) {
-            if (isset($lineaVenta['cantidad'], $lineaVenta['precio_venta'])) {//cond. para que reconozca al 0(el valor)
-                $cantidad = floatval($lineaVenta['cantidad']);//convertido a float para evitar error string*string
+            if (isset($lineaVenta['cantidad'], $lineaVenta['precio_venta'])) { //cond. para que reconozca al 0(el valor)
+                $cantidad = floatval($lineaVenta['cantidad']); //convertido a float para evitar error string*string
                 $precioVenta = floatval($lineaVenta['precio_venta']);
                 $this->lineasVenta[$index]['importe'] = $cantidad * $precioVenta;
                 $this->total += $this->lineasVenta[$index]['importe'];
@@ -155,7 +156,7 @@ class CreateNotaVentaComponent extends Component
 
             // Si todo va bien, se confirma la transacción
             DB::commit();
-            return redirect()->route('nota_venta.index')->with('info', 'Nueva venta registrada!!');
+            /*return redirect()->route('nota_venta.index')->with('info', 'Nueva venta registrada!!');*/
         } catch (\Exception $e) {
             // En caso de error, se revierte la transacción
             DB::rollback();
@@ -163,6 +164,14 @@ class CreateNotaVentaComponent extends Component
             // Agrega aquí el manejo de errores, por ejemplo:
             session()->flash('error', 'Ha ocurrido un error al crear la nota de venta: ' . $e->getMessage());
         }
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR NOTA DE VENTA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+        return redirect()->route('nota_venta.index')->with('info', 'Nueva venta registrada!!');
     }
 
     public function render()

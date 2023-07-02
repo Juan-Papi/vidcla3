@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Almacen;
+use App\Models\Bitacora;
 use App\Models\NotaCompra;
 use App\Models\Proveedor;
 
@@ -53,6 +54,13 @@ class AdminNotaCompra extends Component
         // Ahora puedes eliminar la NotaCompra
         $compra->delete();
 
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR COMPRA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+        
         return back()->with('info', 'Nota de Compra eliminada y stock actualizado exitosamente.');
     }
     public function descargarPDF()

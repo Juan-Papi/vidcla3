@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 
@@ -37,6 +38,12 @@ class CategoriaController extends Controller
         $categoria->nombre = $request->nombre;
         $categoria->save();
 
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR CATEGORIA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
         
         return Redirect()->route('admin.categoria.index')->with('info', 'La CATEGORIA se creo satisfactoriamente!');
     }
@@ -69,6 +76,14 @@ class CategoriaController extends Controller
         $categoria->nombre = $request->nombre;
         $categoria->save();
         
+        $bitacora = new Bitacora();
+
+        $bitacora->accion = '***ACTUALIZAR CATEGORIA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('admin.categoria.index')->with('info', 'Datos actualizados!');
     }
 
@@ -78,6 +93,14 @@ class CategoriaController extends Controller
     public function destroy(Categoria $categoria)
     {
         $categoria->delete();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR CATEGORIA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('admin.categoria.index')->with('info', 'La CATEGORIA se eliminó con éxito!');
     }
 }

@@ -103,6 +103,7 @@ class NotaCompraController extends Controller
      */
     public function destroy(NotaCompra $nota_compra)
     {
+        //Ya no esta en uso porque estamos trabajandolo con componentes livewire
         $nota_compra->delete();
         return redirect()->route('admin.nota_compra.index')->with('info', 'Nota de compra eliminada!');
     }

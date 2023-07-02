@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Almacen;
+use App\Models\Bitacora;
 use App\Models\NotaCompra;
 use App\Models\Parabrisa;
 use App\Models\Proveedor;
@@ -110,7 +111,14 @@ class EditPurchaseNoteForm extends Component
             // Si no, asocia el Parabrisa con el Almacén y establece el stock inicial
             $almacen->parabrisas()->attach($this->parabrisa_id, ['stock' => $this->cantidad]);
         }
-
+        
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR COMPRA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+        
         return redirect()->route('admin.nota_compra.index')->with('info', 'Nota de compra actualizada exitosamente');
     }
 

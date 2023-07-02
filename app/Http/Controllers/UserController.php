@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -36,6 +37,13 @@ class UserController extends Controller
 
         User::create($data);
 
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR USUARIO';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('admin.users.index')->with('info', 'El nuevo USUARIO se creo satisfactoriamente!');
     }
     public function rol(User $user)
@@ -53,7 +61,14 @@ class UserController extends Controller
     {
         $user->roles()->sync($request->roles);
         //return redirect()->route('admin.users.rol', $user);
-        return redirect()->route('admin.users.index', $user)->with('info', 'ASIGNACION DE ROLES.');;
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'QQQ ASIGNACION DE ROLES';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+        return redirect()->route('admin.users.index', $user)->with('info', 'ASIGNACION DE ROLES.');
+       
     }
     public function update(Request $request, User $user)
     {
@@ -72,11 +87,25 @@ class UserController extends Controller
 
         $user->update($data);
 
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR USUARIO';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('admin.users.index')->with('info', 'USUARIO actualizado exitosamente.');
     }
     public function destroy(User $user)
     {
         $user->delete();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR USUARIO';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
 
         return redirect()->route('admin.users.index')->with('info', 'Usuario eliminado exitosamente.');
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use App\Models\Categoria;
 use App\Models\Parabrisa;
 use App\Models\Posicion;
@@ -65,6 +66,13 @@ class ParabrisaController extends Controller
         // Guardar el nuevo parabrisa en la base de datos
         $parabrisa->save();
 
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR PARABRISA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+        
         // Redireccionar a una página de éxito o mostrar un mensaje
         return redirect()->route('admin.parabrisa.index')->with('info', 'El nuevo PARABRISA se creo satisfactoriamente!');
     
@@ -122,6 +130,13 @@ class ParabrisaController extends Controller
         // Actualizando informacion
         $parabrisa->save();
 
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR PARABRISA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         // Redireccionar a una página de éxito o mostrar un mensaje
         return redirect()->route('admin.parabrisa.index')->with('info', 'Datos actualizados!');
     }
@@ -132,6 +147,14 @@ class ParabrisaController extends Controller
     public function destroy(Parabrisa $parabrisa)
     {
         $parabrisa->delete();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR PARABRISA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('admin.parabrisa.index')->with('info', 'El PARABRISA se eliminó con éxito!');
     }
 }

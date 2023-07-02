@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 
@@ -36,6 +37,13 @@ class MarcaController extends Controller
         $marca = new Marca();
         $marca->nombre = $request->nombre;
         $marca->save();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '+++CREAR MARCA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
     
         return redirect()->route('admin.marca.index')->with('info', '¡La MARCA se creó satisfactoriamente!');
     }
@@ -67,6 +75,13 @@ class MarcaController extends Controller
     
         $marca->nombre = $request->nombre;
         $marca->save();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = '***ACTUALIZAR MARCA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
     
         return redirect()->route('admin.marca.index')->with('info', '¡La MARCA se actualizó satisfactoriamente!');
     }
@@ -77,6 +92,14 @@ class MarcaController extends Controller
     public function destroy(Marca $marca)
     {
         $marca->delete();
+
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR MARCA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
+
         return redirect()->route('admin.marca.index')->with('info', 'La MARCA se eliminó con éxito!');
     }
 }

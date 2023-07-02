@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Almacen;
+use App\Models\Bitacora;
 use App\Models\Cliente;
 use App\Models\Factura;
 use App\Models\NotaVenta;
@@ -96,6 +97,13 @@ class NotaVentaComponent extends Component
             // Agrega aquí el manejo de errores, por ejemplo:
             session()->flash('error', 'Ha ocurrido un error al eliminar la venta: ' . $e->getMessage());
         }
+        
+        $bitacora = new Bitacora();
+        $bitacora->accion = 'XXX ELIMINAR VENTA';
+        $bitacora->fecha_hora = now();
+        $bitacora->fecha = now()->format('Y-m-d');
+        $bitacora->user_id = auth()->id();
+        $bitacora->save();
 
         // Recarga la página para actualizar la lista de ventas
         return redirect()->route('nota_venta.index')->with('info', 'Venta eliminada correctamente');
