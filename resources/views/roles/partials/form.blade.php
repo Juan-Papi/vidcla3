@@ -35,11 +35,16 @@ var llamada message --}}
     <br>
 @enderror
 
-@foreach ($permissions as $permission)
-    <div>
-        <label>
-            {!! Form::checkbox('permissions[]', $permission->id, null, ['class' => 'mr-1']) !!}
-            {{ $permission->name }}
-        </label>
-    </div>
-@endforeach
+<div class="row">
+    @foreach ($permissions as $permission)
+        <div class="col-md-4">
+            <div class="form-check">
+                <label class="form-check-label">
+                    {!! Form::checkbox('permissions[]', $permission->id, null, ['class' => 'form-check-input']) !!}
+                    {{ $permission->name }}
+                </label>
+            </div>
+        </div>
+    @endforeach
+</div>
+
