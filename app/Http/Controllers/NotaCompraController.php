@@ -11,9 +11,12 @@ use PDF;
 
 class NotaCompraController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('can:Listar compras')->only('index');
+        $this->middleware('can:Editar compras')->only('edit');
+        $this->middleware('can:Crear compras')->only('create');
+    }
     public function index()
     {
         return view('nota-compra.index');

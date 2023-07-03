@@ -8,9 +8,13 @@ use Illuminate\Http\Request;
 
 class ProveedorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('can:Listar proveedor')->only('index');
+        $this->middleware('can:Editar proveedor')->only('edit', 'update');
+        $this->middleware('can:Crear proveedor')->only('create', 'store');
+        $this->middleware('can:Eliminar proveedor')->only('destroy');
+    }
     public function index()
     {
         return view('proveedor.index');

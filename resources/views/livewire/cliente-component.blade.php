@@ -52,14 +52,16 @@
                                     <a class="btn btn-primary"
                                         href="{{ route('cliente.edit', $cliente) }}">Editar/Ver</a>
                                 </td>
-                                <td width="10px">
-                                    {{-- el form es necesario para cuando queremos eliminar por eso no pusimos la etiqueta <a href=""></a> --}}
-                                    <form action="{{ route('cliente.destroy', $cliente) }}" method="POST">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-danger" type="submit">Eliminar</button>
-                                    </form>
-                                </td>
+                                @can('Eliminar cliente')
+                                    <td width="10px">
+                                        {{-- el form es necesario para cuando queremos eliminar por eso no pusimos la etiqueta <a href=""></a> --}}
+                                        <form action="{{ route('cliente.destroy', $cliente) }}" method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-danger" type="submit">Eliminar</button>
+                                        </form>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>

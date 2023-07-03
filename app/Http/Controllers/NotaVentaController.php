@@ -8,9 +8,12 @@ use PDF;
 
 class NotaVentaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('can:Listar ventas')->only('index');
+        $this->middleware('can:Editar ventas')->only('edit');
+        $this->middleware('can:Crear ventas')->only('create');
+    }
     public function index()
     {
         return view('nota-venta.index');

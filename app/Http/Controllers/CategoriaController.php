@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __construct()
+    {
+        $this->middleware('can:Listar categoria')->only('index');
+        $this->middleware('can:Editar categoria')->only('edit', 'update');
+        $this->middleware('can:Crear categoria')->only('create', 'store');
+        $this->middleware('can:Eliminar categoria')->only('destroy');
+    }
     public function index()
     {
         $categorias = Categoria::all();

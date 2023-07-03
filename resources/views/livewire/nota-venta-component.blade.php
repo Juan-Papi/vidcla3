@@ -58,7 +58,7 @@
                     <input wire:model="hasta" type="date" class="form-control" id="hasta">
                 </div>
             </div>
-            
+
 
             <!-- Botones -->
             <div class="row mt-3">
@@ -89,10 +89,11 @@
     {{-- Tablas --}}
     <div class="card">
 
-
-        <div class="card-header">
-            <a class="btn btn-info" href="{{ route('nota_venta.create') }}">NUEVA VENTA</a>
-        </div>
+        @can('Crear ventas')
+            <div class="card-header">
+                <a class="btn btn-info" href="{{ route('nota_venta.create') }}">NUEVA VENTA</a>
+            </div>
+        @endcan
 
         @if ($nota_ventas->count())
             <div class="card-body">
@@ -136,15 +137,18 @@
                                 </td>
 
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}
-
-                                <td width="10px">
-                                    <a class="btn btn-primary"
-                                        href="{{ route('nota_venta.edit', $nota_venta->id) }}">Edit</a>
-                                </td>
-                                <td width="10px">
-                                    <button class="btn btn-danger" type="button"
-                                        onclick="confirmDelete({{ $nota_venta->id }})">Del</button>
-                                </td>
+                                @can('Editar ventas')
+                                    <td width="10px">
+                                        <a class="btn btn-primary"
+                                            href="{{ route('nota_venta.edit', $nota_venta->id) }}">Edit</a>
+                                    </td>
+                                @endcan
+                                @can('Eliminar ventas')
+                                    <td width="10px">
+                                        <button class="btn btn-danger" type="button"
+                                            onclick="confirmDelete({{ $nota_venta->id }})">Del</button>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>

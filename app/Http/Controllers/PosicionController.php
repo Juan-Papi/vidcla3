@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 
 class PosicionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __construct()
+    {
+        $this->middleware('can:Listar posicion')->only('index');
+        $this->middleware('can:Editar posicion')->only('edit', 'update');
+        $this->middleware('can:Crear posicion')->only('create', 'store');
+        $this->middleware('can:Eliminar posicion')->only('destroy');
+    }
+
     public function index()
     {
         $posiciones = Posicion::all();
@@ -33,7 +39,7 @@ class PosicionController extends Controller
         $request->validate([
             'nombre' => 'required|unique:posicions'
         ]);
-    
+
         $posicion = new Posicion();
         $posicion->nombre = $request->nombre;
         $posicion->save();
@@ -44,9 +50,8 @@ class PosicionController extends Controller
         $bitacora->fecha = now()->format('Y-m-d');
         $bitacora->user_id = auth()->id();
         $bitacora->save();
-        
-        return Redirect()->route('admin.posicion.index')->with('info', 'La POSICION se creo satisfactoriamente!');
 
+        return Redirect()->route('admin.posicion.index')->with('info', 'La POSICION se creo satisfactoriamente!');
     }
 
     /**
@@ -71,9 +76,9 @@ class PosicionController extends Controller
     public function update(Request $request, Posicion $posicion)
     {
         $request->validate([
-            'nombre' => 'required|unique:posicions,nombre,'.$posicion->id
+            'nombre' => 'required|unique:posicions,nombre,' . $posicion->id
         ]);
-    
+
         $posicion->nombre = $request->nombre;
         $posicion->save();
 

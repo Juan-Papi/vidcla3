@@ -76,7 +76,7 @@
                 placeholder="Escriba un nombre ..." type="text">
         </div> --}}
         <div class="card-header">
-            <a class="btn btn-secondary" href="{{ route('admin.nota_compra.create') }}">NUEVA COMPRA</a>
+            <a class="btn btn-info" href="{{ route('admin.nota_compra.create') }}">NUEVA COMPRA</a>
         </div>
 
         @if ($nota_compras->count())

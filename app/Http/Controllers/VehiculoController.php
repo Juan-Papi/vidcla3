@@ -9,9 +9,14 @@ use Illuminate\Http\Request;
 
 class VehiculoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __construct()
+    {
+        $this->middleware('can:Listar vehiculo')->only('index');
+        $this->middleware('can:Editar vehiculo')->only('edit', 'update');
+        $this->middleware('can:Crear vehiculo')->only('create', 'store');
+        $this->middleware('can:Eliminar vehiculo')->only('destroy');
+    }
     public function index()
     {
         return view('vehiculos.index');
@@ -23,7 +28,7 @@ class VehiculoController extends Controller
     public function create()
     {
         $marcas = Marca::all();
-        return view('vehiculos.create',compact('marcas'));
+        return view('vehiculos.create', compact('marcas'));
     }
 
     /**
@@ -32,34 +37,34 @@ class VehiculoController extends Controller
     public function store(Request $request)
     {
         $messages = [
-           
+
             'matricula.unique' => 'La matrícula ya está en uso.',
             'descripcion.required' => 'El campo Descripción es obligatorio.',
             'año.required' => 'El campo Año es obligatorio.',
             'marca_id.required' => 'Debe seleccionar una marca.',
         ];
-        
+
         $request->validate([
-            
+
             'descripcion' => 'required',
             'año' => 'required',
             'marca_id' => 'required',
         ], $messages);
-        
-      
+
+
         $vehiculo = Vehiculo::create([
             'año' => $request->año,
             'descripcion' => $request->descripcion,
             'marca_id' => $request->marca_id,
         ]);
-        
+
         $bitacora = new Bitacora();
         $bitacora->accion = '+++CREAR VEHICULO';
         $bitacora->fecha_hora = now();
         $bitacora->fecha = now()->format('Y-m-d');
         $bitacora->user_id = auth()->id();
         $bitacora->save();
-        
+
         return Redirect()->route('admin.vehiculo.index')->with('info', 'El nuevo VEHICULO se creo satisfactoriamente!');
     }
 
@@ -68,7 +73,7 @@ class VehiculoController extends Controller
      */
     public function show(Marca $marca)
     {
-        return view('vehiculos.show',compact('marca'));
+        return view('vehiculos.show', compact('marca'));
     }
 
     /**
@@ -86,23 +91,23 @@ class VehiculoController extends Controller
     public function update(Request $request, Vehiculo $vehiculo)
     {
         $messages = [
-            
+
             'matricula.unique' => 'La matrícula ya está en uso.',
             'descripcion.required' => 'El campo Descripción es obligatorio.',
             'año.required' => 'El campo Año es obligatorio.',
             'marca_id.required' => 'Debe seleccionar una marca.',
         ];
-        
+
         $request->validate([
             'descripcion' => 'required',
             'año' => 'required',
             'marca_id' => 'required',
         ], $messages);
 
-  
-        $vehiculo->descripcion = $request->descripcion; 
-        $vehiculo->año = $request->año;   
-        $vehiculo->marca_id = $request->marca_id;      
+
+        $vehiculo->descripcion = $request->descripcion;
+        $vehiculo->año = $request->año;
+        $vehiculo->marca_id = $request->marca_id;
         $vehiculo->save();
 
         $bitacora = new Bitacora();
@@ -113,7 +118,6 @@ class VehiculoController extends Controller
         $bitacora->save();
 
         return redirect()->route('admin.vehiculo.index')->with('info', 'Datos actualizados!');
-
     }
 
     /**
@@ -129,7 +133,7 @@ class VehiculoController extends Controller
         $bitacora->fecha = now()->format('Y-m-d');
         $bitacora->user_id = auth()->id();
         $bitacora->save();
-        
+
         return redirect()->route('admin.vehiculo.index')->with('info', 'El VEHICULO se eliminó con éxito!');
     }
 }

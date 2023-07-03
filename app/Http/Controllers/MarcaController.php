@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 
 class MarcaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __construct()
+    {
+        $this->middleware('can:Listar marca')->only('index');
+        $this->middleware('can:Editar marca')->only('edit', 'update');
+        $this->middleware('can:Crear marca')->only('create', 'store');
+        $this->middleware('can:Eliminar marca')->only('destroy');
+    }
+
     public function index()
     {
         $marcas = Marca::all();

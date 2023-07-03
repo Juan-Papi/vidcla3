@@ -11,9 +11,13 @@ use Illuminate\Http\Request;
 
 class ParabrisaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('can:Listar parabrisa')->only('index');
+        $this->middleware('can:Editar parabrisa')->only('edit', 'update');
+        $this->middleware('can:Crear parabrisa')->only('create', 'store');
+        $this->middleware('can:Eliminar parabrisa')->only('destroy');
+    }
     public function index()
     {
         return view('parabrisas.index');

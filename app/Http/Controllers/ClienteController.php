@@ -8,9 +8,13 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('can:Listar cliente')->only('index');
+        $this->middleware('can:Editar cliente')->only('edit', 'update');
+        $this->middleware('can:Crear cliente')->only('create', 'store');
+        $this->middleware('can:Eliminar cliente')->only('destroy');
+    }
     public function index()
     {
         return view('cliente.index');
@@ -80,14 +84,14 @@ class ClienteController extends Controller
     public function update(Request $request, Cliente $cliente)
     {
         $request->validate([
-            'carnet' => 'required|integer|unique:clientes,carnet,'.$cliente->id,
+            'carnet' => 'required|integer|unique:clientes,carnet,' . $cliente->id,
             'nombre' => 'required',
             'materno' => 'required',
             'paterno' => 'required',
             'ciudad' => 'required',
             'sexo' => 'required',
         ]);
-    
+
         $cliente->update([
             'carnet' => $request->carnet,
             'nombre' => $request->nombre,
@@ -103,9 +107,9 @@ class ClienteController extends Controller
         $bitacora->fecha = now()->format('Y-m-d');
         $bitacora->user_id = auth()->id();
         $bitacora->save();
-    
+
         // Código adicional o redireccionamiento después de actualizar el cliente
-    
+
         return redirect()->route('cliente.index')->with('info', 'Cliente actualizado exitosamente.');
     }
 

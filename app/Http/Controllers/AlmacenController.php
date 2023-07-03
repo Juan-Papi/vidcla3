@@ -9,9 +9,13 @@ use PDF;
 
 class AlmacenController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('can:Listar almacen')->only('index');
+        $this->middleware('can:Editar almacen')->only('edit', 'update');
+        $this->middleware('can:Crear almacen')->only('create', 'store');
+        $this->middleware('can:Eliminar almacen')->only('destroy');
+    }
     public function index()
     {
         return view('almacen.index');

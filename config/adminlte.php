@@ -324,12 +324,12 @@ return [
             'label'       => 4,
             'label_color' => 'success',
         ],*/
-        ['header' => 'account_settings'],
+       /* ['header' => 'account_settings'],
         [
             'text' => 'profile',
             'route'  => 'profile.show',
             'icon' => 'fas fa-fw fa-user',
-        ],
+        ],*/
         /* [
             'text' => 'change_password',
             'url'  => 'admin/settings',
@@ -375,13 +375,8 @@ return [
         [
             'text'    => 'Administrar ventas',
             'icon'    => 'fas fa-fw fa-chart-line',
+            'can' => 'Administrar ventas',
             'submenu' => [
-                /* [
-                    'text' => 'Nota de venta',
-                    'route'  => 'admin.users.index',
-                    'icon'    => 'fas fa-fw fa-receipt',
-                    'active' => ['users*'], //extra para los botones sidevar relacionados
-                ],*/
                 [
                     'text' => 'Nota de venta',
                     'icon'    => 'fas fa-fw fa-receipt',
@@ -406,12 +401,14 @@ return [
                     'icon'    => 'fas fa-fw fa-users',
                     'route'  => 'cliente.index',
                     'active' => ['cliente*'], //extra para los botones sidevar relacionados
+                    'can' => 'Listar cliente',
                 ],
                 [
                     'text' => 'Telefonos',
                     'icon'    => 'fas fa-fw fa-phone',
                     'route'  => 'telefono.index',
                     'active' => ['telefono*'], //extra para los botones sidevar relacionados
+                    'can' => 'Listar telefono',
                 ],
 
             ],
@@ -419,6 +416,7 @@ return [
         [
             'text'    => 'Administrar compras',
             'icon'    => 'fas fa-fw fa-tags',
+            'can' => 'Administrar compras',
             'submenu' => [
 
                 [
@@ -426,18 +424,21 @@ return [
                     'icon'    => 'fas fa-fw fa-file-invoice',
                     'route'  => 'admin.nota_compra.index',
                     'active' => ['nota_compra*'], //extra para los botones sidevar relacionados
+                    'can' => 'Listar compras',
                 ],
                 [
                     'text' => 'Almacen',
                     'icon'    => 'fas fa-fw fa-cube',
                     'route'  => 'admin.almacen.index',
                     'active' => ['almacen*'], //extra para los botones sidevar relacionados
+                    'can' => 'Listar almacen',
                 ],
                 [
                     'text' => 'Proveedor',
                     'icon'    => 'fas fa-fw fa-cogs',
                     'route'  => 'admin.proveedor.index',
                     'active' => ['proveedor*'], //extra para los botones sidevar relacionados
+                    'can' => 'Listar proveedor',
                 ],
 
 
@@ -446,24 +447,28 @@ return [
         [
             'text'    => 'Administrar Inventario',
             'icon'    => 'fas fa-fw fa-warehouse',
+            'can' => 'Administrar inventario',
             'submenu' => [
                 [
                     'text' => 'Parabrisa',
                     'route'  => 'admin.parabrisa.index',
                     'icon'    => 'fas fa-fw fa-glass-whiskey',
                     'active' => ['parabrisa*'], //extra para los botones sidevar relacionados
+                    'can' => 'Listar parabrisa',
                 ],
                 [
                     'text' => 'Posicion',
                     'route'  => 'admin.posicion.index',
                     'icon'    => 'fas fa-fw fa-glass-whiskey',
                     'active' => ['posicion*'], //extra para los botones sidevar relacionados
+                    'can' => 'Listar posicion',
                 ],
                 [
                     'text' => 'Categoria',
                     'route'  => 'admin.categoria.index',
                     'icon'    => 'fas fa-fw fa-box-open',
                     'active' => ['categoria*'], //extra para los botones sidevar relacionados
+                    'can' => 'Listar categoria',
                 ],
 
                 [
@@ -471,12 +476,14 @@ return [
                     'icon'    => 'fas fa-fw fa-list-alt',
                     'route'  => 'admin.marca.index',
                     'active' => ['marca*'], //extra para los botones sidevar relacionados
+                    'can' => 'Listar marca',
                 ],
                 [
                     'text' => 'Vehiculo',
                     'icon'    => 'fas fa-fw fa-car',
                     'route'  => 'admin.vehiculo.index',
                     'active' => ['vehiculo*'], //extra para los botones sidevar relacionados
+                    'can' => 'Listar vehiculo',
                 ],
 
             ],

@@ -11,9 +11,11 @@
             <input wire:keydown="limpiar_page" wire:model="buscar" class="form-control w-100"
                 placeholder="Escriba un nombre ..." type="text">
         </div> --}}
-        <div class="card-header">
-            <a class="btn btn-secondary" href="{{ route('admin.almacen.create') }}">NUEVO ALMACEN</a>
-        </div>
+        @can('Crear almacen')
+            <div class="card-header">
+                <a class="btn btn-secondary" href="{{ route('admin.almacen.create') }}">NUEVO ALMACEN</a>
+            </div>
+        @endcan
 
         @if ($almacens->count())
             <div class="card-body">
@@ -56,18 +58,24 @@
                                         href="{{ route('almacen.pdf', $almacen->id) }}">PDF</a>
                                 </td>
 
-                                <td width="10px">
-                                    <a class="btn btn-primary"
-                                        href="{{ route('admin.almacen.edit', $almacen) }}">Editar</a>
-                                </td>
-                                <td width="10px">
-                                    {{-- el form es necesario para cuando queremos eliminar por eso no pusimos la etiqueta <a href=""></a> --}}
-                                    <form action="{{ route('admin.almacen.destroy', $almacen) }}" method="POST">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-danger" type="submit">Eliminar</button>
-                                    </form>
-                                </td>
+                                @can('Editar almacen')
+                                    <td width="10px">
+                                        <a class="btn btn-primary"
+                                            href="{{ route('admin.almacen.edit', $almacen) }}">Editar</a>
+                                    </td>
+                                @endcan
+
+                                @can('Eliminar almacen')
+                                    <td width="10px">
+                                        {{-- el form es necesario para cuando queremos eliminar por eso no pusimos la etiqueta <a href=""></a> --}}
+                                        <form action="{{ route('admin.almacen.destroy', $almacen) }}" method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-danger" type="submit">Eliminar</button>
+                                        </form>
+                                    </td>
+                                @endcan
+
                             </tr>
                         @endforeach
                     </tbody>
