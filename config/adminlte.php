@@ -339,6 +339,7 @@ return [
         [
             'text'    => 'Administrar usuarios',
             'icon'    => 'fas fa-fw fa-users',
+            'can' => 'Administrar usuarios',
             'submenu' => [
                 [
                     'text' => 'Usuarios',
@@ -360,14 +361,14 @@ return [
                     'route'  => 'personal.index',
                     'icon'    => 'fas fa-fw fa-briefcase',
                     'active' => ['personal*'], //extra para los botones sidevar relacionados
-                    //'can' => 'Listar usuarios',
+                    'can' => 'Listar personal',
                 ],
                 [
                     'text' => 'Bitacora',
                     'route'  => 'bitacora.index',
                     'icon'    => 'fas fa-fw fa-book',
                     'active' => ['bitacora*'], //extra para los botones sidevar relacionados
-                    //'can' => 'Listar usuarios',
+                    'can' => 'Listar bitacora',
                 ],
             ],
         ],

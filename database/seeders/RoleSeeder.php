@@ -14,10 +14,10 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $role = Role::create(['name' => 'Administrador']);
-        $role->permissions()->sync([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+        $role->permissions()->sync([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,12,13,14,15,16,17,18,19]);
 
         //Otra forma de agregar permisos con nombres
         $role = Role::create(['name' => 'Ejecutivo de ventas']);
-        $role->syncPermissions(['Crear ventas', 'Listar ventas']);
+        $role->syncPermissions(['Crear ventas', 'Listar ventas','Ver dashboard']);
     }
 }

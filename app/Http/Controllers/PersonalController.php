@@ -9,9 +9,13 @@ use Illuminate\Http\Request;
 
 class PersonalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('can:Listar personal')->only('index');
+        $this->middleware('can:Editar personal')->only('edit', 'update');
+        $this->middleware('can:Crear personal')->only('create', 'store');
+        $this->middleware('can:Eliminar personal')->only('destroy');
+    }
     public function index()
     {
         return view('personal.index');
@@ -46,7 +50,7 @@ class PersonalController extends Controller
             'ciudad' => 'required|string|max:255',
             'user_id' => 'nullable|exists:users,id',
         ]);
-    
+
         $personal = new Personal($validatedData);
         $personal->save();
 
@@ -56,7 +60,7 @@ class PersonalController extends Controller
         $bitacora->fecha = now()->format('Y-m-d');
         $bitacora->user_id = auth()->id();
         $bitacora->save();
-    
+
         return redirect()->route('personal.index')
             ->with('info', 'Personal creado exitosamente.');
     }
@@ -66,7 +70,6 @@ class PersonalController extends Controller
      */
     public function show(Personal $personal)
     {
-        
     }
 
     /**
@@ -74,10 +77,10 @@ class PersonalController extends Controller
      */
     public function edit(Personal $personal)
     {
-      // Consigue todos los usuarios que no tienen un personal asignado o son el usuario actual del personal que estamos editando
-    $users = User::doesntHave('personal')->orWhere('id', $personal->user_id)->get();
+        // Consigue todos los usuarios que no tienen un personal asignado o son el usuario actual del personal que estamos editando
+        $users = User::doesntHave('personal')->orWhere('id', $personal->user_id)->get();
 
-    return view('personal.edit', compact('personal', 'users'));
+        return view('personal.edit', compact('personal', 'users'));
     }
 
     /**
@@ -97,16 +100,16 @@ class PersonalController extends Controller
             'ciudad' => 'required|string',
             'user_id' => 'nullable|exists:users,id|unique:personals,user_id,' . $personal->id
         ]);
-    
+
         // Si el user_id del request es diferente al user_id actual del Personal
         if ($request->user_id != $personal->user_id) {
-    
+
             // Si el Personal actual tiene un User asociado, desasociar
             if ($personal->user) {
                 $personal->user()->dissociate();
                 $personal->save();
             }
-    
+
             // Si se proporcionó un user_id en el request, encontrar ese User y asociarlo con este Personal
             if ($request->user_id) {
                 $user = User::find($request->user_id);
@@ -114,10 +117,10 @@ class PersonalController extends Controller
                 $personal->save();
             }
         }
-    
+
         // Actualizar el Personal con los datos del request
         $personal->update($request->except('user_id'));
-        
+
         $bitacora = new Bitacora();
         $bitacora->accion = '***ACTUALIZAR PERSONAL';
         $bitacora->fecha_hora = now();
@@ -141,7 +144,7 @@ class PersonalController extends Controller
         $bitacora->fecha = now()->format('Y-m-d');
         $bitacora->user_id = auth()->id();
         $bitacora->save();
-        
+
         return redirect()->route('personal.index')
             ->with('info', 'Personal eliminado exitosamente.');
     }

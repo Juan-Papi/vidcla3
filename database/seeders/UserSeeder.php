@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
             ],
             //nro 4
             [
-                'name' => 'Carlinchi fjdsaklf',
+                'name' => 'Carlinchi Rojas',
                 'email' => 'carl123@gmail.com',
                 'password' => bcrypt('password123')
             ],
@@ -74,5 +74,11 @@ class UserSeeder extends Seeder
             'email'=>'pablojuan123sc@gmail.com',
             'password'=>bcrypt(12345678)
         ])->assignRole('Administrador');
+
+        User::create([
+            'name'=>'Pedro Fernandez',
+            'email'=>'pedrofer123sc@gmail.com',
+            'password'=>bcrypt(12345678)
+        ])->assignRole('Ejecutivo de ventas');
     }
 }
