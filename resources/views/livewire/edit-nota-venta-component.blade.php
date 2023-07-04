@@ -24,7 +24,7 @@
                     </div>
 
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="cliente_id">Cliente: </label>
@@ -37,7 +37,7 @@
                             @endif
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 @foreach ($lineasVenta as $index => $lineaVenta)
                     <div class="row mt-3">
@@ -103,7 +103,7 @@
                             <i class="fas fa-plus"></i>
                         </span>Add</button>
                 </div>
-                <div class="row mt-3">
+                {{-- <div class="row mt-3">
                     <div class="col-md-6">
                         <label for="factura">Factura? </label>
                         <select class="form-control" wire:model="factura">
@@ -118,7 +118,7 @@
                             <input type="text" class="form-control" placeholder="Ingrese el NIT..." wire:model="nit">
                         </div>
                     @endif
-                </div>
+                </div> --}}
 
                 <div class="row mt-3">
                     <div class="col-md-6">
