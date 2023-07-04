@@ -156,7 +156,15 @@ class CreateNotaVentaComponent extends Component
 
             // Si todo va bien, se confirma la transacción
             DB::commit();
-            /*return redirect()->route('nota_venta.index')->with('info', 'Nueva venta registrada!!');*/
+
+            $bitacora = new Bitacora();
+            $bitacora->accion = '+++CREAR NOTA DE VENTA';
+            $bitacora->fecha_hora = now();
+            $bitacora->fecha = now()->format('Y-m-d');
+            $bitacora->user_id = auth()->id();
+            $bitacora->save();
+            
+            return redirect()->route('nota_venta.index')->with('info', 'Nueva venta registrada!!');
         } catch (\Exception $e) {
             // En caso de error, se revierte la transacción
             DB::rollback();
@@ -165,13 +173,7 @@ class CreateNotaVentaComponent extends Component
             session()->flash('error', 'Ha ocurrido un error al crear la nota de venta: ' . $e->getMessage());
         }
 
-        $bitacora = new Bitacora();
-        $bitacora->accion = '+++CREAR NOTA DE VENTA';
-        $bitacora->fecha_hora = now();
-        $bitacora->fecha = now()->format('Y-m-d');
-        $bitacora->user_id = auth()->id();
-        $bitacora->save();
-        return redirect()->route('nota_venta.index')->with('info', 'Nueva venta registrada!!');
+       // return redirect()->route('nota_venta.index')->with('info', 'Nueva venta registrada!!');
     }
 
     public function render()

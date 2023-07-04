@@ -137,7 +137,7 @@
                                 </td>
 
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}
-                                @can('Editar ventas')
+                                @can('Actualizar ventas')
                                     <td width="10px">
                                         <a class="btn btn-primary"
                                             href="{{ route('nota_venta.edit', $nota_venta->id) }}">Edit</a>
