@@ -18,13 +18,13 @@
                         <tr>
                             <th>Carnet</th>
                             <th>Nombre</th>
-                            <th>Materno</th>
                             <th>Paterno</th>
+                            <th>Materno</th>
                             <th>Sexo</th>
                             <th>Cargo</th>
                             <th>Estado</th>
-                            <th>País</th>
-                            <th>Ciudad</th>
+                            {{-- <th>País</th> --}}
+                            {{-- <th>Ciudad</th> --}}
                             <th>Usuario</th>
                             <th colspan="2"></th>
                         </tr>
@@ -34,13 +34,13 @@
                             <tr>
                                 <td>{{ $personal->carnet }}</td>
                                 <td>{{ $personal->nombre }}</td>
-                                <td>{{ $personal->materno }}</td>
                                 <td>{{ $personal->paterno }}</td>
+                                <td>{{ $personal->materno }}</td>
                                 <td>{{ $personal->sexo }}</td>
                                 <td>{{ $personal->cargo }}</td>
                                 <td>{{ $personal->estado }}</td>
-                                <td>{{ $personal->pais }}</td>
-                                <td>{{ $personal->ciudad }}</td>
+                                {{-- <td>{{ $personal->pais }}</td> --}}
+                                {{-- <td>{{ $personal->ciudad }}</td> --}}
                                 <td>
                                     @if($personal->user)
                                         {{ $personal->user->name }}
