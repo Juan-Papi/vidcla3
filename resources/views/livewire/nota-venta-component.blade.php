@@ -135,18 +135,27 @@
                                 <td>
                                     ID: {{ $nota_venta->almacen->id }}, {{ $nota_venta->almacen->nombre }}
                                 </td>
+                                {{-- para que el boton quede pegado a la derecha->width=10px --}}
+                                <td width="10px">
+                                    <a class="btn btn-outline-info"
+                                        href="{{ route('nota_venta.pdf', $nota_venta->id) }}"><i
+                                            class="fas fa-file-pdf"></i>
+                                    </a>
+                                </td>
 
                                 {{-- para que el boton quede pegado a la derecha->width=10px --}}
                                 @can('Actualizar ventas')
                                     <td width="10px">
                                         <a class="btn btn-primary"
-                                            href="{{ route('nota_venta.edit', $nota_venta->id) }}">Edit</a>
+                                            href="{{ route('nota_venta.edit', $nota_venta->id) }}"><i
+                                                class="fas fa-user-edit"></i></a>
                                     </td>
                                 @endcan
                                 @can('Eliminar ventas')
                                     <td width="10px">
                                         <button class="btn btn-danger" type="button"
-                                            onclick="confirmDelete({{ $nota_venta->id }})">Del</button>
+                                            onclick="confirmDelete({{ $nota_venta->id }})"><i
+                                                class="fas fa-user-minus"></i></button>
                                     </td>
                                 @endcan
                             </tr>

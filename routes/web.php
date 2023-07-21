@@ -46,7 +46,7 @@ Route::middleware([
 });
 
 //Para los roles
-Route::resource('roles',RoleController::class)->names('admin.roles');
+Route::resource('roles', RoleController::class)->names('admin.roles');
 
 //Para los usuarios
 //only en este caso solo creara las rutas index, edit, update
@@ -62,7 +62,7 @@ Route::put('users/{user}', [UserController::class, 'update'])->name('admin.users
 Route::delete('users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 
 //Para los estados del pedido
-Route::resource('estado-pedido',EstadoPedidoController::class)->names('admin.estado-pedido');
+Route::resource('estado-pedido', EstadoPedidoController::class)->names('admin.estado-pedido');
 
 //Para las categorias -------------------------------------------------------------------------------------------------
 Route::get('categoria', [CategoriaController::class, 'index'])->name('admin.categoria.index');
@@ -182,8 +182,9 @@ Route::get('nota_venta/{nota_venta}', [NotaVentaController::class, 'show'])->nam
 Route::get('nota_venta/{nota_venta}/edit', [NotaVentaController::class, 'edit'])->name('nota_venta.edit');
 Route::put('nota_venta/{nota_venta}', [NotaVentaController::class, 'update'])->name('nota_venta.update');
 Route::delete('nota_venta/{nota_venta}', [NotaVentaController::class, 'destroy'])->name('nota_venta.destroy');
+Route::get('nota_venta/{id}/pdf',  [NotaVentaController::class, 'generarPDF'])->name('nota_venta.pdf');
 //Route::get('nota_venta/reporte', [NotaVentaController::class, 'generarReporte'])->name('nota_venta.reporte');//Forma1 no funciona por alguna razon,mirar notaCompraComponent de software sport center para ver como se hizo get correctamente
-Route::post('nota_venta/reporte', [NotaVentaController::class, 'generarReporte'])->name('nota_venta.reporte');//para la forma 2 con POST (si funciona comprobado!!)
+Route::post('nota_venta/reporte', [NotaVentaController::class, 'generarReporte'])->name('nota_venta.reporte'); //para la forma 2 con POST (si funciona comprobado!!)
 
 //PARA LOS EMPLEADOS
 Route::get('personal', [PersonalController::class, 'index'])->name('personal.index');
@@ -194,5 +195,5 @@ Route::get('personal/{personal}/edit', [PersonalController::class, 'edit'])->nam
 Route::put('personal/{personal}', [PersonalController::class, 'update'])->name('personal.update');
 Route::delete('personal/{personal}', [PersonalController::class, 'destroy'])->name('personal.destroy');
 
-//PARA LA BITACORA 
+//PARA LA BITACORA
 Route::get('bitacora', [BitacoraController::class, 'index'])->name('bitacora.index');

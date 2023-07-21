@@ -18,6 +18,19 @@ class NotaVentaController extends Controller
     {
         return view('nota-venta.index');
     }
+    public function generarPDF($id)
+    {
+        $nota_venta = NotaVenta::find($id);
+        $parabrisas = $nota_venta->parabrisas;
+
+        //interpretacion del loadview
+        /*Con referencia a view, la vista pdf que esta dentro de la carpeta almacen*/
+        $pdf = PDF::loadView('nota-venta.reporte', compact('nota_venta', 'parabrisas'));
+
+        /*  $filename = 'almacen_' . $almacen->nombre . '_' . $almacen->id . '.pdf';*/
+        $filename = 'venta_' . $nota_venta->id . '.pdf';
+        return $pdf->download($filename);
+    }
 
     /**
      * Show the form for creating a new resource.
