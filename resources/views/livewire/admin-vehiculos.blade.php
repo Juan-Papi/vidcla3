@@ -16,48 +16,50 @@
         </div>
 
         @if ($vehiculos->count())
-            <div class="card-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            
-                            <th>Descripcion</th>
-                            <th>Año</th>
-                            <th>Marca</th>
-                            <th colspan="2"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($vehiculos as $vehiculo)
+            <div class="table-responsive">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
 
-                               
-                                <td>
-                                    {{ $vehiculo->descripcion }}
-                                </td>
-                                <td>
-                                    {{ $vehiculo->año }}
-                                </td>
-                                <td>
-                                    {{ $vehiculo->marca->nombre }}
-                                </td>
-                                {{-- para que el boton quede pegado a la derecha->width=10px --}}
-                                <td width="10px">
-                                    <a class="btn btn-primary"
-                                        href="{{ route('admin.vehiculo.edit', $vehiculo) }}">Editar/Ver</a>
-                                </td>
-                                <td width="10px">
-                                    {{-- el form es necesario para cuando queremos eliminar por eso no pusimos la etiqueta <a href=""></a> --}}
-                                    <form action="{{ route('admin.vehiculo.destroy', $vehiculo) }}" method="POST">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-danger" type="submit">Eliminar</button>
-                                    </form>
-                                </td>
+                                <th>Descripcion</th>
+                                <th>Año</th>
+                                <th>Marca</th>
+                                <th colspan="2"></th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($vehiculos as $vehiculo)
+                                <tr>
+
+
+                                    <td>
+                                        {{ $vehiculo->descripcion }}
+                                    </td>
+                                    <td>
+                                        {{ $vehiculo->año }}
+                                    </td>
+                                    <td>
+                                        {{ $vehiculo->marca->nombre }}
+                                    </td>
+                                    {{-- para que el boton quede pegado a la derecha->width=10px --}}
+                                    <td width="10px">
+                                        <a class="btn btn-primary"
+                                            href="{{ route('admin.vehiculo.edit', $vehiculo) }}">Editar/Ver</a>
+                                    </td>
+                                    <td width="10px">
+                                        {{-- el form es necesario para cuando queremos eliminar por eso no pusimos la etiqueta <a href=""></a> --}}
+                                        <form action="{{ route('admin.vehiculo.destroy', $vehiculo) }}" method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-danger" type="submit">Eliminar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="card-footer">

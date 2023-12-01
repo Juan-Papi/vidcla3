@@ -16,59 +16,63 @@
         </div>
 
         @if ($proveedores->count())
-            <div class="card-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                                                 
-                            {{-- en descripcion ira vehiculo con marca --}}
-                            <th>Nombre</th>
-                            <th>Email</th>
-                            <th>Telefono</th>
-                            <th>Ciudad</th>
-                            <th>Pais</th>          
-                            <th colspan="2"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($proveedores as $proveedor)
+            <div class="table-responsive">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
 
-                                <td>
-                                    {{ $proveedor->nombre }}
-                                </td>                            
-                                <td>
-                                    {{ $proveedor->email }}
-                                </td>
-                                <td>
-                                    {{ $proveedor->telefono }}
-                                </td>
-                                <td>
-                                    {{ $proveedor->ciudad }}
-                                </td>
-                                <td>
-                                    {{ $proveedor->pais }}
-                                </td>
-                                                       
-                                {{-- para que el boton quede pegado a la derecha->width=10px --}}
-                             
-                                <td width="10px">
-                                    <a class="btn btn-primary"
-                                        href="{{ route('admin.proveedor.edit', $proveedor) }}">Editar</a>
-                                </td>
-                                <td width="10px">
-                                    {{-- el form es necesario para cuando queremos eliminar por eso no pusimos la etiqueta <a href=""></a> --}}
-                                    <form action="{{ route('admin.proveedor.destroy', $proveedor) }}" method="POST">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-danger" type="submit">Eliminar</button>
-                                    </form>
-                                </td>
+                                {{-- en descripcion ira vehiculo con marca --}}
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                                <th>Ciudad</th>
+                                <th>Pais</th>
+                                <th colspan="2"></th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($proveedores as $proveedor)
+                                <tr>
+
+                                    <td>
+                                        {{ $proveedor->nombre }}
+                                    </td>
+                                    <td>
+                                        {{ $proveedor->email }}
+                                    </td>
+                                    <td>
+                                        {{ $proveedor->telefono }}
+                                    </td>
+                                    <td>
+                                        {{ $proveedor->ciudad }}
+                                    </td>
+                                    <td>
+                                        {{ $proveedor->pais }}
+                                    </td>
+
+                                    {{-- para que el boton quede pegado a la derecha->width=10px --}}
+
+                                    <td width="10px">
+                                        <a class="btn btn-primary"
+                                            href="{{ route('admin.proveedor.edit', $proveedor) }}">Editar</a>
+                                    </td>
+                                    <td width="10px">
+                                        {{-- el form es necesario para cuando queremos eliminar por eso no pusimos la etiqueta <a href=""></a> --}}
+                                        <form action="{{ route('admin.proveedor.destroy', $proveedor) }}"
+                                            method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-danger" type="submit">Eliminar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
 
             <div class="card-footer">
                 {{ $proveedores->links() }}
